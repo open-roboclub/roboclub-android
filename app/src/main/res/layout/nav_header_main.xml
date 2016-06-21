@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:text="Where innovation meets implementation"
             android:id="@+id/textView"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="12sp"/>
 
 </LinearLayout>
