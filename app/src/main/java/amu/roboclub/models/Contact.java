@@ -1,8 +1,17 @@
 package amu.roboclub.models;
 
 public class Contact {
-    String name;
-    String designation;
-    String imgUrl;
-    String[] links;
+    public String name, designation, imgUrl;
+    public String[] links;
+
+    public Contact(String name, String designation){
+        this.name = name;
+        this.designation = designation;
+    }
+
+    public Contact(String name, String designation, String imgUrl){
+        this.name = name;
+        this.designation = designation;
+        this.imgUrl = imgUrl;
+    }
 }
