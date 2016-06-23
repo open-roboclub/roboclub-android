@@ -17,9 +17,9 @@ import java.util.List;
 
 
 public class CurrentProjectFragment extends Fragment {
-    private List<Project> projects = new ArrayList<>();
+    protected List<Project> projects = new ArrayList<>();
     private RecyclerView recyclerView;
-    private ProjectAdapter pAdapter;
+    protected ProjectAdapter pAdapter;
 
     public CurrentProjectFragment() {
         // Required empty public constructor
@@ -48,7 +48,7 @@ public class CurrentProjectFragment extends Fragment {
         return root;
     }
 
-    private void loadProjects(){
+    protected void loadProjects(){
         projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney", "", "http://www.hostinger.in/static/images/logo-in.png"));
         projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney"));
         projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney"));
