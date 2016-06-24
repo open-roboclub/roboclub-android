@@ -49,20 +49,22 @@ public class CurrentProjectFragment extends Fragment {
     }
 
     protected void loadProjects(){
-        projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney", "", "http://www.hostinger.in/static/images/logo-in.png"));
-        projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney"));
-        projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney"));
-        projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney"));
-        projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney"));
-        projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney"));
-        projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney"));
-        projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney"));
-        projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney"));
-        projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney"));
-        projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney"));
-        projects.add(new Project("Sample Project", "Areeb Jamal, Divy Prakash, Priya Varshney"));
+        String[] titles = getActivity().getResources().getStringArray(R.array.current_title);
+        String[] teams = getActivity().getResources().getStringArray(R.array.current_team);
+        String[] about = getActivity().getResources().getStringArray(R.array.current_about);
+        String[] images = getActivity().getResources().getStringArray(R.array.current_images);
 
-        pAdapter.notifyDataSetChanged();
+        int min = Math.min(titles.length, teams.length);
+
+        for(int i = 0; i < min; i++){
+            try {
+                projects.add(new Project(titles[i], teams[i], about[i], images[i]));
+            } catch (Exception e) {
+                projects.add(new Project(titles[i], teams[i]));
+            }
+        }
+
+        pAdapter.notifyDataSetChanged();;
     }
 
 

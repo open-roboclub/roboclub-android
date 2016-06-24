@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="previous_title">
+        <item>Sample Project</item>
+        <item>Hello World</item>
+    </string-array>
+
+    <string-array name="previous_team">
+        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
+        <item>Noto Sans</item>
+    </string-array>
+
+    <string-array name="previous_about">
+        <item>Abhi mujh mein kahin baaki thodi si hai zindagi. Jagi dhadkan nayi, jaana zinda hoon main to abhi.</item>
+        <item>print \'Hello World\';</item>
+    </string-array>
+
+    <string-array name="previous_images">
+        <item>http://www.hostinger.in/static/images/logo-in.png</item>
+        <item>http://www.tutorialspoint.com/java/images/logo.png</item>
+    </string-array>
+
+    <string-array name="current_title">
+        <item>Sample Project</item>
+        <item>Sample Project</item>
+        <item>Sample Project</item>
+        <item>Sample Project</item>
+        <item>Sample Project</item>
+        <item>Sample Project</item>
+        <item>Sample Project</item>
+        <item>Sample Project</item>
+    </string-array>
+
+    <string-array name="current_team">
+        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
+        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
+        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
+        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
+        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
+        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
+        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
+    </string-array>
+
+    <string-array name="current_about">
+
+    </string-array>
+
+    <string-array name="current_images">
+
+    </string-array>
+
+</resources>
