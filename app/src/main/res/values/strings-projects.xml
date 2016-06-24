@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="previous_title">
-        <item>Sample Project</item>
-        <item>Hello World</item>
+        <item>Autonomous Electroplating Station</item>
+        <item>Face Detection Based Electricity Control</item>
+        <item>Basic Calculator on ATMEGA16</item>
+	<item>Data Logging with Micro SD card</item>
+	<item>Wireless Gesture Controlled Robot</item>
+	<item>RF Energy Harvesting Based Battery less E-Paper</item>
+	<item>Railway Signalling for Fog Mitigation / Poor Visibility</item>
+	<item>Autonomous Buggy</item>
+	<item>Web Monitor- Low Cost Video Surviellance Robot</item>
+	<item>Ethernet &amp; SMS Based Home Automation with Enhanced Security</item>
+	<item>Low Cost ECG Signal Acquisition and Feature Extraction with Computer Aided Analysis</item>
+	<item>STBCFG01 based Backcover Battery Charger</item>
+	<item>Autonomous Underwater Vehicle (Safina-e-Abdoz)</item>
+	<item>Autonomous Reaction Vessel</item>
+	<item>Stationary Device for Harvesting Energy from Railway Tracks</item>
+	<item></item>
     </string-array>
 
     <string-array name="previous_team">
         <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
         <item>Noto Sans</item>
+        <item>amu</item>
     </string-array>
 
     <string-array name="previous_about">
         <item>Abhi mujh mein kahin baaki thodi si hai zindagi. Jagi dhadkan nayi, jaana zinda hoon main to abhi.</item>
         <item>print \'Hello World\';</item>
+        <item>hello world</item>
     </string-array>
 
     <string-array name="previous_images">
