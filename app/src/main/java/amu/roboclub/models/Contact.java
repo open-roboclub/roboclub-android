@@ -14,4 +14,11 @@ public class Contact {
         this.designation = designation;
         this.imgUrl = imgUrl;
     }
+
+    public Contact(String name, String designation, String imgUrl, String[] links){
+        this.name = name;
+        this.designation = designation;
+        this.imgUrl = imgUrl;
+        this.links = links;
+    }
 }

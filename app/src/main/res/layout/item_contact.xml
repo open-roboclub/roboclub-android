@@ -11,40 +11,58 @@
         android:foreground="?attr/selectableItemBackground"
         app:cardCornerRadius="3dp"
         app:cardElevation="1dp">
-    <LinearLayout
-            android:orientation="horizontal"
-            android:padding="10dp"
+
+    <RelativeLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <ImageView
-                android:id="@+id/avatar"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                app:srcCompat="@drawable/ic_avatar"
-                tools:ignore="MissingPrefix"/>
-
         <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp">
-            <TextView
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
+                android:id="@+id/info"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_avatar"
+                    tools:ignore="MissingPrefix"/>
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    android:textColor="@android:color/black"
-                    android:text="Name"/>
-            <TextView
-                    android:id="@+id/designation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    android:textSize="11sp"
-                    android:text="Designation"/>
+                    android:layout_marginLeft="5dp">
+
+                <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:textColor="@android:color/black"
+                        android:text="Name"/>
+
+                <TextView
+                        android:id="@+id/designation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:textSize="11sp"
+                        android:text="Designation"/>
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+                android:id="@+id/contactPanel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_below="@+id/info">
+        </LinearLayout>
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

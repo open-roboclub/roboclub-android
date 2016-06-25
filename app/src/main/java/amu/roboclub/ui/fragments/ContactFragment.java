@@ -50,9 +50,33 @@ public class ContactFragment extends Fragment {
     }
 
     private void loadContacts() {
-        contacts.add(new Contact("Nishant Pratap Singh", "Co-Ordinator", "http://www.amuroboclub.in/img/members/NishantPratapSingh.jpg"));
-        contacts.add(new Contact("Amar Upadhyay", "Co-Ordinator", "http://www.amuroboclub.in/img/members/AmarUpadhyay.jpg"));
-        contacts.add(new Contact("Mohd Talha", "Co-Ordinator", "http://www.amuroboclub.in/img/members/MohdTalha.jpg"));
+        contacts.add(new Contact(
+                "Nishant Pratap Singh",
+                "Co-Ordinator",
+                "http://www.amuroboclub.in/img/members/NishantPratapSingh.jpg",
+                new String[] {
+                        "+91-9412272766",
+                        "npsaligarh@gmail.com",
+                        "https://facebook.com/NPSIN"}));
+        contacts.add(new Contact(
+                "Amar Upadhyay",
+                "Co-Ordinator",
+                "http://www.amuroboclub.in/img/members/AmarUpadhyay.jpg",
+                new String[] {
+                        "+91-9045414527",
+                        "chat2amar@yahoo.in",
+                        "https://www.facebook.com/amarupadhyay.happy",
+                        "https://plus.google.com/u/0/107125332291865356506/posts",
+                        "https://www.linkedin.com/profile/view?id=380171064"}));
+        contacts.add(new Contact(
+                "Mohd Talha",
+                "Co-Ordinator",
+                "http://www.amuroboclub.in/img/members/MohdTalha.jpg",
+                new String[] {
+                        "+91-8755174490",
+                        "mohdtalha13@gmail.com",
+                        "https://www.facebook.com/talha.mohd.5",
+                        "https://www.linkedin.com/profile/view?id=403978334"}));
 
         cAdapter.notifyDataSetChanged();
 
