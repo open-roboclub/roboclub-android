@@ -10,14 +10,14 @@
 		<item>Railway Signalling for Fog Mitigation / Poor Visibility</item>
 		<item>Autonomous Buggy</item>
 		<item>Web Monitor- Low Cost Video Surviellance Robot</item>
-		<item>Ethernet and amp; SMS Based Home Automation with Enhanced Security</item>
+		<item>Ethernet and SMS Based Home Automation with Enhanced Security</item>
 		<item>Low Cost ECG Signal Acquisition and Feature Extraction with Computer Aided Analysis</item>
-		<item>STBCFG01 based Backcover Battery Charger</item>
+		<item>STBCFG01 based Back Cover Battery Charger</item>
 		<item>Autonomous Underwater Vehicle (Safina-e-Abdoz)</item>
 		<item>Autonomous Reaction Vessel</item>
 		<item>Stationary Device for Harvesting Energy from Railway Tracks</item>
 		<item>GSM Based Result System</item>
-		<item>autonomous athletic time keeping device</item>
+		<item>Autonomous Athletic Time Keeping Device</item>
 		<item>Laser Tag ShowDown</item>
 		<item>IOT Based Home Appliances Controlled through Wireless Sensor Networks</item>
     </string-array>
@@ -43,7 +43,7 @@
 
         <item>This project is a prototype to demonstrate the locomotion of autonomous urban passenger vehicles. It makes to and fro movement from one stop to the other via several other intermediate stops. This project can be further extended to implement other fuctions and safety features </item>
 
-        <item>This robot is a low cost solution for remote video surviellance. Costing around INR 2,500 this robot transmits video into a remote computer operated through a Graphical Interface (GUI) running on the computer. The movement is manually controlled and uses parallel port communication. </item>
+        <item>This robot is a low cost solution for remote video surveillance. Costing around INR 2,500 this robot transmits video into a remote computer operated through a Graphical Interface (GUI) running on the computer. The movement is manually controlled and uses parallel port communication. </item>
 
         <item>The most important feature of the home is that electrical appliances can be controlled from anywhere through a protected webpage. The automated home is well equipped with various sensors which are SMS controlled. The main entrance is password protected and employed with sms notification in case of any breach. Image Processing based Garage gate opening is also employed. Other remarkable features include Automatic Water Level indicator, LPG indicator, alarming and sms notification in case of security and safety breach etc. </item>
 
@@ -118,8 +118,25 @@
     </string-array>
 
     <string-array name="previous_images">
-        <item>http://www.hostinger.in/static/images/logo-in.png</item>
-        <item>http://www.tutorialspoint.com/java/images/logo.png</item>
+        <item>http://www.amuroboclub.in/projects/ELP/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/projects/FaceDetection/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/projects/BasicCalculator/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/projects/DataLogging/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/projects/GestureRobot/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/projects/EPaper/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/projects/FogMitigation/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/projects/AutoBuggy/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/projects/WebMonitor/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/projects/HomeAutomation/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/projects/LowCostECG/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/projects/STBCFG/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/projects/Safina/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/projects/AutonomousReaction/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/img/robo.jpg</item>
+        <item>http://www.amuroboclub.in/projects/GSMBasedResult/thumb.jpg</item>
+        <item>http://www.amuroboclub.in/img/robo.jpg</item>
+        <item>http://www.amuroboclub.in/img/robo.jpg</item>
+        <item>http://www.amuroboclub.in/img/robo.jpg</item>
     </string-array>
 
     <string-array name="current_title">
