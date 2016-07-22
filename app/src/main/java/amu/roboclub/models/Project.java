@@ -4,6 +4,10 @@ public class Project {
     public String title, about, team, imgUrl;
     public boolean opened;
 
+    public Project(String title){
+        this.title = title;
+    }
+
     public Project(String title, String team){
         this.title = title;
         this.team = team;

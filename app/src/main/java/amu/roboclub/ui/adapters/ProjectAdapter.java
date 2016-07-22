@@ -54,9 +54,18 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Project project = projects.get(position);
+
         holder.title.setText(project.title);
-        holder.team.setText(project.team);
-        holder.about.setText(project.about);
+
+        if(project.team!=null)
+            holder.team.setText(project.team);
+        else
+            holder.team.setVisibility(View.GONE);
+
+        if(project.about!=null)
+            holder.about.setText(project.about);
+        else
+            holder.about.setVisibility(View.GONE);
 
         if(project.imgUrl!=null)
             Picasso.with(context).load(project.imgUrl).into(holder.projectImg);

@@ -140,24 +140,19 @@
     </string-array>
 
     <string-array name="current_title">
-        <item>Sample Project</item>
-        <item>Sample Project</item>
-        <item>Sample Project</item>
-        <item>Sample Project</item>
-        <item>Sample Project</item>
-        <item>Sample Project</item>
-        <item>Sample Project</item>
-        <item>Sample Project</item>
+        <item>Application Development For Maintaining Database</item>
+        <item>Automatic Vehicle Speed Control Wirelessly</item>
+        <item>Developing A Server,Accessible Through Internet</item>
+        <item>Development Of A Mobile Detector </item>
+        <item>Drone Based Monitoring For University Campus\n(Sponsored by Sarfaraz Khan, Roboclub Alumni)</item>
+        <item>Gesture And Voice Controlled Wheelchair</item>
+        <item>GSM Based Vechile Tracking System</item>
+        <item>IR Based Remote Control With Sensing Unit</item>
+        <item>Two Link Robot Controller</item>
     </string-array>
 
     <string-array name="current_team">
-        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
-        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
-        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
-        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
-        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
-        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
-        <item>Areeb Jamal, Divya Prakash, Priya Varshney</item>
+
     </string-array>
 
     <string-array name="current_about">

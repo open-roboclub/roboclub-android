@@ -54,13 +54,13 @@ public class CurrentProjectFragment extends Fragment {
         String[] about = getActivity().getResources().getStringArray(R.array.current_about);
         String[] images = getActivity().getResources().getStringArray(R.array.current_images);
 
-        int min = Math.min(titles.length, teams.length);
+        int min = titles.length;
 
         for(int i = 0; i < min; i++){
             try {
                 projects.add(new Project(titles[i], teams[i], about[i], images[i]));
             } catch (Exception e) {
-                projects.add(new Project(titles[i], teams[i]));
+                projects.add(new Project(titles[i]));
             }
         }
 
