@@ -4,20 +4,33 @@ import amu.roboclub.R;
 import amu.roboclub.ui.fragments.ContactFragment;
 import amu.roboclub.ui.fragments.HomeFragment;
 import amu.roboclub.ui.fragments.ProjectFragment;
+import android.app.Dialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -100,6 +113,38 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_contact) {
             fragmentClass = ContactFragment.class;
         } else if (id == R.id.nav_feedback) {
+            final AlertDialog.Builder feedback = new AlertDialog.Builder(this, R.style.DialogTheme);
+            LayoutInflater inflater = this.getLayoutInflater();
+            final View dialogView = inflater.inflate(R.layout.feedback_dialog,null);
+            feedback.setView(dialogView);
+
+
+            feedback.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    EditText text = (EditText) dialogView.findViewById(R.id.feedback);
+                    String data = text.getText().toString();
+                    try {
+                        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                        emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        emailIntent.setType("vnd.android.cursor.item/email");
+                        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"amuroboclub@gmail.com"});
+                        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback");
+                        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, data);
+                        startActivity(emailIntent);
+                    }
+                    catch (ActivityNotFoundException error) {
+                        Toast.makeText(getApplicationContext(), "Sorry no activity found", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            feedback.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            feedback.show();
 
         } else if (id == R.id.nav_about) {
 
