@@ -1,7 +1,5 @@
 package amu.roboclub.ui.adapters;
 
-import amu.roboclub.ui.fragments.IntroFragment;
-import amu.roboclub.ui.fragments.NewsFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -19,7 +17,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        if(position >= mTabs || position < 0)
+        if (position >= mTabs || position < 0)
             return null;
 
         try {

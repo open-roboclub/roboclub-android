@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void askFeedback(){
+    private void askFeedback() {
         final AlertDialog.Builder feedback = new AlertDialog.Builder(this, R.style.DialogTheme);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.dialog_feedback, null);
@@ -155,8 +155,7 @@ public class MainActivity extends AppCompatActivity
                     emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback from App");
                     emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, data);
                     startActivity(emailIntent);
-                }
-                catch (ActivityNotFoundException error) {
+                } catch (ActivityNotFoundException error) {
                     Toast.makeText(getApplicationContext(), "No App can handle this!", Toast.LENGTH_SHORT).show();
                 }
             }

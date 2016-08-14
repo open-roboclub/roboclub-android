@@ -22,7 +22,7 @@ public class PreviousProjectFragment extends CurrentProjectFragment {
         String[] images = getActivity().getResources().getStringArray(R.array.previous_images);
 
         int min = Math.min(titles.length, teams.length);
-        for(int i = 0; i < min; i++){
+        for (int i = 0; i < min; i++) {
 
             try {
                 projects.add(new Project(titles[i], teams[i], about[i], images[i]));

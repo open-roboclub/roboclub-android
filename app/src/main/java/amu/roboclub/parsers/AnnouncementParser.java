@@ -19,7 +19,7 @@ public class AnnouncementParser {
     private List<Announcement> announcements = new ArrayList<>();
     private AnnouncementLoader announcementLoader;
 
-    public AnnouncementParser(AnnouncementLoader announcementLoader){
+    public AnnouncementParser(AnnouncementLoader announcementLoader) {
         this.announcementLoader = announcementLoader;
     }
 
@@ -54,12 +54,13 @@ public class AnnouncementParser {
             String link = null;
             try {
 
-                if (message.select("a[href]").first()!=null)
+                if (message.select("a[href]").first() != null)
                     link = message.select("a[href]").first().attr("abs:href");
 
                 try {
                     link = message.select("div.attachment").select("a[href]").first().attr("abs:href");
-                } catch (NullPointerException npe) {}
+                } catch (NullPointerException npe) {
+                }
 
                 URL url = new URL(link);
                 URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
@@ -73,7 +74,7 @@ public class AnnouncementParser {
         }
     }
 
-    private class AnnouncementHandler extends AsyncTask<Void, Void, List<Announcement>>{
+    private class AnnouncementHandler extends AsyncTask<Void, Void, List<Announcement>> {
 
         @Override
         protected List<Announcement> doInBackground(Void... voids) {

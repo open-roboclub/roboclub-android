@@ -4,22 +4,22 @@
         <item>Autonomous Electroplating Station</item>
         <item>Face Detection Based Electricity Control</item>
         <item>Basic Calculator on ATMEGA16</item>
-		<item>Data Logging with Micro SD card</item>
-		<item>Wireless Gesture Controlled Robot</item>
-		<item>RF Energy Harvesting Based Battery less E-Paper</item>
-		<item>Railway Signalling for Fog Mitigation / Poor Visibility</item>
-		<item>Autonomous Buggy</item>
-		<item>Web Monitor- Low Cost Video Surviellance Robot</item>
-		<item>Ethernet and SMS Based Home Automation with Enhanced Security</item>
-		<item>Low Cost ECG Signal Acquisition and Feature Extraction with Computer Aided Analysis</item>
-		<item>STBCFG01 based Back Cover Battery Charger</item>
-		<item>Autonomous Underwater Vehicle (Safina-e-Abdoz)</item>
-		<item>Autonomous Reaction Vessel</item>
-		<item>Stationary Device for Harvesting Energy from Railway Tracks</item>
-		<item>GSM Based Result System</item>
-		<item>Autonomous Athletic Time Keeping Device</item>
-		<item>Laser Tag ShowDown</item>
-		<item>IOT Based Home Appliances Controlled through Wireless Sensor Networks</item>
+        <item>Data Logging with Micro SD card</item>
+        <item>Wireless Gesture Controlled Robot</item>
+        <item>RF Energy Harvesting Based Battery less E-Paper</item>
+        <item>Railway Signalling for Fog Mitigation / Poor Visibility</item>
+        <item>Autonomous Buggy</item>
+        <item>Web Monitor- Low Cost Video Surviellance Robot</item>
+        <item>Ethernet and SMS Based Home Automation with Enhanced Security</item>
+        <item>Low Cost ECG Signal Acquisition and Feature Extraction with Computer Aided Analysis</item>
+        <item>STBCFG01 based Back Cover Battery Charger</item>
+        <item>Autonomous Underwater Vehicle (Safina-e-Abdoz)</item>
+        <item>Autonomous Reaction Vessel</item>
+        <item>Stationary Device for Harvesting Energy from Railway Tracks</item>
+        <item>GSM Based Result System</item>
+        <item>Autonomous Athletic Time Keeping Device</item>
+        <item>Laser Tag ShowDown</item>
+        <item>IOT Based Home Appliances Controlled through Wireless Sensor Networks</item>
     </string-array>
 
     <string-array name="previous_about">
@@ -65,13 +65,13 @@
  		The prototype model uses UART Protocol to interface GSM Modem and I2C Protocol to interface external EEPROM with Microcontroller. The purpose of GSM Modem is to send and receive the message from recipients whereas EEPROM stores the database of Result along with Individuals Student Id. Microcontroller acts as a link between GSM Modem and EEPROM and processes the data to deliver correct message to correct Individual. 
  		Prototype Design Model uses some standard components such as GSM Modem SIM300, AVR Microcontroller, USBASP AVR Programmer, EEPROM 24C512 IC, 7805 Voltage Regulator and few other miscellaneous components. </item>
 
- 		<item></item>
+        <item></item>
 
         <item>The purpose of the project is to design a Wearable Sensor Technology based Electronic Jackets that can be used to sense the laser beams falling over them. The project aims to deliver a fun Event with a practical approach in Embedded Electronics. Electronic Jackets are given to students from different departments of University to use them in their own way.
- 		The system design uses a sensor network over each Electronic Jacket, controlled by AVR Microcontrollers. The laser diode is used as a laser gun to locate their enemies.</item> 
+ 		The system design uses a sensor network over each Electronic Jacket, controlled by AVR Microcontrollers. The laser diode is used as a laser gun to locate their enemies.</item>
 
-		<item></item> 
-		
+        <item></item>
+
     </string-array>
 
     <string-array name="previous_team">
@@ -112,7 +112,6 @@
         <item>Anand Agrawal</item>
 
         <item>Anand Agrawal</item>
-
 
 
     </string-array>

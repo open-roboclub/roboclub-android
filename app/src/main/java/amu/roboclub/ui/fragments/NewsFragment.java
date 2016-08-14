@@ -24,11 +24,11 @@ public class NewsFragment extends Fragment implements AnnouncementLoader {
 
     @Override
     public void onAnnouncementsLoaded(List<Announcement> announcements) {
-        if(news.size()>0)
+        if (news.size() > 0)
             news.clear();
         news.addAll(announcements);
 
-        if(announcementAdapter==null) {
+        if (announcementAdapter == null) {
             announcementAdapter = new AnnouncementAdapter(getContext(), news);
         } else {
             announcementAdapter.notifyDataSetChanged();
@@ -51,7 +51,7 @@ public class NewsFragment extends Fragment implements AnnouncementLoader {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        if(announcementAdapter == null)
+        if (announcementAdapter == null)
             announcementAdapter = new AnnouncementAdapter(getContext(), news);
         recyclerView.setAdapter(announcementAdapter);
 

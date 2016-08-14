@@ -18,8 +18,8 @@ import java.util.List;
 
 public class CurrentProjectFragment extends Fragment {
     protected List<Project> projects = new ArrayList<>();
-    private RecyclerView recyclerView;
     protected ProjectAdapter pAdapter;
+    private RecyclerView recyclerView;
 
     public CurrentProjectFragment() {
         // Required empty public constructor
@@ -48,7 +48,7 @@ public class CurrentProjectFragment extends Fragment {
         return root;
     }
 
-    protected void loadProjects(){
+    protected void loadProjects() {
         String[] titles = getActivity().getResources().getStringArray(R.array.current_title);
         String[] teams = getActivity().getResources().getStringArray(R.array.current_team);
         String[] about = getActivity().getResources().getStringArray(R.array.current_about);
@@ -56,7 +56,7 @@ public class CurrentProjectFragment extends Fragment {
 
         int min = titles.length;
 
-        for(int i = 0; i < min; i++){
+        for (int i = 0; i < min; i++) {
             try {
                 projects.add(new Project(titles[i], teams[i], about[i], images[i]));
             } catch (Exception e) {
@@ -64,7 +64,8 @@ public class CurrentProjectFragment extends Fragment {
             }
         }
 
-        pAdapter.notifyDataSetChanged();;
+        pAdapter.notifyDataSetChanged();
+        ;
     }
 
 

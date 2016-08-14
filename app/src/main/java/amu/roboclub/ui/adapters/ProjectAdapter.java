@@ -20,25 +20,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     private Context context;
     private List<Project> projects;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        public CardView root;
-        public TextView title, team, about;
-        public ImageView projectImg;
-        public LinearLayout hiddenView;
-
-        public ViewHolder(View view) {
-            super(view);
-            root = (CardView) view.findViewById(R.id.rootView);
-            title = (TextView) view.findViewById(R.id.title);
-            team = (TextView) view.findViewById(R.id.team);
-            about = (TextView) view.findViewById(R.id.aboutProject);
-            projectImg = (ImageView) view.findViewById(R.id.projectImg);
-            hiddenView = (LinearLayout) view.findViewById(R.id.hidden);
-        }
-    }
-
-    public ProjectAdapter(Context context, List<Project> projects){
+    public ProjectAdapter(Context context, List<Project> projects) {
         this.context = context;
         this.projects = projects;
     }
@@ -57,22 +39,22 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
 
         holder.title.setText(project.title);
 
-        if(project.team!=null)
+        if (project.team != null)
             holder.team.setText(project.team);
         else
             holder.team.setVisibility(View.GONE);
 
-        if(project.about!=null)
+        if (project.about != null)
             holder.about.setText(project.about);
         else
             holder.about.setVisibility(View.GONE);
 
-        if(project.imgUrl!=null)
+        if (project.imgUrl != null)
             Picasso.with(context).load(project.imgUrl).into(holder.projectImg);
         else
             holder.projectImg.setVisibility(View.GONE);
 
-        if(project.opened)
+        if (project.opened)
             holder.hiddenView.setVisibility(View.VISIBLE);
         else
             holder.hiddenView.setVisibility(View.GONE);
@@ -80,7 +62,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         holder.root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(holder.hiddenView.getVisibility()==View.VISIBLE){
+                if (holder.hiddenView.getVisibility() == View.VISIBLE) {
                     holder.hiddenView.setVisibility(View.GONE);
                     project.opened = false;
                 } else {
@@ -95,6 +77,24 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     @Override
     public int getItemCount() {
         return projects.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        public CardView root;
+        public TextView title, team, about;
+        public ImageView projectImg;
+        public LinearLayout hiddenView;
+
+        public ViewHolder(View view) {
+            super(view);
+            root = (CardView) view.findViewById(R.id.rootView);
+            title = (TextView) view.findViewById(R.id.title);
+            team = (TextView) view.findViewById(R.id.team);
+            about = (TextView) view.findViewById(R.id.aboutProject);
+            projectImg = (ImageView) view.findViewById(R.id.projectImg);
+            hiddenView = (LinearLayout) view.findViewById(R.id.hidden);
+        }
     }
 
 }

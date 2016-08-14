@@ -2,9 +2,7 @@ package amu.roboclub.ui.fragments;
 
 import amu.roboclub.R;
 import amu.roboclub.models.Contact;
-import amu.roboclub.models.Project;
 import amu.roboclub.ui.adapters.ContactAdapter;
-import amu.roboclub.ui.adapters.ProjectAdapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -54,7 +52,7 @@ public class ContactFragment extends Fragment {
                 "Nishant Pratap Singh",
                 "Co-Ordinator",
                 "http://www.amuroboclub.in/img/members/NishantPratapSingh.jpg",
-                new String[] {
+                new String[]{
                         "+91-9412272766",
                         "npsaligarh@gmail.com",
                         "https://facebook.com/NPSIN"}));
@@ -62,7 +60,7 @@ public class ContactFragment extends Fragment {
                 "Amar Upadhyay",
                 "Co-Ordinator",
                 "http://www.amuroboclub.in/img/members/AmarUpadhyay.jpg",
-                new String[] {
+                new String[]{
                         "+91-9045414527",
                         "chat2amar@yahoo.in",
                         "https://www.facebook.com/amarupadhyay.happy",
@@ -72,7 +70,7 @@ public class ContactFragment extends Fragment {
                 "Mohd Talha",
                 "Co-Ordinator",
                 "http://www.amuroboclub.in/img/members/MohdTalha.jpg",
-                new String[] {
+                new String[]{
                         "+91-8755174490",
                         "mohdtalha13@gmail.com",
                         "https://www.facebook.com/talha.mohd.5",

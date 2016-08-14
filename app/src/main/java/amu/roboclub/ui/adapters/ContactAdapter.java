@@ -30,22 +30,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     private Context context;
     private List<Contact> contacts;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        public CardView root;
-        public TextView name, designation;
-        public ImageView avatar;
-
-        public ViewHolder(View view) {
-            super(view);
-            root = (CardView) view.findViewById(R.id.rootView);
-            name = (TextView) view.findViewById(R.id.name);
-            designation = (TextView) view.findViewById(R.id.designation);
-            avatar = (ImageView) view.findViewById(R.id.avatar);
-        }
-    }
-
-    public ContactAdapter(Context context, List<Contact> contacts){
+    public ContactAdapter(Context context, List<Contact> contacts) {
         this.context = context;
         this.contacts = contacts;
     }
@@ -69,55 +54,55 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
                 .transform(new CircleTransform())
                 .into(holder.avatar);
 
-        if(contact.links==null)
+        if (contact.links == null)
             return;
 
         LinearLayout contactPanel = (LinearLayout) holder.root.findViewById(R.id.contactPanel);
 
-        for(String link : contact.links){
+        for (String link : contact.links) {
             ImageButton im = new ImageButton(context);
 
             int[] attrs = new int[]{R.attr.selectableItemBackgroundBorderless};
             TypedArray typedArray = context.obtainStyledAttributes(attrs);
             im.setBackgroundResource(typedArray.getResourceId(0, 0));
-            im.setPadding(20,20,20,20);
+            im.setPadding(20, 20, 20, 20);
 
             Intent i = null;
 
-            if(link.contains("facebook")){
+            if (link.contains("facebook")) {
                 im.setImageResource(R.drawable.ic_facebook);
                 DrawableCompat.setTint(im.getDrawable(), ContextCompat.getColor(context, R.color.fb_blue));
 
                 i = new Intent(Intent.ACTION_VIEW,
                         Uri.parse(link));
-            } else if(link.contains("linkedin")){
+            } else if (link.contains("linkedin")) {
                 im.setImageResource(R.drawable.ic_linkedin);
                 DrawableCompat.setTint(im.getDrawable(), ContextCompat.getColor(context, R.color.li_blue));
 
                 i = new Intent(Intent.ACTION_VIEW,
                         Uri.parse(link));
-            } else if(link.contains("plus.google")){
+            } else if (link.contains("plus.google")) {
                 im.setImageResource(R.drawable.ic_gplus);
                 DrawableCompat.setTint(im.getDrawable(), ContextCompat.getColor(context, R.color.gp_red));
 
                 i = new Intent(Intent.ACTION_VIEW,
                         Uri.parse(link));
-            } else if(link.contains("+91")){
+            } else if (link.contains("+91")) {
                 im.setImageResource(R.drawable.ic_phone);
                 DrawableCompat.setTint(im.getDrawable(), ContextCompat.getColor(context, R.color.ph_blue));
 
-                i = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+link));
-            } else if(link.contains("@")){
+                i = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + link));
+            } else if (link.contains("@")) {
                 im.setImageResource(R.drawable.ic_email);
                 DrawableCompat.setTint(im.getDrawable(), ContextCompat.getColor(context, R.color.em_red));
 
                 i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_EMAIL, new String[]{ link });
+                i.putExtra(Intent.EXTRA_EMAIL, new String[]{link});
                 i.putExtra(Intent.EXTRA_SUBJECT, "To Co-Ordinator, AMU RoboClub");
             }
 
-            if(i!=null) {
+            if (i != null) {
                 contactPanel.addView(im);
                 final Intent intent = i;
                 im.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +123,21 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     @Override
     public int getItemCount() {
         return contacts.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        public CardView root;
+        public TextView name, designation;
+        public ImageView avatar;
+
+        public ViewHolder(View view) {
+            super(view);
+            root = (CardView) view.findViewById(R.id.rootView);
+            name = (TextView) view.findViewById(R.id.name);
+            designation = (TextView) view.findViewById(R.id.designation);
+            avatar = (ImageView) view.findViewById(R.id.avatar);
+        }
     }
 
 }
