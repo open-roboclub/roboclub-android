@@ -6,7 +6,7 @@
         android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
+        android:layout_margin="5dp"
         app:cardCornerRadius="3dp"
         app:cardElevation="1dp">
 
@@ -24,7 +24,7 @@
             <ImageView
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/ic_news"
+                    app:srcCompat="@drawable/ic_news"
                     tools:ignore="MissingPrefix"/>
 
             <TextView
@@ -48,8 +48,10 @@
                 android:text="12-06-2016"/>
 
         <LinearLayout
+                android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:orientation="horizontal"
                 android:background="#33000000"/>
 
         <LinearLayout
@@ -57,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:background="#ECEFF1"
                 android:padding="5dp"
                 android:clickable="true"
                 android:foreground="?attr/selectableItemBackground"
@@ -66,13 +69,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:src="@drawable/ic_link"
+                    app:srcCompat="@drawable/ic_link"
                     tools:ignore="MissingPrefix"/>
 
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="13sp"
+                    android:textColor="#CC607D8B"
                     android:text="Visit attached link"/>
         </LinearLayout>
 

@@ -40,8 +40,14 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
         holder.news.setText(announcement.message);
         holder.date.setText(announcement.date);
 
-        if (announcement.attachment == null)
+        if (announcement.attachment == null){
+            holder.link.setVisibility(View.GONE);
+            holder.divider.setVisibility(View.GONE);
             return;
+        }
+
+        holder.link.setVisibility(View.VISIBLE);
+        holder.divider.setVisibility(View.VISIBLE);
 
         holder.link.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,13 +71,14 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView news, date;
-        public LinearLayout link;
+        public LinearLayout link, divider;
 
         public ViewHolder(View view) {
             super(view);
             news = (TextView) view.findViewById(R.id.news);
             date = (TextView) view.findViewById(R.id.date);
             link = (LinearLayout) view.findViewById(R.id.link);
+            divider = (LinearLayout) view.findViewById(R.id.divider);
         }
     }
 
