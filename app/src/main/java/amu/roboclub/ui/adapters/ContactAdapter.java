@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
+import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
@@ -49,10 +50,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         holder.name.setText(contact.name);
         holder.designation.setText(contact.designation);
 
-        Picasso.with(context).load(contact.imgUrl)
-                .placeholder(VectorDrawableCompat.create(context.getResources(), R.drawable.ic_avatar, null))
-                .transform(new CircleTransform())
-                .into(holder.avatar);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP)
+            Picasso.with(context).load(contact.imgUrl)
+                    .placeholder(VectorDrawableCompat.create(context.getResources(), R.drawable.ic_avatar, null))
+                    .transform(new CircleTransform())
+                    .into(holder.avatar);
+        else
+            Picasso.with(context).load(contact.imgUrl)
+                    .transform(new CircleTransform())
+                    .into(holder.avatar);
 
         if (contact.links == null)
             return;

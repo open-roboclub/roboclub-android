@@ -139,6 +139,8 @@
     </string-array>
 
     <string-array name="current_title">
+        <item>Wireless garbage monitoring System for smart cities</item>
+        <item>Smart Farming techniques</item>
         <item>Application Development For Maintaining Database</item>
         <item>Automatic Vehicle Speed Control Wirelessly</item>
         <item>Developing A Server,Accessible Through Internet</item>
