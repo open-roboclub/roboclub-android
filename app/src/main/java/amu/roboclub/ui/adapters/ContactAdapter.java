@@ -50,15 +50,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         holder.name.setText(contact.name);
         holder.designation.setText(contact.designation);
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP)
-            Picasso.with(context).load(contact.imgUrl)
-                    .placeholder(VectorDrawableCompat.create(context.getResources(), R.drawable.ic_avatar, null))
-                    .transform(new CircleTransform())
-                    .into(holder.avatar);
-        else
-            Picasso.with(context).load(contact.imgUrl)
-                    .transform(new CircleTransform())
-                    .into(holder.avatar);
+        Picasso.with(context).load(contact.imgUrl)
+                .placeholder(R.drawable.ic_avatar)
+                .transform(new CircleTransform())
+                .into(holder.avatar);
 
         if (contact.links == null)
             return;
