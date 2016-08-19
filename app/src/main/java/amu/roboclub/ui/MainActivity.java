@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_feedback) {
             askFeedback();
         } else if (id == R.id.nav_about) {
-
+            startActivity(new Intent(this, DetailActivity.class));
         }
 
         if (fragmentClass != null) {

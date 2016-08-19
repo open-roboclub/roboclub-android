@@ -18,6 +18,7 @@ import java.util.List;
 public class AnnouncementParser {
     private List<Announcement> announcements = new ArrayList<>();
     private AnnouncementLoader announcementLoader;
+    private String message = null;
 
     public AnnouncementParser(AnnouncementLoader announcementLoader) {
         this.announcementLoader = announcementLoader;
@@ -37,8 +38,10 @@ public class AnnouncementParser {
 
     private void parseDoc() {
         Document page = loadDocument();
-        if (page == null)
+        if (page == null) {
+            message = "Couldn't Load News. Check connection";
             return;
+        }
 
         Elements dates = page.select("div.date");
         for (Element date : dates) {
@@ -59,17 +62,14 @@ public class AnnouncementParser {
 
                 try {
                     link = message.select("div.attachment").select("a[href]").first().attr("abs:href");
-                } catch (NullPointerException npe) {
-                }
+                } catch (NullPointerException npe) { }
 
                 URL url = new URL(link);
                 URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
                 url = uri.toURL();
                 announcement.attachment = url.toString();
             } catch (MalformedURLException mue) {
-
             } catch (URISyntaxException use) {
-
             }
         }
     }
@@ -85,7 +85,10 @@ public class AnnouncementParser {
         @Override
         protected void onPostExecute(List<Announcement> announcements) {
             super.onPostExecute(announcements);
-            announcementLoader.onAnnouncementsLoaded(announcements);
+            if(message==null)
+                announcementLoader.onAnnouncementsLoaded(announcements);
+            else
+                announcementLoader.onError(message);
         }
     }
 

@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface AnnouncementLoader {
     void onAnnouncementsLoaded(List<Announcement> announcements);
+    void onError(String message);
 }
