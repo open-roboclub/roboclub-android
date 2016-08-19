@@ -33,3 +33,8 @@
 -keepattributes RuntimeInvisibleParameterAnnotations
 
 -keepattributes EnclosingMethod
+
+-keep public enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
