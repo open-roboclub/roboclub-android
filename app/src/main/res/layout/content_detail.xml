@@ -2,6 +2,7 @@
 <android.support.v4.widget.NestedScrollView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -25,7 +26,7 @@
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="About"
+                        android:text="@string/title_app"
                         android:textColor="@color/colorPrimary"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
@@ -34,12 +35,12 @@
                         android:layout_height="1dp"
                         android:theme="@style/Divider"
                         android:layout_marginBottom="@dimen/divider_margin"
-                        android:layout_marginTop="@dimen/divider_margin" />
+                        android:layout_marginTop="@dimen/divider_margin"/>
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Test"/>
+                        android:text="@string/about_app"/>
 
             </LinearLayout>
 
@@ -61,7 +62,7 @@
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="About"
+                        android:text="@string/title_developers"
                         android:textColor="@color/colorPrimary"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
@@ -70,12 +71,56 @@
                         android:layout_height="1dp"
                         android:theme="@style/Divider"
                         android:layout_marginBottom="@dimen/divider_margin"
-                        android:layout_marginTop="@dimen/divider_margin" />
+                        android:layout_marginTop="@dimen/divider_margin"/>
 
-                <TextView
-                        android:layout_width="wrap_content"
+                <LinearLayout
+                        android:id="@+id/rootAreeb"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Test"/>
+                        android:clickable="true"
+                        android:foreground="?attr/selectableItemBackground">
+
+                    <ImageView
+                            android:id="@+id/avatarAreeb"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            app:srcCompat="@drawable/ic_avatar"
+                            tools:ignore="MissingPrefix"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:text="Areeb Jamal"
+                            android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/rootDP"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:foreground="?attr/selectableItemBackground">
+
+                    <ImageView
+                            android:id="@+id/avatarDP"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            app:srcCompat="@drawable/ic_avatar"
+                            tools:ignore="MissingPrefix"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:text="Divya Prakash Varshney"
+                            android:layout_gravity="center"/>
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -97,7 +142,7 @@
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="About"
+                        android:text="@string/title_libraries"
                         android:textColor="@color/colorPrimary"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
@@ -106,7 +151,7 @@
                         android:layout_height="1dp"
                         android:theme="@style/Divider"
                         android:layout_marginBottom="@dimen/divider_margin"
-                        android:layout_marginTop="@dimen/divider_margin" />
+                        android:layout_marginTop="@dimen/divider_margin"/>
 
                 <TextView
                         android:layout_width="wrap_content"

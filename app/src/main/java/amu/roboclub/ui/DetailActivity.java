@@ -1,14 +1,18 @@
 package amu.roboclub.ui;
 
+import amu.roboclub.R;
+import amu.roboclub.utils.CircleTransform;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import amu.roboclub.R;
 import android.widget.ImageView;
+import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
@@ -22,8 +26,47 @@ public class DetailActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ImageView im = (ImageView) findViewById(R.id.backdrop);
-        Picasso.with(this).load(R.drawable.header).into(im);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/iamareebjamal/roboclub-amu")));
+                } catch (ActivityNotFoundException anfe) {
+                    Toast.makeText(getApplicationContext(), "No Browser Found!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        fab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(getApplicationContext(), "Source Code", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        loadImages();
+
+    }
+
+    private void loadImages() {
+        ImageView header = (ImageView) findViewById(R.id.backdrop);
+        Picasso.with(this).load(R.drawable.header).into(header);
+
+        ImageView avatarAreeb = (ImageView) findViewById(R.id.avatarAreeb);
+        Picasso.with(this)
+                .load("http://www.amuroboclub.in/img/members/AreebJamal.jpg")
+                .placeholder(R.drawable.ic_avatar)
+                .transform(new CircleTransform())
+                .into(avatarAreeb);
+
+        ImageView avatarDP = (ImageView) findViewById(R.id.avatarDP);
+        Picasso.with(this)
+                .load("https://avatars3.githubusercontent.com/u/9443348?v=3&s=460")
+                .placeholder(R.drawable.ic_avatar)
+                .transform(new CircleTransform())
+                .into(avatarDP);
+
     }
 
     @Override
