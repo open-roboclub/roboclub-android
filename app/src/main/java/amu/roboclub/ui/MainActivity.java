@@ -2,12 +2,12 @@ package amu.roboclub.ui;
 
 import amu.roboclub.R;
 import amu.roboclub.ui.fragments.ContactFragment;
+import amu.roboclub.ui.fragments.FeedbackDialogFragment;
 import amu.roboclub.ui.fragments.HomeFragment;
 import amu.roboclub.ui.fragments.ProjectFragment;
-import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -16,14 +16,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity
@@ -119,36 +115,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void askFeedback() {
-        final AlertDialog.Builder feedback = new AlertDialog.Builder(this, R.style.DialogTheme);
-        LayoutInflater inflater = this.getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.dialog_feedback, null);
-        feedback.setView(dialogView);
-
-
-        feedback.setPositiveButton("Send", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                EditText text = (EditText) dialogView.findViewById(R.id.feedback);
-                String data = text.getText().toString();
-                try {
-                    Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-                    emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    emailIntent.setType("vnd.android.cursor.item/email");
-                    emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"amuroboclub@gmail.com"});
-                    emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback from App");
-                    emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, data);
-                    startActivity(emailIntent);
-                } catch (ActivityNotFoundException error) {
-                    Toast.makeText(getApplicationContext(), "No App can handle this!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        feedback.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        feedback.show();
+        final BottomSheetDialogFragment myBottomSheet = FeedbackDialogFragment.newInstance();
+        myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
     }
 }
