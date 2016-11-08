@@ -38,3 +38,13 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
+
+
+# This rule will properly ProGuard all the model classes in
+# the package com.yourcompany.models. Modify to fit the structure
+# of your app.
+-keepclassmembers class amu.roboclub.models.** {
+  *;
+}
+
+-keep class amu.roboclub.ui.viewholder.** { *; }

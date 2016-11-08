@@ -62,11 +62,12 @@ public class ContactFragment extends Fragment {
                         .transform(new CircleTransform())
                         .into(holder.avatar);
 
+                LinearLayout contactPanel = (LinearLayout) holder.root.findViewById(R.id.contactPanel);
+                contactPanel.removeAllViews();
+
                 if (contact.links == null)
                     return;
 
-                LinearLayout contactPanel = (LinearLayout) holder.root.findViewById(R.id.contactPanel);
-                contactPanel.removeAllViews();
                 for (String link : contact.links.values()) {
                     ImageButton im = new ImageButton(getContext());
 
