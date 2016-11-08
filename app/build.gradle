@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "amu.roboclub"
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -28,4 +28,10 @@ dependencies {
     compile 'com.android.support:support-v4:23.3.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'org.jsoup:jsoup:1.9.2'
+    compile 'com.google.firebase:firebase-database:9.8.0'
+    compile 'com.google.firebase:firebase-messaging:9.8.0'
+    compile 'com.google.firebase:firebase-auth:9.8.0'
+    compile 'com.firebaseui:firebase-ui-database:1.0.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
