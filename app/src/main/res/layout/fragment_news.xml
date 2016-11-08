@@ -37,15 +37,4 @@
                 android:text="No News"/>
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:id="@+id/fab"
-            app:layout_anchor="@id/recycler_view"
-            app:layout_anchorGravity="bottom|right|end"
-            android:src="@drawable/ic_refresh"
-            android:layout_margin="@dimen/fab_margin"
-            android:clickable="true"
-            app:layout_behavior="amu.roboclub.utils.FABScroll"/>
-
 </android.support.design.widget.CoordinatorLayout>

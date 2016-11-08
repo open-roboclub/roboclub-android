@@ -1,12 +1,12 @@
 package amu.roboclub.ui.fragments;
 
 import amu.roboclub.R;
-import amu.roboclub.models.Announcement;
-import amu.roboclub.parsers.AnnouncementLoader;
-import amu.roboclub.parsers.AnnouncementParser;
-import amu.roboclub.ui.adapters.AnnouncementAdapter;
+import amu.roboclub.models.News;
+import amu.roboclub.ui.viewholder.NewsHolder;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,84 +16,64 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class NewsFragment extends Fragment implements AnnouncementLoader {
-    private List<Announcement> news = new ArrayList<>();
-    private AnnouncementAdapter announcementAdapter;
-    private RecyclerView recyclerView;
-
-    private View root;
-
-    @Override
-    public void onAnnouncementsLoaded(List<Announcement> announcements) {
-        if (news.size() > 0)
-            news.clear();
-        news.addAll(announcements);
-
-        announcementAdapter.notifyDataSetChanged();
-        hideLoader();
-    }
-
-    @Override
-    public void onError(String message) {
-        Snackbar.make(root, message, Snackbar.LENGTH_LONG)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        AnnouncementParser announcementParser = new AnnouncementParser(NewsFragment.this);
-                        announcementParser.getAnnouncements();
-                    }
-                }).show();
-        showLoader();
-    }
-
+public class NewsFragment extends Fragment  {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_news, container, false);
+        View root = inflater.inflate(R.layout.fragment_news, container, false);
 
-        recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        llm.setReverseLayout(true);
+        llm.setStackFromEnd(true);
+        recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        AnnouncementParser announcementParser = new AnnouncementParser(this);
-        announcementParser.getAnnouncements();
+        final LinearLayout loading = (LinearLayout) root.findViewById(R.id.no_news);
 
-        announcementAdapter = new AnnouncementAdapter(getContext(), news);
-        recyclerView.setAdapter(announcementAdapter);
+        DatabaseReference newsReference = FirebaseDatabase.getInstance().getReference("news");
+        FirebaseRecyclerAdapter newsAdapter = new FirebaseRecyclerAdapter<News, NewsHolder>(News.class, R.layout.item_announcement, NewsHolder.class, newsReference){
 
-        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                AnnouncementParser announcementParser = new AnnouncementParser(NewsFragment.this);
-                announcementParser.getAnnouncements();
+            protected void populateViewHolder(final NewsHolder holder, final News news, int position) {
+
+                if(loading.getVisibility()==View.VISIBLE){
+                    loading.setVisibility(View.GONE);
+                }
+
+                holder.news.setText(news.notice);
+                holder.date.setText(news.date);
+
+                if (news.link == null){
+                    holder.link.setVisibility(View.GONE);
+                    holder.divider.setVisibility(View.GONE);
+                    return;
+                }
+
+                holder.link.setVisibility(View.VISIBLE);
+                holder.divider.setVisibility(View.VISIBLE);
+
+                holder.link.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse(news.link));
+                        try {
+                            getActivity().startActivity(i);
+                        } catch (ActivityNotFoundException e) {
+                            Snackbar.make(holder.link, "No app can handle the request", Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
-        });
-        fab.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Toast.makeText(getContext(), "Refresh", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
+        };
+
+        recyclerView.setAdapter(newsAdapter);
 
         return root;
-    }
-
-    private void hideLoader() {
-        LinearLayout loading = (LinearLayout) root.findViewById(R.id.no_news);
-        loading.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
-    }
-
-    private void showLoader() {
-        LinearLayout loading = (LinearLayout) root.findViewById(R.id.no_news);
-        loading.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.GONE);
     }
 }
