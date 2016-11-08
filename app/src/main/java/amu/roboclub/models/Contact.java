@@ -1,24 +1,15 @@
 package amu.roboclub.models;
 
+import java.util.HashMap;
+
 public class Contact {
-    public String name, designation, imgUrl;
-    public String[] links;
+    public String name, position, thumbnail;
+    public HashMap<String, String> links;
 
-    public Contact(String name, String designation) {
-        this.name = name;
-        this.designation = designation;
-    }
+    public Contact(){}
 
-    public Contact(String name, String designation, String imgUrl) {
+    public Contact(String name, String position) {
         this.name = name;
-        this.designation = designation;
-        this.imgUrl = imgUrl;
-    }
-
-    public Contact(String name, String designation, String imgUrl, String[] links) {
-        this.name = name;
-        this.designation = designation;
-        this.imgUrl = imgUrl;
-        this.links = links;
+        this.position = position;
     }
 }
