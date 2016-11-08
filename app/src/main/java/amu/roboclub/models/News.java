@@ -5,7 +5,8 @@ public class News {
     public String notice;
     public String link;
 
-    public News(){}
+    public News() {
+    }
 
     public News(String date, String notice) {
         this.date = date;

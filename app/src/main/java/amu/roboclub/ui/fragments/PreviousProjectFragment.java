@@ -15,7 +15,7 @@ public class PreviousProjectFragment extends CurrentProjectFragment {
     }
 
     @Override
-    protected Query getDatabaseReference(){
+    protected Query getDatabaseReference() {
         return FirebaseDatabase.getInstance().getReference("projects").orderByChild("ongoing").equalTo(false);
     }
 

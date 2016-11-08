@@ -26,12 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class ContactFragment extends Fragment {
-    private List<Contact> contacts = new ArrayList<>();
     private RecyclerView recyclerView;
 
     public ContactFragment() {
@@ -54,7 +50,7 @@ public class ContactFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         DatabaseReference contactReference = FirebaseDatabase.getInstance().getReference("team/16");
-        FirebaseRecyclerAdapter contactAdapter = new FirebaseRecyclerAdapter<Contact, ContactHolder>(Contact.class, R.layout.item_contact, ContactHolder.class, contactReference){
+        FirebaseRecyclerAdapter contactAdapter = new FirebaseRecyclerAdapter<Contact, ContactHolder>(Contact.class, R.layout.item_contact, ContactHolder.class, contactReference) {
 
             @Override
             protected void populateViewHolder(final ContactHolder holder, final Contact contact, int position) {

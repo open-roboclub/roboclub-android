@@ -16,9 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class CurrentProjectFragment extends Fragment {
 
@@ -44,7 +41,7 @@ public class CurrentProjectFragment extends Fragment {
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        FirebaseRecyclerAdapter projectAdapter = new FirebaseRecyclerAdapter<Project, ProjectHolder>(Project.class, R.layout.item_project, ProjectHolder.class, getDatabaseReference()){
+        FirebaseRecyclerAdapter projectAdapter = new FirebaseRecyclerAdapter<Project, ProjectHolder>(Project.class, R.layout.item_project, ProjectHolder.class, getDatabaseReference()) {
 
             @Override
             protected void populateViewHolder(final ProjectHolder holder, final Project project, int position) {
@@ -90,7 +87,7 @@ public class CurrentProjectFragment extends Fragment {
         return root;
     }
 
-    protected Query getDatabaseReference(){
+    protected Query getDatabaseReference() {
         return FirebaseDatabase.getInstance().getReference("projects").orderByChild("ongoing").equalTo(true);
     }
 

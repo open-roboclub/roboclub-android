@@ -20,7 +20,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class NewsFragment extends Fragment  {
+public class NewsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,19 +36,19 @@ public class NewsFragment extends Fragment  {
         final LinearLayout loading = (LinearLayout) root.findViewById(R.id.no_news);
 
         DatabaseReference newsReference = FirebaseDatabase.getInstance().getReference("news");
-        FirebaseRecyclerAdapter newsAdapter = new FirebaseRecyclerAdapter<News, NewsHolder>(News.class, R.layout.item_announcement, NewsHolder.class, newsReference){
+        FirebaseRecyclerAdapter newsAdapter = new FirebaseRecyclerAdapter<News, NewsHolder>(News.class, R.layout.item_announcement, NewsHolder.class, newsReference) {
 
             @Override
             protected void populateViewHolder(final NewsHolder holder, final News news, int position) {
 
-                if(loading.getVisibility()==View.VISIBLE){
+                if (loading.getVisibility() == View.VISIBLE) {
                     loading.setVisibility(View.GONE);
                 }
 
                 holder.news.setText(news.notice);
                 holder.date.setText(news.date);
 
-                if (news.link == null){
+                if (news.link == null) {
                     holder.link.setVisibility(View.GONE);
                     holder.divider.setVisibility(View.GONE);
                     return;
