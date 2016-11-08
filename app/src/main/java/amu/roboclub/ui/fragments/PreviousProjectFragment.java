@@ -1,7 +1,7 @@
 package amu.roboclub.ui.fragments;
 
-import amu.roboclub.R;
-import amu.roboclub.models.Project;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 public class PreviousProjectFragment extends CurrentProjectFragment {
 
@@ -15,23 +15,8 @@ public class PreviousProjectFragment extends CurrentProjectFragment {
     }
 
     @Override
-    protected void loadProjects() {
-        String[] titles = getActivity().getResources().getStringArray(R.array.previous_title);
-        String[] teams = getActivity().getResources().getStringArray(R.array.previous_team);
-        String[] about = getActivity().getResources().getStringArray(R.array.previous_about);
-        String[] images = getActivity().getResources().getStringArray(R.array.previous_images);
-
-        int min = Math.min(titles.length, teams.length);
-        for (int i = 0; i < min; i++) {
-
-            try {
-                projects.add(new Project(titles[i], teams[i], about[i], images[i]));
-            } catch (Exception e) {
-                projects.add(new Project(titles[i], teams[i], about[i]));
-            }
-        }
-
-        pAdapter.notifyDataSetChanged();
+    protected Query getDatabaseReference(){
+        return FirebaseDatabase.getInstance().getReference("projects").orderByChild("ongoing").equalTo(false);
     }
 
 }

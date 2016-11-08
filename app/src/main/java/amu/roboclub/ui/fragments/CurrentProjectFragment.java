@@ -2,7 +2,7 @@ package amu.roboclub.ui.fragments;
 
 import amu.roboclub.R;
 import amu.roboclub.models.Project;
-import amu.roboclub.ui.adapters.ProjectAdapter;
+import amu.roboclub.ui.viewholder.ProjectHolder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,15 +11,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class CurrentProjectFragment extends Fragment {
-    protected List<Project> projects = new ArrayList<>();
-    protected ProjectAdapter pAdapter;
-    private RecyclerView recyclerView;
 
     public CurrentProjectFragment() {
         // Required empty public constructor
@@ -36,36 +37,61 @@ public class CurrentProjectFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_project, container, false);
 
-        recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
-
-        pAdapter = new ProjectAdapter(getContext(), projects);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        llm.setReverseLayout(true);
+        llm.setStackFromEnd(true);
+        recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(pAdapter);
 
-        loadProjects();
+        FirebaseRecyclerAdapter projectAdapter = new FirebaseRecyclerAdapter<Project, ProjectHolder>(Project.class, R.layout.item_project, ProjectHolder.class, getDatabaseReference()){
+
+            @Override
+            protected void populateViewHolder(final ProjectHolder holder, final Project project, int position) {
+                holder.title.setText(project.name);
+
+                if (project.team != null)
+                    holder.team.setText(project.team);
+                else
+                    holder.team.setVisibility(View.GONE);
+
+                if (project.description != null)
+                    holder.about.setText(project.description);
+                else
+                    holder.about.setVisibility(View.GONE);
+
+                if (project.image != null)
+                    Picasso.with(getContext()).load(project.getImage()).into(holder.projectImg);
+                else
+                    holder.projectImg.setVisibility(View.GONE);
+
+                if (project.opened)
+                    holder.hiddenView.setVisibility(View.VISIBLE);
+                else
+                    holder.hiddenView.setVisibility(View.GONE);
+
+                holder.root.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (holder.hiddenView.getVisibility() == View.VISIBLE) {
+                            holder.hiddenView.setVisibility(View.GONE);
+                            project.opened = false;
+                        } else {
+                            holder.hiddenView.setVisibility(View.VISIBLE);
+                            project.opened = true;
+                        }
+                    }
+                });
+            }
+        };
+
+        recyclerView.setAdapter(projectAdapter);
 
         return root;
     }
 
-    protected void loadProjects() {
-        String[] titles = getActivity().getResources().getStringArray(R.array.current_title);
-        String[] teams = getActivity().getResources().getStringArray(R.array.current_team);
-        String[] about = getActivity().getResources().getStringArray(R.array.current_about);
-        String[] images = getActivity().getResources().getStringArray(R.array.current_images);
-
-        int min = titles.length;
-
-        for (int i = 0; i < min; i++) {
-            try {
-                projects.add(new Project(titles[i], teams[i], about[i], images[i]));
-            } catch (Exception e) {
-                projects.add(new Project(titles[i]));
-            }
-        }
-
-        pAdapter.notifyDataSetChanged();
-        ;
+    protected Query getDatabaseReference(){
+        return FirebaseDatabase.getInstance().getReference("projects").orderByChild("ongoing").equalTo(true);
     }
 
 

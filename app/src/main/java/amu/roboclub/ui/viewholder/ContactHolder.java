@@ -16,7 +16,7 @@ public class ContactHolder extends RecyclerView.ViewHolder {
     public ContactHolder(View view) {
         super(view);
         root = (CardView) view.findViewById(R.id.rootView);
-        name = (TextView) view.findViewById(R.id.name);
+        name = (TextView) view.findViewById(R.id.title);
         position = (TextView) view.findViewById(R.id.position);
         avatar = (ImageView) view.findViewById(R.id.avatar);
     }

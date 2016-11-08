@@ -1,28 +1,16 @@
 package amu.roboclub.models;
 
 public class Project {
-    public String title, about, team, imgUrl;
-    public boolean opened;
+    public String name, description, team, image;
+    public boolean opened, ongoing;
 
-    public Project(String title) {
-        this.title = title;
+    public Project(){}
+
+    public Project(String name) {
+        this.name = name;
     }
 
-    public Project(String title, String team) {
-        this.title = title;
-        this.team = team;
-    }
-
-    public Project(String title, String team, String about) {
-        this.title = title;
-        this.team = team;
-        this.about = about;
-    }
-
-    public Project(String title, String team, String about, String imgUrl) {
-        this.title = title;
-        this.team = team;
-        this.about = about;
-        this.imgUrl = imgUrl;
+    public String getImage() {
+        return "http://amuroboclub.in/" + image;
     }
 }
