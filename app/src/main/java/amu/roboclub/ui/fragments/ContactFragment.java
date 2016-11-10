@@ -45,7 +45,7 @@ public class ContactFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        snackbar = Snackbar.make(getView(), "Loading Projects", Snackbar.LENGTH_INDEFINITE);
+        snackbar = Snackbar.make(getView(), "Loading Team Members", Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
     }
 
