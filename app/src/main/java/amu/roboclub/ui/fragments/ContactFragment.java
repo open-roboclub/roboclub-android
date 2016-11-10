@@ -7,11 +7,13 @@ import amu.roboclub.utils.CircleTransform;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -57,8 +59,12 @@ public class ContactFragment extends Fragment {
                 holder.name.setText(contact.name);
                 holder.position.setText(contact.position);
 
+                Drawable mPlaceholderDrawable = ResourcesCompat.getDrawable(
+                        getContext().getResources(),
+                        R.drawable.ic_avatar, null);
+
                 Picasso.with(getContext()).load(contact.thumbnail)
-                        .placeholder(R.drawable.ic_avatar)
+                        .placeholder(mPlaceholderDrawable)
                         .transform(new CircleTransform())
                         .into(holder.avatar);
 

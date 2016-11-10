@@ -4,9 +4,11 @@ import amu.roboclub.R;
 import amu.roboclub.utils.CircleTransform;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatDelegate;
@@ -55,17 +57,21 @@ public class DetailActivity extends AppCompatActivity {
         ImageView header = (ImageView) findViewById(R.id.backdrop);
         Picasso.with(this).load(R.drawable.header).into(header);
 
+        Drawable mPlaceholderDrawable = ResourcesCompat.getDrawable(
+                getResources(),
+                R.drawable.ic_avatar, null);
+
         ImageView avatarAreeb = (ImageView) findViewById(R.id.avatarAreeb);
         Picasso.with(this)
                 .load("http://www.amuroboclub.in/img/members/AreebJamal.jpg")
-                .placeholder(R.drawable.ic_avatar)
+                .placeholder(mPlaceholderDrawable)
                 .transform(new CircleTransform())
                 .into(avatarAreeb);
 
         ImageView avatarDP = (ImageView) findViewById(R.id.avatarDP);
         Picasso.with(this)
                 .load("https://avatars3.githubusercontent.com/u/9443348?v=3&s=460")
-                .placeholder(R.drawable.ic_avatar)
+                .placeholder(mPlaceholderDrawable)
                 .transform(new CircleTransform())
                 .into(avatarDP);
 
