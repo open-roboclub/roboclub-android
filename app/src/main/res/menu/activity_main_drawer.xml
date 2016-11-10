@@ -14,6 +14,10 @@
                 android:id="@+id/nav_contact"
                 android:icon="@drawable/ic_menu_contact"
                 android:title="Contacts"/>
+        <item
+                android:id="@+id/contribution"
+                android:icon="@drawable/ic_coin"
+                android:title="Contribution"/>
     </group>
 
     <item android:title="Info">

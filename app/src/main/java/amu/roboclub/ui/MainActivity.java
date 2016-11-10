@@ -1,10 +1,7 @@
 package amu.roboclub.ui;
 
 import amu.roboclub.R;
-import amu.roboclub.ui.fragments.ContactFragment;
-import amu.roboclub.ui.fragments.FeedbackDialogFragment;
-import amu.roboclub.ui.fragments.HomeFragment;
-import amu.roboclub.ui.fragments.ProjectFragment;
+import amu.roboclub.ui.fragments.*;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -18,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.MenuItem;
 import android.view.View;
 import com.google.firebase.database.FirebaseDatabase;
@@ -37,6 +35,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -83,6 +82,8 @@ public class MainActivity extends AppCompatActivity
             fragmentClass = HomeFragment.class;
         } else if (id == R.id.nav_projects) {
             fragmentClass = ProjectFragment.class;
+        } else if (id == R.id.contribution){
+            fragmentClass = ContributionFragment.class;
         } else if (id == R.id.nav_contact) {
             fragmentClass = ContactFragment.class;
         } else if (id == R.id.nav_feedback) {
