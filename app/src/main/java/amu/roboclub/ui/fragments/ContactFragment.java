@@ -10,6 +10,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -30,7 +31,7 @@ import com.squareup.picasso.Picasso;
 
 
 public class ContactFragment extends Fragment {
-    private RecyclerView recyclerView;
+    private Snackbar snackbar;
 
     public ContactFragment() {
         // Required empty public constructor
@@ -42,11 +43,18 @@ public class ContactFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        snackbar = Snackbar.make(getView(), "Loading Projects", Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_contact, container, false);
 
-        recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -56,6 +64,9 @@ public class ContactFragment extends Fragment {
 
             @Override
             protected void populateViewHolder(final ContactHolder holder, final Contact contact, int position) {
+                if(snackbar.isShown())
+                    snackbar.dismiss();
+
                 holder.name.setText(contact.name);
                 holder.position.setText(contact.position);
 

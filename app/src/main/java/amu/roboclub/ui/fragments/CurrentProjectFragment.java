@@ -4,6 +4,8 @@ import amu.roboclub.R;
 import amu.roboclub.models.Project;
 import amu.roboclub.ui.viewholder.ProjectHolder;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +20,7 @@ import com.squareup.picasso.Picasso;
 
 
 public class CurrentProjectFragment extends Fragment {
+    private Snackbar snackbar;
 
     public CurrentProjectFragment() {
         // Required empty public constructor
@@ -26,6 +29,13 @@ public class CurrentProjectFragment extends Fragment {
     public static CurrentProjectFragment newInstance() {
         CurrentProjectFragment fragment = new CurrentProjectFragment();
         return fragment;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        snackbar = Snackbar.make(getView(), "Loading Projects", Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
     }
 
     @Override
@@ -41,10 +51,14 @@ public class CurrentProjectFragment extends Fragment {
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+
+
         FirebaseRecyclerAdapter projectAdapter = new FirebaseRecyclerAdapter<Project, ProjectHolder>(Project.class, R.layout.item_project, ProjectHolder.class, getDatabaseReference()) {
 
             @Override
             protected void populateViewHolder(final ProjectHolder holder, final Project project, int position) {
+                if(snackbar.isShown())
+                    snackbar.dismiss();
                 holder.title.setText(project.name);
 
                 if (project.team != null)

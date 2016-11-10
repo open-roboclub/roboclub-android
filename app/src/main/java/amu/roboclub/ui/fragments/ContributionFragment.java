@@ -4,6 +4,7 @@ import amu.roboclub.R;
 import amu.roboclub.models.Contribution;
 import amu.roboclub.ui.viewholder.ContributionHolder;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,11 +38,16 @@ public class ContributionFragment extends Fragment {
         llm.setStackFromEnd(true);
         recyclerView.setLayoutManager(llm);
 
+        final Snackbar snackbar = Snackbar.make(recyclerView, "Loading Contributors", Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
+
         DatabaseReference contributionReference = FirebaseDatabase.getInstance().getReference("contribution");
         FirebaseRecyclerAdapter contributionAdapter = new FirebaseRecyclerAdapter<Contribution, ContributionHolder>(Contribution.class, R.layout.item_contribution, ContributionHolder.class, contributionReference){
 
             @Override
             protected void populateViewHolder(ContributionHolder holder, Contribution contribution, int position) {
+                if(snackbar.isShown())
+                    snackbar.dismiss();
                 holder.contributor.setText(contribution.contributor);
                 holder.purpose.setText(contribution.purpose);
                 holder.remark.setText(contribution.remark);
