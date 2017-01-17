@@ -12,6 +12,6 @@ public class Project {
     }
 
     public String getImage() {
-        return "http://amuroboclub.in/" + image;
+        return image;
     }
 }
