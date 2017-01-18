@@ -3,9 +3,12 @@ package amu.roboclub.ui.fragments;
 import amu.roboclub.R;
 import amu.roboclub.models.Project;
 import amu.roboclub.ui.viewholder.ProjectHolder;
+import amu.roboclub.utils.CircleTransform;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,8 +54,6 @@ public class CurrentProjectFragment extends Fragment {
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
-
         FirebaseRecyclerAdapter projectAdapter = new FirebaseRecyclerAdapter<Project, ProjectHolder>(Project.class, R.layout.item_project, ProjectHolder.class, getDatabaseReference()) {
 
             @Override
@@ -64,17 +65,20 @@ public class CurrentProjectFragment extends Fragment {
                 if (project.team != null)
                     holder.team.setText(project.team);
                 else
-                    holder.team.setVisibility(View.GONE);
+                    holder.team.setText("---");
 
                 if (project.description != null)
                     holder.about.setText(project.description);
                 else
                     holder.about.setVisibility(View.GONE);
 
-                if (project.image != null)
-                    Picasso.with(getContext()).load(project.getImage()).into(holder.projectImg);
+                if (project.image == null || project.image.contains("robo.jpg"))
+                    holder.projectImg.setImageDrawable(VectorDrawableCompat.create(getResources(), R.drawable.ic_gear, null));
                 else
-                    holder.projectImg.setVisibility(View.GONE);
+                    Picasso.with(getContext())
+                            .load(project.getImage())
+                            .transform(new CircleTransform())
+                            .into(holder.projectImg);
 
                 if (project.opened)
                     holder.hiddenView.setVisibility(View.VISIBLE);

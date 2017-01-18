@@ -7,11 +7,16 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public class PagerAdapter extends FragmentStatePagerAdapter {
     private int mTabs;
     private Class[] fragments;
+    private String[] titles;
 
     public PagerAdapter(FragmentManager fm, Class... tabs) {
         super(fm);
         mTabs = tabs.length;
         fragments = tabs;
+    }
+
+    public void setTitles(String ... titles) {
+        this.titles = titles;
     }
 
     @Override
@@ -31,5 +36,10 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return mTabs;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return titles[position];
     }
 }

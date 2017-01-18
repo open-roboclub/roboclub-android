@@ -28,35 +28,21 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_tabbed, container, false);
 
-
         TabLayout tabLayout = (TabLayout) root.findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Intro"));
-        tabLayout.addTab(tabLayout.newTab().setText("News"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) root.findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter
-                (getActivity().getSupportFragmentManager(), IntroFragment.class, NewsFragment.class);
+        final PagerAdapter adapter = new PagerAdapter(
+                getActivity().getSupportFragmentManager(),
+                IntroFragment.class,
+                NewsFragment.class
+        );
+        adapter.setTitles("Intro", "News");
         viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+        tabLayout.setupWithViewPager(viewPager);
 
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-
-        });
-
+        viewPager.setCurrentItem(1, true);
+        
         return root;
     }
 

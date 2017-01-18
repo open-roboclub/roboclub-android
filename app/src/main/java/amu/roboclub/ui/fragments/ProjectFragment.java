@@ -35,32 +35,18 @@ public class ProjectFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_tabbed, container, false);
 
         TabLayout tabLayout = (TabLayout) root.findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Current"));
-        tabLayout.addTab(tabLayout.newTab().setText("Previous"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager viewPager = (ViewPager) root.findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter
-                (getActivity().getSupportFragmentManager(), CurrentProjectFragment.class, PreviousProjectFragment.class);
+        ViewPager viewPager = (ViewPager) root.findViewById(R.id.pager);
+        PagerAdapter adapter = new PagerAdapter(
+                getActivity().getSupportFragmentManager(),
+                PreviousProjectFragment.class,
+                CurrentProjectFragment.class
+        );
+        adapter.setTitles("Completed", "Ongoing");
         viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+        tabLayout.setupWithViewPager(viewPager);
 
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-
-        });
         return root;
     }
 

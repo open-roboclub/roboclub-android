@@ -38,15 +38,7 @@ public class ContactFragment extends Fragment {
     }
 
     public static ContactFragment newInstance() {
-        ContactFragment fragment = new ContactFragment();
-        return fragment;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        snackbar = Snackbar.make(getView(), "Loading Team Members", Snackbar.LENGTH_INDEFINITE);
-        snackbar.show();
+        return new ContactFragment();
     }
 
     @Override
@@ -58,6 +50,9 @@ public class ContactFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        snackbar = Snackbar.make(recyclerView, "Loading Team Members", Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
 
         DatabaseReference contactReference = FirebaseDatabase.getInstance().getReference("team/16");
         FirebaseRecyclerAdapter contactAdapter = new FirebaseRecyclerAdapter<Contact, ContactHolder>(Contact.class, R.layout.item_contact, ContactHolder.class, contactReference) {
