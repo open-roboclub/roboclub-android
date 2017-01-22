@@ -22,8 +22,7 @@ public class ContributionFragment extends Fragment {
     }
 
     public static ContributionFragment newInstance() {
-        ContributionFragment fragment = new ContributionFragment();
-        return fragment;
+        return new ContributionFragment();
     }
 
     @Override

@@ -10,8 +10,7 @@ public class PreviousProjectFragment extends CurrentProjectFragment {
     }
 
     public static PreviousProjectFragment newInstance() {
-        PreviousProjectFragment fragment = new PreviousProjectFragment();
-        return fragment;
+        return new PreviousProjectFragment();
     }
 
     @Override

@@ -15,8 +15,7 @@ public class IntroFragment extends Fragment {
     }
 
     public static IntroFragment newInstance() {
-        IntroFragment fragment = new IntroFragment();
-        return fragment;
+        return new IntroFragment();
     }
 
     @Override

@@ -18,8 +18,7 @@ public class ProjectFragment extends Fragment {
     }
 
     public static ProjectFragment newInstance() {
-        ProjectFragment fragment = new ProjectFragment();
-        return fragment;
+        return new ProjectFragment();
     }
 
     @Override

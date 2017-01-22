@@ -18,8 +18,7 @@ public class HomeFragment extends Fragment {
     }
 
     public static HomeFragment newInstance() {
-        HomeFragment fragment = new HomeFragment();
-        return fragment;
+        return new HomeFragment();
     }
 
     @Override
@@ -42,7 +41,7 @@ public class HomeFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
 
         viewPager.setCurrentItem(1, true);
-        
+
         return root;
     }
 

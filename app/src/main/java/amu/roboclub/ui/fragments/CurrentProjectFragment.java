@@ -6,7 +6,6 @@ import amu.roboclub.ui.viewholder.ProjectHolder;
 import amu.roboclub.utils.CircleTransform;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
@@ -23,22 +22,13 @@ import com.squareup.picasso.Picasso;
 
 
 public class CurrentProjectFragment extends Fragment {
-    private Snackbar snackbar;
 
     public CurrentProjectFragment() {
         // Required empty public constructor
     }
 
     public static CurrentProjectFragment newInstance() {
-        CurrentProjectFragment fragment = new CurrentProjectFragment();
-        return fragment;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        snackbar = Snackbar.make(getView(), "Loading Projects", Snackbar.LENGTH_INDEFINITE);
-        snackbar.show();
+        return new CurrentProjectFragment();
     }
 
     @Override
@@ -53,6 +43,9 @@ public class CurrentProjectFragment extends Fragment {
         llm.setStackFromEnd(true);
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        final Snackbar snackbar = Snackbar.make(recyclerView, "Loading Projects", Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
 
         FirebaseRecyclerAdapter projectAdapter = new FirebaseRecyclerAdapter<Project, ProjectHolder>(Project.class, R.layout.item_project, ProjectHolder.class, getDatabaseReference()) {
 

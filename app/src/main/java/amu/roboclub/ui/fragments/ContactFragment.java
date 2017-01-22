@@ -10,7 +10,6 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -86,6 +85,7 @@ public class ContactFragment extends Fragment {
                     int[] attrs = new int[]{R.attr.selectableItemBackgroundBorderless};
                     TypedArray typedArray = getActivity().obtainStyledAttributes(attrs);
                     im.setBackgroundResource(typedArray.getResourceId(0, 0));
+                    typedArray.recycle();
                     im.setPadding(20, 20, 20, 20);
 
                     Intent i = null;

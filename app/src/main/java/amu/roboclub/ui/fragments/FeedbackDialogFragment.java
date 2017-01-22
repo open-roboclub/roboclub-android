@@ -14,9 +14,10 @@ import android.widget.Toast;
 
 public class FeedbackDialogFragment extends BottomSheetDialogFragment {
 
+    public FeedbackDialogFragment() {}
+
     public static FeedbackDialogFragment newInstance() {
-        FeedbackDialogFragment f = new FeedbackDialogFragment();
-        return f;
+        return new FeedbackDialogFragment();
     }
 
     @Override
