@@ -1,8 +1,5 @@
 package amu.roboclub.ui.fragments;
 
-import amu.roboclub.R;
-import amu.roboclub.models.Contribution;
-import amu.roboclub.ui.viewholder.ContributionHolder;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -12,9 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import amu.roboclub.R;
+import amu.roboclub.models.Contribution;
+import amu.roboclub.ui.viewholder.ContributionHolder;
 
 public class ContributionFragment extends Fragment {
     public ContributionFragment() {
@@ -41,11 +43,11 @@ public class ContributionFragment extends Fragment {
         snackbar.show();
 
         DatabaseReference contributionReference = FirebaseDatabase.getInstance().getReference("contribution");
-        FirebaseRecyclerAdapter contributionAdapter = new FirebaseRecyclerAdapter<Contribution, ContributionHolder>(Contribution.class, R.layout.item_contribution, ContributionHolder.class, contributionReference){
+        FirebaseRecyclerAdapter contributionAdapter = new FirebaseRecyclerAdapter<Contribution, ContributionHolder>(Contribution.class, R.layout.item_contribution, ContributionHolder.class, contributionReference) {
 
             @Override
             protected void populateViewHolder(ContributionHolder holder, Contribution contribution, int position) {
-                if(snackbar.isShown())
+                if (snackbar.isShown())
                     snackbar.dismiss();
                 holder.contributor.setText(contribution.contributor);
                 holder.purpose.setText(contribution.purpose);

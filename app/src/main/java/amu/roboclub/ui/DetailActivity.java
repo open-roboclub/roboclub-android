@@ -1,7 +1,5 @@
 package amu.roboclub.ui;
 
-import amu.roboclub.R;
-import amu.roboclub.utils.CircleTransform;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -11,13 +9,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.squareup.picasso.Picasso;
+
+import amu.roboclub.R;
+import amu.roboclub.utils.CircleTransform;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -88,6 +90,7 @@ public class DetailActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
+            default:
         }
         return super.onOptionsItemSelected(item);
     }

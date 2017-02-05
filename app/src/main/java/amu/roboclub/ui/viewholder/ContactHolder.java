@@ -1,11 +1,12 @@
 package amu.roboclub.ui.viewholder;
 
-import amu.roboclub.R;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import amu.roboclub.R;
 
 public class ContactHolder extends RecyclerView.ViewHolder {
 

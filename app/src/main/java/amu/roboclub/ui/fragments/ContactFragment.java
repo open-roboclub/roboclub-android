@@ -1,9 +1,5 @@
 package amu.roboclub.ui.fragments;
 
-import amu.roboclub.R;
-import amu.roboclub.models.Contact;
-import amu.roboclub.ui.viewholder.ContactHolder;
-import amu.roboclub.utils.CircleTransform;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -23,10 +19,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
+
+import amu.roboclub.R;
+import amu.roboclub.models.Contact;
+import amu.roboclub.ui.viewholder.ContactHolder;
+import amu.roboclub.utils.CircleTransform;
 
 
 public class ContactFragment extends Fragment {
@@ -58,7 +60,7 @@ public class ContactFragment extends Fragment {
 
             @Override
             protected void populateViewHolder(final ContactHolder holder, final Contact contact, int position) {
-                if(snackbar.isShown())
+                if (snackbar.isShown())
                     snackbar.dismiss();
 
                 holder.name.setText(contact.name);

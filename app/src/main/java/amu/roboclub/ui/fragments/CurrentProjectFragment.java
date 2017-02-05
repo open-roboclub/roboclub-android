@@ -1,10 +1,5 @@
 package amu.roboclub.ui.fragments;
 
-import amu.roboclub.R;
-import amu.roboclub.models.Project;
-import amu.roboclub.ui.viewholder.ProjectHolder;
-import amu.roboclub.utils.CircleTransform;
-
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.graphics.drawable.VectorDrawableCompat;
@@ -15,10 +10,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
+
+import amu.roboclub.R;
+import amu.roboclub.models.Project;
+import amu.roboclub.ui.viewholder.ProjectHolder;
+import amu.roboclub.utils.CircleTransform;
 
 
 public class CurrentProjectFragment extends Fragment {
@@ -51,7 +52,7 @@ public class CurrentProjectFragment extends Fragment {
 
             @Override
             protected void populateViewHolder(final ProjectHolder holder, final Project project, int position) {
-                if(snackbar.isShown())
+                if (snackbar.isShown())
                     snackbar.dismiss();
                 holder.title.setText(project.name);
 

@@ -1,9 +1,10 @@
 package amu.roboclub.ui.viewholder;
 
-import amu.roboclub.R;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import amu.roboclub.R;
 
 public class ContributionHolder extends RecyclerView.ViewHolder {
 

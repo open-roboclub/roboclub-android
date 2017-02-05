@@ -1,8 +1,5 @@
 package amu.roboclub.ui.fragments;
 
-import amu.roboclub.R;
-import amu.roboclub.models.News;
-import amu.roboclub.ui.viewholder.NewsHolder;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,9 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import amu.roboclub.R;
+import amu.roboclub.models.News;
+import amu.roboclub.ui.viewholder.NewsHolder;
 
 public class NewsFragment extends Fragment {
 

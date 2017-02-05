@@ -3,33 +3,33 @@
 
     <group android:checkableBehavior="single">
         <item
-                android:id="@+id/nav_home"
-                android:icon="@drawable/ic_menu_dashboard"
-                android:title="Home"/>
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_dashboard"
+            android:title="Home" />
         <item
-                android:id="@+id/nav_projects"
-                android:icon="@drawable/ic_menu_projects"
-                android:title="Projects"/>
+            android:id="@+id/nav_projects"
+            android:icon="@drawable/ic_menu_projects"
+            android:title="Projects" />
         <item
-                android:id="@+id/nav_contact"
-                android:icon="@drawable/ic_menu_contact"
-                android:title="Contacts"/>
+            android:id="@+id/nav_contact"
+            android:icon="@drawable/ic_menu_contact"
+            android:title="Contacts" />
         <item
-                android:id="@+id/contribution"
-                android:icon="@drawable/ic_coin"
-                android:title="Contribution"/>
+            android:id="@+id/contribution"
+            android:icon="@drawable/ic_coin"
+            android:title="Contribution" />
     </group>
 
     <item android:title="Info">
         <menu>
             <item
-                    android:id="@+id/nav_feedback"
-                    android:icon="@drawable/ic_menu_feedback"
-                    android:title="Feedback"/>
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_menu_feedback"
+                android:title="Feedback" />
             <item
-                    android:id="@+id/nav_about"
-                    android:icon="@drawable/ic_menu_app"
-                    android:title="About"/>
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_app"
+                android:title="About" />
         </menu>
     </item>
 

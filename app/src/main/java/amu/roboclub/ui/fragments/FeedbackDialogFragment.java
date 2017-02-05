@@ -1,6 +1,5 @@
 package amu.roboclub.ui.fragments;
 
-import amu.roboclub.R;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +11,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import amu.roboclub.R;
+
 public class FeedbackDialogFragment extends BottomSheetDialogFragment {
 
-    public FeedbackDialogFragment() {}
+    public FeedbackDialogFragment() {
+    }
 
     public static FeedbackDialogFragment newInstance() {
         return new FeedbackDialogFragment();
@@ -37,16 +39,16 @@ public class FeedbackDialogFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 String feedback = edt.getText().toString();
-                if(feedback.isEmpty()){
+                if (feedback.isEmpty()) {
                     Toast.makeText(getContext(), "Can't send empty feedback!", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
-                        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                        Intent emailIntent = new Intent(Intent.ACTION_SEND);
                         emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         emailIntent.setType("vnd.android.cursor.item/email");
-                        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"amuroboclub@gmail.com"});
-                        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback from App");
-                        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, feedback);
+                        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"amuroboclub@gmail.com"});
+                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback from App");
+                        emailIntent.putExtra(Intent.EXTRA_TEXT, feedback);
                         startActivity(emailIntent);
                     } catch (ActivityNotFoundException error) {
                         Toast.makeText(getContext(), "No App can handle this!", Toast.LENGTH_SHORT).show();

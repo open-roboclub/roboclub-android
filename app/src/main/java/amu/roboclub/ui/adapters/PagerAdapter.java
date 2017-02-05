@@ -15,7 +15,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         fragments = tabs;
     }
 
-    public void setTitles(String ... titles) {
+    public void setTitles(String... titles) {
         this.titles = titles;
     }
 
