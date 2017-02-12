@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import amu.roboclub.R;
 import amu.roboclub.ui.fragments.ContactFragment;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity
 
     static {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
     }
 
     private Fragment instanceFragment;
