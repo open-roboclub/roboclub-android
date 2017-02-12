@@ -35,4 +35,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_detail">About App</string>
+    <string name="title_activity_project_detail">ProjectDetailActivity</string>
 </resources>
