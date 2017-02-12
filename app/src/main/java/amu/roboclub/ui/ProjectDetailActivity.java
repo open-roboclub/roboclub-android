@@ -4,12 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
+import android.util.StringBuilderPrinter;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,26 +25,16 @@ import android.widget.Toast;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import amu.roboclub.R;
+import amu.roboclub.models.Doc;
 import amu.roboclub.models.Project;
 import amu.roboclub.ui.fragments.ProjectFragment;
 
 public class ProjectDetailActivity extends AppCompatActivity {
 
     private Project project;
-
-
-
-    private static float toPx(float dp, Context context) {
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        float px = dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-        return px;
-    }
-
-    private static String getSmallImage(String url) {
-        return url.replaceFirst("upload/", "upload/c_thumb,w_150,h_150/");
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +54,18 @@ public class ProjectDetailActivity extends AppCompatActivity {
         populateUI();
     }
 
+    private static float toPx(float dp, Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
+    private static String getSmallImage(String url) {
+        return url.replaceFirst("upload/", "upload/c_thumb,w_150,h_150/");
+    }
+
     private void showImages() {
-        if (project.images == null || project.images.size() == 0)
+        if (project.images == null || project.images.isEmpty())
             return;
 
 
@@ -145,7 +149,29 @@ public class ProjectDetailActivity extends AppCompatActivity {
     }
 
     private void showDocuments() {
-        
+        if(project.docs == null || project.docs.isEmpty())
+            return;
+
+        TextView documents = (TextView) findViewById(R.id.documents);
+        documents.setMovementMethod(LinkMovementMethod.getInstance());
+
+        findViewById(R.id.documents_card).setVisibility(View.VISIBLE);
+
+        StringBuilder sb = new StringBuilder();
+
+        for (Doc doc : project.docs) {
+            sb.append("<a href=\"");
+            sb.append(doc.url);
+            sb.append("\" >");
+            sb.append(doc.name);
+            sb.append("</a><br>");
+        }
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            documents.setText(Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            documents.setText(Html.fromHtml(sb.toString()));
+        }
     }
 
     private void populateUI() {
