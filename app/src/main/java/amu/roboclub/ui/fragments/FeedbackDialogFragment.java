@@ -3,6 +3,7 @@ package amu.roboclub.ui.fragments;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import amu.roboclub.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class FeedbackDialogFragment extends BottomSheetDialogFragment {
 
@@ -22,18 +31,21 @@ public class FeedbackDialogFragment extends BottomSheetDialogFragment {
         return new FeedbackDialogFragment();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    @BindView(R.id.feedbackEdt)
+    EditText edt;
+    @BindView(R.id.send)
+    ImageView send;
+
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("feedback");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.bottomsheet_feedback, container, false);
+        View root = inflater.inflate(R.layout.bottomsheet_feedback, container, false);
 
-        final EditText edt = (EditText) v.findViewById(R.id.feedbackEdt);
-        ImageView send = (ImageView) v.findViewById(R.id.send);
+        ButterKnife.bind(this, root);
+
+        final FeedbackDialogFragment current = this;
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,21 +53,23 @@ public class FeedbackDialogFragment extends BottomSheetDialogFragment {
                 String feedback = edt.getText().toString();
                 if (feedback.isEmpty()) {
                     Toast.makeText(getContext(), "Can't send empty feedback!", Toast.LENGTH_SHORT).show();
-                } else {
-                    try {
-                        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                        emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        emailIntent.setType("vnd.android.cursor.item/email");
-                        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"amuroboclub@gmail.com"});
-                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback from App");
-                        emailIntent.putExtra(Intent.EXTRA_TEXT, feedback);
-                        startActivity(emailIntent);
-                    } catch (ActivityNotFoundException error) {
-                        Toast.makeText(getContext(), "No App can handle this!", Toast.LENGTH_SHORT).show();
-                    }
+                    return;
                 }
+
+                databaseReference.push().setValue(feedback, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        if(databaseError != null)
+                            Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getContext(), "Feedback Posted", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                current.dismiss();
+
             }
         });
-        return v;
+        return root;
     }
 }

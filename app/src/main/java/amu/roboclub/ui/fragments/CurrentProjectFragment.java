@@ -20,6 +20,8 @@ import amu.roboclub.ui.ProjectDetailActivity;
 import amu.roboclub.R;
 import amu.roboclub.models.Project;
 import amu.roboclub.ui.viewholder.ProjectHolder;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class CurrentProjectFragment extends Fragment {
@@ -32,13 +34,18 @@ public class CurrentProjectFragment extends Fragment {
         return new CurrentProjectFragment();
     }
 
+    @BindView(R.id.main_content)
+    CoordinatorLayout mainLayout;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_project, container, false);
 
-        CoordinatorLayout mainLayout = (CoordinatorLayout) root.findViewById(R.id.main_content);
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+        ButterKnife.bind(this, root);
+
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setReverseLayout(true);
         llm.setStackFromEnd(true);

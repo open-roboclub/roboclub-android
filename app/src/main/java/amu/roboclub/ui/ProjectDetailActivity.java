@@ -9,11 +9,11 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
-import android.util.StringBuilderPrinter;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +25,8 @@ import android.widget.Toast;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import amu.roboclub.R;
 import amu.roboclub.models.Doc;
@@ -36,11 +37,16 @@ public class ProjectDetailActivity extends AppCompatActivity {
 
     private Project project;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
 
         project = (Project) getIntent().getSerializableExtra("project");
@@ -64,12 +70,12 @@ public class ProjectDetailActivity extends AppCompatActivity {
         return url.replaceFirst("upload/", "upload/c_thumb,w_150,h_150/");
     }
 
+    @BindView(R.id.gallery_list)
+    LinearLayout imageList;
+
     private void showImages() {
         if (project.images == null || project.images.isEmpty())
             return;
-
-
-        final LinearLayout imageList = (LinearLayout) findViewById(R.id.gallery_list);
 
         for (final String imageUrl : project.images) {
             final ImageView im = new ImageView(this);
@@ -119,18 +125,22 @@ public class ProjectDetailActivity extends AppCompatActivity {
 
     }
 
+    @BindView(R.id.youtube_card)
+    CardView youtubeCard;
+    @BindView(R.id.youtube_thumb)
+    ImageView youtube;
+
     private void showYoutube() {
         if (project.youtube == null)
             return;
 
 
-        ImageView youtube = (ImageView) findViewById(R.id.youtube_thumb);
         Picasso.with(this)
                 .load("https://img.youtube.com/vi/" + project.youtube + "/hqdefault.jpg")
                 .into(youtube, new Callback() {
                     @Override
                     public void onSuccess() {
-                        findViewById(R.id.youtube_card).setVisibility(View.VISIBLE);
+                        youtubeCard.setVisibility(View.VISIBLE);
                     }
 
                     @Override
@@ -148,14 +158,18 @@ public class ProjectDetailActivity extends AppCompatActivity {
 
     }
 
+    @BindView(R.id.documents_card)
+    CardView documentsCard;
+    @BindView(R.id.documents)
+    TextView documents;
+
     private void showDocuments() {
         if(project.docs == null || project.docs.isEmpty())
             return;
 
-        TextView documents = (TextView) findViewById(R.id.documents);
         documents.setMovementMethod(LinkMovementMethod.getInstance());
 
-        findViewById(R.id.documents_card).setVisibility(View.VISIBLE);
+        documentsCard.setVisibility(View.VISIBLE);
 
         StringBuilder sb = new StringBuilder();
 
@@ -174,14 +188,16 @@ public class ProjectDetailActivity extends AppCompatActivity {
         }
     }
 
+    @BindView(R.id.image)
+    ImageView image;
+    @BindView(R.id.team)
+    TextView team;
+    @BindView(R.id.description)
+    TextView description;
+
     private void populateUI() {
         if (project == null)
             return;
-
-        ImageView image = (ImageView) findViewById(R.id.image);
-        TextView team = (TextView) findViewById(R.id.team);
-        TextView description = (TextView) findViewById(R.id.description);
-
 
         ProjectFragment.setImage(this, image, project.image);
 

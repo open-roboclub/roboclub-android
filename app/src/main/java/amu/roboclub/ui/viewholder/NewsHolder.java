@@ -6,17 +6,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import amu.roboclub.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class NewsHolder extends RecyclerView.ViewHolder {
 
-    public TextView news, date;
-    public LinearLayout link, divider;
+    @BindView(R.id.news)
+    public TextView news;
+    @BindView(R.id.date)
+    public  TextView date;
+    @BindView(R.id.link)
+    public LinearLayout link;
+    @BindView(R.id.divider)
+    public LinearLayout divider;
 
     public NewsHolder(View view) {
         super(view);
-        news = (TextView) view.findViewById(R.id.news);
-        date = (TextView) view.findViewById(R.id.date);
-        link = (LinearLayout) view.findViewById(R.id.link);
-        divider = (LinearLayout) view.findViewById(R.id.divider);
+
+        ButterKnife.bind(this, view);
     }
 }

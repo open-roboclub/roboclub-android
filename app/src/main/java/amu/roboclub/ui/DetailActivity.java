@@ -20,14 +20,23 @@ import com.squareup.picasso.Picasso;
 
 import amu.roboclub.R;
 import amu.roboclub.utils.CircleTransform;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class DetailActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -37,7 +46,6 @@ public class DetailActivity extends AppCompatActivity {
         }
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,22 +68,26 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
+    @BindView(R.id.backdrop)
+    ImageView header;
+    @BindView(R.id.avatarAreeb)
+    ImageView avatarAreeb;
+    @BindView(R.id.avatarDP)
+    ImageView avatarDP;
+
     private void loadImages() {
-        ImageView header = (ImageView) findViewById(R.id.backdrop);
         Picasso.with(this).load(R.drawable.header).into(header);
 
         Drawable mPlaceholderDrawable = ResourcesCompat.getDrawable(
                 getResources(),
                 R.drawable.ic_avatar, null);
 
-        ImageView avatarAreeb = (ImageView) findViewById(R.id.avatarAreeb);
         Picasso.with(this)
                 .load("http://www.amuroboclub.in/img/members/AreebJamal.jpg")
                 .placeholder(mPlaceholderDrawable)
                 .transform(new CircleTransform())
                 .into(avatarAreeb);
 
-        ImageView avatarDP = (ImageView) findViewById(R.id.avatarDP);
         Picasso.with(this)
                 .load("https://avatars3.githubusercontent.com/u/9443348?v=3&s=460")
                 .placeholder(mPlaceholderDrawable)

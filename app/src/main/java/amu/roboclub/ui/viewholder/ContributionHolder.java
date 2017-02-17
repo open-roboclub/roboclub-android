@@ -5,16 +5,23 @@ import android.view.View;
 import android.widget.TextView;
 
 import amu.roboclub.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ContributionHolder extends RecyclerView.ViewHolder {
 
-    public TextView contributor, purpose, remark, amount;
+    @BindView(R.id.contributor)
+    public TextView contributor;
+    @BindView(R.id.purpose)
+    public TextView purpose;
+    @BindView(R.id.remark)
+    public TextView remark;
+    @BindView(R.id.amount)
+    public TextView amount;
 
     public ContributionHolder(View view) {
         super(view);
-        contributor = (TextView) view.findViewById(R.id.contributor);
-        purpose = (TextView) view.findViewById(R.id.purpose);
-        remark = (TextView) view.findViewById(R.id.remark);
-        amount = (TextView) view.findViewById(R.id.amount);
+
+        ButterKnife.bind(this, view);
     }
 }

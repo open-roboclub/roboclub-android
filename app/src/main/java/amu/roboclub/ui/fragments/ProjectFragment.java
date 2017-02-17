@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.squareup.picasso.Picasso;
 import amu.roboclub.R;
 import amu.roboclub.ui.adapters.PagerAdapter;
 import amu.roboclub.utils.CircleTransform;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class ProjectFragment extends Fragment {
@@ -28,11 +31,10 @@ public class ProjectFragment extends Fragment {
         return new ProjectFragment();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+    @BindView(R.id.pager)
+    ViewPager viewPager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,9 +42,8 @@ public class ProjectFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_tabbed, container, false);
 
-        TabLayout tabLayout = (TabLayout) root.findViewById(R.id.tab_layout);
+        ButterKnife.bind(this, root);
 
-        ViewPager viewPager = (ViewPager) root.findViewById(R.id.pager);
         PagerAdapter adapter = new PagerAdapter(
                 getActivity().getSupportFragmentManager(),
                 PreviousProjectFragment.class,

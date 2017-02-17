@@ -21,21 +21,27 @@ import com.google.firebase.database.FirebaseDatabase;
 import amu.roboclub.R;
 import amu.roboclub.models.News;
 import amu.roboclub.ui.viewholder.NewsHolder;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class NewsFragment extends Fragment {
+
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.no_news)
+    LinearLayout loading;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_news, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+        ButterKnife.bind(this, root);
+
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setReverseLayout(true);
         llm.setStackFromEnd(true);
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        final LinearLayout loading = (LinearLayout) root.findViewById(R.id.no_news);
 
         DatabaseReference newsReference = FirebaseDatabase.getInstance().getReference("news");
         FirebaseRecyclerAdapter newsAdapter = new FirebaseRecyclerAdapter<News, NewsHolder>(News.class, R.layout.item_announcement, NewsHolder.class, newsReference) {

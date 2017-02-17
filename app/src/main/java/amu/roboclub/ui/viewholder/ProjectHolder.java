@@ -8,11 +8,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import amu.roboclub.R;
+import butterknife.BindView;
 
 public class ProjectHolder extends RecyclerView.ViewHolder {
 
+    @BindView(R.id.rootView)
     public CardView root;
-    public TextView title, team;
+    @BindView(R.id.title)
+    public TextView title;
+    @BindView(R.id.team)
+    public TextView team;
+    @BindView(R.id.projectImg)
     public ImageView projectImg;
 
     public ProjectHolder(View view) {

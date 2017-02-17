@@ -17,6 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import amu.roboclub.R;
 import amu.roboclub.models.Contribution;
 import amu.roboclub.ui.viewholder.ContributionHolder;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ContributionFragment extends Fragment {
     public ContributionFragment() {
@@ -27,12 +29,16 @@ public class ContributionFragment extends Fragment {
         return new ContributionFragment();
     }
 
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_contribution, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
+        ButterKnife.bind(this, root);
+
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setReverseLayout(true);
@@ -43,7 +49,8 @@ public class ContributionFragment extends Fragment {
         snackbar.show();
 
         DatabaseReference contributionReference = FirebaseDatabase.getInstance().getReference("contribution");
-        FirebaseRecyclerAdapter contributionAdapter = new FirebaseRecyclerAdapter<Contribution, ContributionHolder>(Contribution.class, R.layout.item_contribution, ContributionHolder.class, contributionReference) {
+        FirebaseRecyclerAdapter contributionAdapter = new FirebaseRecyclerAdapter<Contribution, ContributionHolder>
+                (Contribution.class, R.layout.item_contribution, ContributionHolder.class, contributionReference) {
 
             @Override
             protected void populateViewHolder(ContributionHolder holder, Contribution contribution, int position) {

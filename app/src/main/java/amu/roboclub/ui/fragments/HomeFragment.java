@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import amu.roboclub.R;
 import amu.roboclub.ui.adapters.PagerAdapter;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class HomeFragment extends Fragment {
@@ -22,15 +24,18 @@ public class HomeFragment extends Fragment {
         return new HomeFragment();
     }
 
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+    @BindView(R.id.pager)
+    ViewPager viewPager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_tabbed, container, false);
 
-        TabLayout tabLayout = (TabLayout) root.findViewById(R.id.tab_layout);
+        ButterKnife.bind(this, root);
 
-        final ViewPager viewPager = (ViewPager) root.findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter(
                 getActivity().getSupportFragmentManager(),
                 IntroFragment.class,

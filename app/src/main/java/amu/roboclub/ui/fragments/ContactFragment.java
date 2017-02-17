@@ -29,6 +29,8 @@ import amu.roboclub.R;
 import amu.roboclub.models.Contact;
 import amu.roboclub.ui.viewholder.ContactHolder;
 import amu.roboclub.utils.CircleTransform;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class ContactFragment extends Fragment {
@@ -42,12 +44,15 @@ public class ContactFragment extends Fragment {
         return new ContactFragment();
     }
 
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_contact, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+        ButterKnife.bind(this, root);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
