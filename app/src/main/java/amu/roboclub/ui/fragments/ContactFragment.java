@@ -134,14 +134,11 @@ public class ContactFragment extends Fragment {
                     if (i != null) {
                         contactPanel.addView(im);
                         final Intent intent = i;
-                        im.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                try {
-                                    getActivity().startActivity(intent);
-                                } catch (ActivityNotFoundException e) {
-                                    Snackbar.make(holder.root, "No app can handle the request", Snackbar.LENGTH_SHORT).show();
-                                }
+                        im.setOnClickListener(view -> {
+                            try {
+                                getActivity().startActivity(intent);
+                            } catch (ActivityNotFoundException e) {
+                                Snackbar.make(holder.root, "No app can handle the request", Snackbar.LENGTH_SHORT).show();
                             }
                         });
                     }

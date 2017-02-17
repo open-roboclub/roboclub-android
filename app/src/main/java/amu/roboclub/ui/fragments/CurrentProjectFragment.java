@@ -71,16 +71,13 @@ public class CurrentProjectFragment extends Fragment {
 
                 ProjectFragment.setImage(getContext(), holder.projectImg, project.image);
 
-                holder.root.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(project.description == null || project.description.equals(""))
-                            return;
+                holder.root.setOnClickListener(view -> {
+                    if(project.description == null || project.description.equals(""))
+                        return;
 
-                        Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
-                        intent.putExtra("project", project);
-                        startActivity(intent);
-                    }
+                    Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
+                    intent.putExtra("project", project);
+                    startActivity(intent);
                 });
             }
         };

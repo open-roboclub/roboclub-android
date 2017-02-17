@@ -65,16 +65,13 @@ public class NewsFragment extends Fragment {
                 holder.link.setVisibility(View.VISIBLE);
                 holder.divider.setVisibility(View.VISIBLE);
 
-                holder.link.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent i = new Intent(Intent.ACTION_VIEW,
-                                Uri.parse(news.link));
-                        try {
-                            getActivity().startActivity(i);
-                        } catch (ActivityNotFoundException e) {
-                            Snackbar.make(holder.link, "No app can handle the request", Snackbar.LENGTH_SHORT).show();
-                        }
+                holder.link.setOnClickListener(view -> {
+                    Intent i = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse(news.link));
+                    try {
+                        getActivity().startActivity(i);
+                    } catch (ActivityNotFoundException e) {
+                        Snackbar.make(holder.link, "No app can handle the request", Snackbar.LENGTH_SHORT).show();
                     }
                 });
             }

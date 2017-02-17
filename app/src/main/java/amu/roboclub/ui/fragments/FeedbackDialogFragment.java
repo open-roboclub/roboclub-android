@@ -47,28 +47,22 @@ public class FeedbackDialogFragment extends BottomSheetDialogFragment {
 
         final FeedbackDialogFragment current = this;
 
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String feedback = edt.getText().toString();
-                if (feedback.isEmpty()) {
-                    Toast.makeText(getContext(), "Can't send empty feedback!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                databaseReference.push().setValue(feedback, new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                        if(databaseError != null)
-                            Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(getContext(), "Feedback Posted", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                current.dismiss();
-
+        send.setOnClickListener(view -> {
+            String feedback = edt.getText().toString();
+            if (feedback.isEmpty()) {
+                Toast.makeText(getContext(), "Can't send empty feedback!", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            databaseReference.push().setValue(feedback, (databaseError, databaseReference1) -> {
+                if(databaseError != null)
+                    Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getContext(), "Feedback Posted", Toast.LENGTH_SHORT).show();
+            });
+
+            current.dismiss();
+
         });
         return root;
     }

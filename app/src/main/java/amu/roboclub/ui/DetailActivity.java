@@ -46,23 +46,19 @@ public class DetailActivity extends AppCompatActivity {
         }
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/iamareebjamal/roboclub-amu")));
-                } catch (ActivityNotFoundException anfe) {
-                    Toast.makeText(getApplicationContext(), "No Browser Found!", Toast.LENGTH_SHORT).show();
-                }
+        fab.setOnClickListener(view -> {
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/iamareebjamal/roboclub-amu")));
+            } catch (ActivityNotFoundException anfe) {
+                Toast.makeText(getApplicationContext(), "No Browser Found!", Toast.LENGTH_SHORT).show();
             }
         });
-        fab.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
+
+        fab.setOnLongClickListener(view -> {
                 Toast.makeText(getApplicationContext(), "Source Code", Toast.LENGTH_SHORT).show();
                 return true;
             }
-        });
+        );
 
         loadImages();
 

@@ -110,12 +110,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                drawer.closeDrawer(GravityCompat.START);
-            }
-        }, 200);
+        drawer.postDelayed(() -> drawer.closeDrawer(GravityCompat.START), 200);
 
         return true;
     }

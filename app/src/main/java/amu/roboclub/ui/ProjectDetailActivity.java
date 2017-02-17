@@ -91,21 +91,18 @@ public class ProjectDetailActivity extends AppCompatActivity {
 
             final Context context = this;
 
-            im.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show();
+            im.setOnClickListener(view -> {
+                Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show();
 
-                    ImageView bigImage = new ImageView(getApplicationContext());
-                    bigImage.setPadding(pad, pad, pad, pad);
-                    Picasso.with(getApplicationContext())
-                            .load(imageUrl)
-                            .into(bigImage);
+                ImageView bigImage = new ImageView(getApplicationContext());
+                bigImage.setPadding(pad, pad, pad, pad);
+                Picasso.with(getApplicationContext())
+                        .load(imageUrl)
+                        .into(bigImage);
 
-                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                    alert.setView(bigImage);
-                    alert.show();
-                }
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                alert.setView(bigImage);
+                alert.show();
             });
 
             Picasso.with(this)
@@ -149,12 +146,7 @@ public class ProjectDetailActivity extends AppCompatActivity {
                     }
                 });
 
-        youtube.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/" + project.youtube)));
-            }
-        });
+        youtube.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/" + project.youtube))));
 
     }
 
