@@ -29,7 +29,7 @@ public class ContributionFragment extends Fragment {
         return new ContributionFragment();
     }
 
-    @BindView(R.id.recycler_view)
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
     @Override
