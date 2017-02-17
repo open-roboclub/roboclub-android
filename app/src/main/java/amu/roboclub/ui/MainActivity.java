@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private Fragment instanceFragment;
+    private int id = R.id.nav_home;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -62,9 +63,22 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        instanceFragment = HomeFragment.newInstance();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_content, instanceFragment).commit();
+        if(savedInstanceState != null && savedInstanceState.getInt("id") != 0)
+            id = savedInstanceState.getInt("id");
+
+        createFragmentFromId(id, "AMU RoboClub");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        state.putInt("id", id);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        id = savedInstanceState.getInt("id");
     }
 
     @Override
@@ -77,24 +91,34 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        int id = item.getItemId();
+    private void createFragmentFromId(int id, String title) {
         Class fragmentClass = null;
 
-        if (id == R.id.nav_home) {
-            fragmentClass = HomeFragment.class;
-        } else if (id == R.id.nav_projects) {
-            fragmentClass = ProjectFragment.class;
-        } else if (id == R.id.contribution) {
-            fragmentClass = ContributionFragment.class;
-        } else if (id == R.id.nav_contact) {
-            fragmentClass = ContactFragment.class;
-        } else if (id == R.id.nav_feedback) {
-            askFeedback();
-        } else if (id == R.id.nav_about) {
-            startActivity(new Intent(this, DetailActivity.class));
+        switch (id) {
+            case R.id.nav_home:
+                this.id = id;
+                fragmentClass = HomeFragment.class;
+                break;
+            case R.id.nav_projects:
+                this.id = id;
+                fragmentClass = ProjectFragment.class;
+                break;
+            case R.id.contribution:
+                this.id = id;
+                fragmentClass = ContributionFragment.class;
+                break;
+            case R.id.nav_contact:
+                this.id = id;
+                fragmentClass = ContactFragment.class;
+                break;
+            case R.id.nav_feedback:
+                askFeedback();
+                break;
+            case R.id.nav_about:
+                startActivity(new Intent(this, DetailActivity.class));
+                break;
+            default:
+                // Do nothing
         }
 
         if (fragmentClass != null) {
@@ -104,19 +128,22 @@ public class MainActivity extends AppCompatActivity
                 e.printStackTrace();
             }
 
-            setTitle(item.getTitle());
+            setTitle(title);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_content, instanceFragment).commit();
         }
 
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.postDelayed(() -> drawer.closeDrawer(GravityCompat.START), 200);
+        if(drawer.isDrawerOpen(GravityCompat.START)) drawer.postDelayed(() -> drawer.closeDrawer(GravityCompat.START), 200);
+    }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        createFragmentFromId(item.getItemId(), (String) item.getTitle());
         return true;
     }
 
     private void askFeedback() {
-        final BottomSheetDialogFragment myBottomSheet = FeedbackDialogFragment.newInstance();
+        BottomSheetDialogFragment myBottomSheet = FeedbackDialogFragment.newInstance();
         myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
     }
 }
