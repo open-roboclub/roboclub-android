@@ -24,26 +24,32 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 app:srcCompat="@drawable/ic_news"
-                tools:ignore="MissingPrefix" />
+                android:contentDescription="@null" />
 
             <TextView
                 android:id="@+id/news"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:paddingTop="5dp"
-                android:text="News" />
+                tools:text="News" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
             android:paddingRight="10dp"
-            android:text="12-06-2016"
-            android:textSize="10sp"
+            android:paddingEnd="10dp"
+            tools:text="12-06-2016"
+            android:textSize="12sp"
             android:textStyle="italic" />
 
         <LinearLayout
@@ -69,12 +75,12 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 app:srcCompat="@drawable/ic_link"
-                tools:ignore="MissingPrefix" />
+                android:contentDescription="@null" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Visit attached link"
+                android:text="@string/visit_attached_link"
                 android:textColor="#CC607D8B"
                 android:textSize="13sp" />
         </LinearLayout>

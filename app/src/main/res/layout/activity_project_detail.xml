@@ -36,7 +36,8 @@
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="100dp"
-                android:layout_height="100dp"/>
+                android:layout_height="100dp"
+                android:contentDescription="@string/project_image" />
 
             <TextView
                 android:id="@+id/team"
@@ -62,14 +63,15 @@
                         android:layout_height="wrap_content"
                         android:padding="16dp"
                         android:background="@color/em_red"
-                        android:text="Youtube Video"/>
+                        android:text="@string/youtube_video"/>
 
                     <ImageView
                         android:id="@+id/youtube_thumb"
                         android:padding="10dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/youtube_thumbnail" />
 
                 </LinearLayout>
 
@@ -94,7 +96,7 @@
                         android:layout_height="wrap_content"
                         android:padding="16dp"
                         android:background="@color/ph_blue"
-                        android:text="Images"/>
+                        android:text="@string/images"/>
 
                     <HorizontalScrollView
                         android:layout_width="match_parent"
@@ -103,7 +105,7 @@
                         <LinearLayout
                             android:id="@+id/gallery_list"
                             android:orientation="horizontal"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:padding="10dp"
                             android:layout_height="wrap_content">
 
@@ -132,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:padding="16dp"
                         android:background="@color/colorAccent"
-                        android:text="Documents"/>
+                        android:text="@string/documents"/>
 
                     <TextView
                         android:id="@+id/documents"

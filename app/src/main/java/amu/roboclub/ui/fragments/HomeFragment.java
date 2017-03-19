@@ -16,10 +16,6 @@ import butterknife.ButterKnife;
 
 public class HomeFragment extends Fragment {
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
-
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
@@ -41,7 +37,7 @@ public class HomeFragment extends Fragment {
                 IntroFragment.class,
                 NewsFragment.class
         );
-        adapter.setTitles("Intro", "News");
+        adapter.setTitles(getString(R.string.intro), getString(R.string.news));
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);

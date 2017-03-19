@@ -36,10 +36,6 @@ import butterknife.ButterKnife;
 public class ContactFragment extends Fragment {
     private Snackbar snackbar;
 
-    public ContactFragment() {
-        // Required empty public constructor
-    }
-
     public static ContactFragment newInstance() {
         return new ContactFragment();
     }
@@ -57,7 +53,7 @@ public class ContactFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        snackbar = Snackbar.make(recyclerView, "Loading Team Members", Snackbar.LENGTH_INDEFINITE);
+        snackbar = Snackbar.make(recyclerView, R.string.loading_members, Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
 
         DatabaseReference contactReference = FirebaseDatabase.getInstance().getReference("team/16");
@@ -127,7 +123,7 @@ public class ContactFragment extends Fragment {
                         i = new Intent(Intent.ACTION_SEND);
                         i.setType("text/plain");
                         i.putExtra(Intent.EXTRA_EMAIL, new String[]{link});
-                        i.putExtra(Intent.EXTRA_SUBJECT, "To Co-Ordinator, AMU RoboClub");
+                        i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_subject));
                     }
 
 
@@ -138,7 +134,7 @@ public class ContactFragment extends Fragment {
                             try {
                                 getActivity().startActivity(intent);
                             } catch (ActivityNotFoundException e) {
-                                Snackbar.make(holder.root, "No app can handle the request", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(holder.root, R.string.app_not_found, Snackbar.LENGTH_SHORT).show();
                             }
                         });
                     }

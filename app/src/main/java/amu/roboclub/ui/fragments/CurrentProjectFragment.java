@@ -26,10 +26,6 @@ import butterknife.ButterKnife;
 
 public class CurrentProjectFragment extends Fragment {
 
-    public CurrentProjectFragment() {
-        // Required empty public constructor
-    }
-
     public static CurrentProjectFragment newInstance() {
         return new CurrentProjectFragment();
     }
@@ -52,7 +48,7 @@ public class CurrentProjectFragment extends Fragment {
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        final Snackbar snackbar = Snackbar.make(mainLayout, "Loading Projects", Snackbar.LENGTH_INDEFINITE);
+        final Snackbar snackbar = Snackbar.make(mainLayout, R.string.loading_projects, Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
 
         FirebaseRecyclerAdapter projectAdapter = new FirebaseRecyclerAdapter<Project, ProjectHolder>(Project.class, R.layout.item_project, ProjectHolder.class, getDatabaseReference()) {
@@ -67,7 +63,7 @@ public class CurrentProjectFragment extends Fragment {
                 if (project.team != null)
                     holder.team.setText(project.team);
                 else
-                    holder.team.setText("---");
+                    holder.team.setText(R.string.dividers);
 
                 ProjectFragment.setImage(getContext(), holder.projectImg, project.image);
 

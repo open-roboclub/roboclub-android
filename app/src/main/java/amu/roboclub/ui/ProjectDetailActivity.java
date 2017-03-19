@@ -92,7 +92,7 @@ public class ProjectDetailActivity extends AppCompatActivity {
             final Context context = this;
 
             im.setOnClickListener(view -> {
-                Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.loading, Toast.LENGTH_SHORT).show();
 
                 ImageView bigImage = new ImageView(getApplicationContext());
                 bigImage.setPadding(pad, pad, pad, pad);
@@ -176,7 +176,10 @@ public class ProjectDetailActivity extends AppCompatActivity {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             documents.setText(Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_COMPACT));
         } else {
-            documents.setText(Html.fromHtml(sb.toString()));
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                documents.setText(Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY));
+            else
+                documents.setText(Html.fromHtml(sb.toString()));
         }
     }
 

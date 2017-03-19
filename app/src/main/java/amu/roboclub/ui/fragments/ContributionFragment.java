@@ -21,9 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ContributionFragment extends Fragment {
-    public ContributionFragment() {
-        // Required empty public constructor
-    }
 
     public static ContributionFragment newInstance() {
         return new ContributionFragment();
@@ -45,7 +42,7 @@ public class ContributionFragment extends Fragment {
         llm.setStackFromEnd(true);
         recyclerView.setLayoutManager(llm);
 
-        final Snackbar snackbar = Snackbar.make(recyclerView, "Loading Contributors", Snackbar.LENGTH_INDEFINITE);
+        final Snackbar snackbar = Snackbar.make(recyclerView, R.string.loading_contributors, Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
 
         DatabaseReference contributionReference = FirebaseDatabase.getInstance().getReference("contribution");

@@ -5,10 +5,6 @@ import com.google.firebase.database.Query;
 
 public class PreviousProjectFragment extends CurrentProjectFragment {
 
-    public PreviousProjectFragment() {
-        // Required empty public constructor
-    }
-
     public static PreviousProjectFragment newInstance() {
         return new PreviousProjectFragment();
     }

@@ -71,7 +71,7 @@ public class NewsFragment extends Fragment {
                     try {
                         getActivity().startActivity(i);
                     } catch (ActivityNotFoundException e) {
-                        Snackbar.make(holder.link, "No app can handle the request", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(holder.link, R.string.app_not_found, Snackbar.LENGTH_SHORT).show();
                     }
                 });
             }

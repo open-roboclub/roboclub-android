@@ -1,9 +1,6 @@
 package amu.roboclub.ui.fragments;
 
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -50,7 +44,7 @@ public class FeedbackDialogFragment extends BottomSheetDialogFragment {
         send.setOnClickListener(view -> {
             String feedback = edt.getText().toString();
             if (feedback.isEmpty()) {
-                Toast.makeText(getContext(), "Can't send empty feedback!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.empty_feedback, Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -58,7 +52,7 @@ public class FeedbackDialogFragment extends BottomSheetDialogFragment {
                 if(databaseError != null)
                     Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(getContext(), "Feedback Posted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.feedback_posted, Toast.LENGTH_SHORT).show();
             });
 
             current.dismiss();

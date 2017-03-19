@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
         if(savedInstanceState != null && savedInstanceState.getInt("id") != 0)
             id = savedInstanceState.getInt("id");
 
-        createFragmentFromId(id, "AMU RoboClub");
+        createFragmentFromId(id, getString(R.string.app_name));
     }
 
     @Override

@@ -36,4 +36,34 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_detail">About App</string>
     <string name="title_activity_project_detail">ProjectDetailActivity</string>
+    <string name="slogan">Where innovation meets implementation</string>
+    <string name="visit_attached_link">Visit attached link</string>
+    <string name="no_news">No News</string>
+    <string name="we_are_because_of_you">We are because of you!</string>
+    <string name="contribution_thanks">Thank you for all the people who contributed in making RoboClub what it is today.\nWe couldn\'t have reached this place without your support.</string>
+    <string name="send_feedback">Send your Feedback</string>
+    <string name="feedback">Feedback</string>
+    <string name="areeb_jamal">Areeb Jamal</string>
+    <string name="divya_prakash_varshney">Divya Prakash Varshney</string>
+    <string name="project_image">Project Image</string>
+    <string name="youtube_video">Youtube Video</string>
+    <string name="youtube_thumbnail">Youtube Thumbnail</string>
+    <string name="images">Images</string>
+    <string name="documents">Documents</string>
+    <string name="backdrop">Backdrop</string>
+    <string name="loading_members">Loading Team Members</string>
+    <string name="mail_subject">To Co-Ordinator, AMU RoboClub</string>
+    <string name="app_not_found">No app can handle the request</string>
+    <string name="loading_contributors">Loading Contributors</string>
+    <string name="loading_projects">Loading Projects</string>
+    <string name="dividers">---</string>
+    <string name="empty_feedback">Can\'t send empty feedback!</string>
+    <string name="feedback_posted">Feedback Posted</string>
+    <string name="intro">Intro</string>
+    <string name="news">News</string>
+    <string name="completed">Completed</string>
+    <string name="ongoing">Ongoing</string>
+    <string name="browser_not_found">No Browser Found!</string>
+    <string name="source_code">Source Code</string>
+    <string name="loading">Loading...</string>
 </resources>

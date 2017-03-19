@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -50,12 +49,12 @@ public class DetailActivity extends AppCompatActivity {
             try {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/iamareebjamal/roboclub-amu")));
             } catch (ActivityNotFoundException anfe) {
-                Toast.makeText(getApplicationContext(), "No Browser Found!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.browser_not_found, Toast.LENGTH_SHORT).show();
             }
         });
 
         fab.setOnLongClickListener(view -> {
-                Toast.makeText(getApplicationContext(), "Source Code", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.source_code, Toast.LENGTH_SHORT).show();
                 return true;
             }
         );

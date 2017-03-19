@@ -22,7 +22,8 @@
             android:id="@+id/projectImg"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:srcCompat="@drawable/ic_gear" />
+            app:srcCompat="@drawable/ic_gear"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/title"

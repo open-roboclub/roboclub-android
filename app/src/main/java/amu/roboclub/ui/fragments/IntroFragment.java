@@ -8,12 +8,7 @@ import android.view.ViewGroup;
 
 import amu.roboclub.R;
 
-
 public class IntroFragment extends Fragment {
-
-    public IntroFragment() {
-        // Required empty public constructor
-    }
 
     public static IntroFragment newInstance() {
         return new IntroFragment();

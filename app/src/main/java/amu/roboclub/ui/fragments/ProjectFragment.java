@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +48,7 @@ public class ProjectFragment extends Fragment {
                 PreviousProjectFragment.class,
                 CurrentProjectFragment.class
         );
-        adapter.setTitles("Completed", "Ongoing");
+        adapter.setTitles(getString(R.string.completed), getString(R.string.ongoing));
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);
