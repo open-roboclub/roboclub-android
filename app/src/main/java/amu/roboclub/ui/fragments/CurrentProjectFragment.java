@@ -42,6 +42,8 @@ public class CurrentProjectFragment extends Fragment {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
+    private ChildEventListener childEventListener;
+
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,7 +94,7 @@ public class CurrentProjectFragment extends Fragment {
             llm.setSpanCount(2);
         }
 
-        getDatabaseReference().addChildEventListener(new ChildEventListener() {
+        childEventListener = getDatabaseReference().addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 llm.smoothScrollToPosition(recyclerView, null, count++);
@@ -125,5 +127,9 @@ public class CurrentProjectFragment extends Fragment {
         return FirebaseDatabase.getInstance().getReference("projects").orderByChild("ongoing").equalTo(true);
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getDatabaseReference().removeEventListener(childEventListener);
+    }
 }

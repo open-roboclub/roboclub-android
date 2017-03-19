@@ -35,6 +35,9 @@ public class ContributionFragment extends Fragment {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    private DatabaseReference contributionReference;
+    private ChildEventListener childEventListener;
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,7 +55,7 @@ public class ContributionFragment extends Fragment {
         final Snackbar snackbar = Snackbar.make(recyclerView, R.string.loading_contributors, Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
 
-        DatabaseReference contributionReference = FirebaseDatabase.getInstance().getReference("contribution");
+        contributionReference = FirebaseDatabase.getInstance().getReference("contribution");
         FirebaseRecyclerAdapter contributionAdapter = new FirebaseRecyclerAdapter<Contribution, ContributionHolder>
                 (Contribution.class, R.layout.item_contribution, ContributionHolder.class, contributionReference) {
 
@@ -73,7 +76,7 @@ public class ContributionFragment extends Fragment {
             gridLayoutManager.setSpanCount(2);
         }
 
-        contributionReference.addChildEventListener(new ChildEventListener() {
+        childEventListener = contributionReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 gridLayoutManager.smoothScrollToPosition(recyclerView, null, count++);
@@ -101,5 +104,11 @@ public class ContributionFragment extends Fragment {
         });
 
         return root;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        contributionReference.removeEventListener(childEventListener);
     }
 }
