@@ -1,11 +1,13 @@
 package amu.roboclub.ui.fragments;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
@@ -25,6 +30,8 @@ import butterknife.ButterKnife;
 
 
 public class CurrentProjectFragment extends Fragment {
+
+    int count;
 
     public static CurrentProjectFragment newInstance() {
         return new CurrentProjectFragment();
@@ -40,11 +47,12 @@ public class CurrentProjectFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_project, container, false);
 
+        count = 0;
+
         ButterKnife.bind(this, root);
 
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        GridLayoutManager llm = new GridLayoutManager(getContext(), 1);
         llm.setReverseLayout(true);
-        llm.setStackFromEnd(true);
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -80,10 +88,40 @@ public class CurrentProjectFragment extends Fragment {
 
         recyclerView.setAdapter(projectAdapter);
 
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            llm.setSpanCount(2);
+        }
+
+        getDatabaseReference().addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                llm.smoothScrollToPosition(recyclerView, null, count++);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                count--;
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
         return root;
     }
 
-    private Query getDatabaseReference() {
+    protected Query getDatabaseReference() {
         return FirebaseDatabase.getInstance().getReference("projects").orderByChild("ongoing").equalTo(true);
     }
 
