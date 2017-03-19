@@ -13,6 +13,10 @@ App provides following sections :
 - **Contacts** : Contact information of Club Team Members
 - **Contributions** : A tribute section to people who contributed to the club
 
+### Screenshots
+![](screenshots/news.png) ![](screenshots/contacts.png) ![](screenshots/contributions.png)
+![](screenshots/projects.png) ![](screenshots/project_detail.png) ![](screenshots/about.png)
+
 ### Author
 [@iamareebjamal](https://github.com/iamareebjamal)  
 [@divs4debu](https://github.com/divs4debu)
