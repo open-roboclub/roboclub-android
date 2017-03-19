@@ -83,7 +83,7 @@ public class CurrentProjectFragment extends Fragment {
         return root;
     }
 
-    protected Query getDatabaseReference() {
+    private Query getDatabaseReference() {
         return FirebaseDatabase.getInstance().getReference("projects").orderByChild("ongoing").equalTo(true);
     }
 

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -17,7 +18,7 @@ import amu.roboclub.R;
 import amu.roboclub.ui.MainActivity;
 
 public class NotificationService extends FirebaseMessagingService {
-    public static final String TAG = "AMURoboClub";
+    private static final String TAG = "AMURoboClub";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -41,8 +42,8 @@ public class NotificationService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        String title = notification.getTitle()!=null?notification.getTitle():"AMU RoboClub";
-        int color = notification.getColor()!=null?Color.parseColor(notification.getColor()):getResources().getColor(R.color.colorAccent);
+        String title = notification.getTitle()!=null?notification.getTitle():getString(R.string.app_name);
+        int color = notification.getColor()!=null?Color.parseColor(notification.getColor()): ResourcesCompat.getColor(getResources(), R.color.colorAccent, null);
         String messageBody = notification.getBody();
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

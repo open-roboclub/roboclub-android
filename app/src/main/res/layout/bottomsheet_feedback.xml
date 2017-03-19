@@ -22,6 +22,7 @@
         android:background="?selectableItemBackgroundBorderless"
         android:padding="10dp"
         app:srcCompat="@drawable/ic_menu_feedback"
-        tools:ignore="MissingPrefix" />
+        tools:ignore="MissingPrefix"
+        android:contentDescription="@null" />
 
 </LinearLayout>

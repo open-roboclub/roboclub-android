@@ -30,7 +30,7 @@ public class FeedbackDialogFragment extends BottomSheetDialogFragment {
     @BindView(R.id.send)
     ImageView send;
 
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("feedback");
+    private final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("feedback");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
