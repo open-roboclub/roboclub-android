@@ -37,6 +37,7 @@ dependencies {
     compile 'com.firebaseui:firebase-ui-database:1.0.0'
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    releaseCompile 'com.google.firebase:firebase-crash:9.8.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
