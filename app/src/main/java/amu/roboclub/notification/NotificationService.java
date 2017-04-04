@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.support.design.BuildConfig;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
@@ -16,6 +17,8 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import amu.roboclub.R;
 import amu.roboclub.ui.MainActivity;
+
+import static amu.roboclub.BuildConfig.DEBUG;
 
 public class NotificationService extends FirebaseMessagingService {
     private static final String TAG = "AMURoboClub";
@@ -29,7 +32,9 @@ public class NotificationService extends FirebaseMessagingService {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
         }
 
-        if (remoteMessage.getNotification() != null && remoteMessage.getFrom().equals("/topics/news")) {
+        boolean toShow = DEBUG || remoteMessage.getFrom().equals("/topics/news");
+
+        if (remoteMessage.getNotification() != null && toShow) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
             sendNotification(remoteMessage.getNotification());
         }

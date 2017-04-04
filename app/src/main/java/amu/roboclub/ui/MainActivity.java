@@ -3,6 +3,7 @@ package amu.roboclub.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.BuildConfig;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity
     static {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         FirebaseMessaging.getInstance().subscribeToTopic("news");
+        if(amu.roboclub.BuildConfig.DEBUG)
+            FirebaseMessaging.getInstance().subscribeToTopic("debug");
     }
 
     private Fragment instanceFragment;
