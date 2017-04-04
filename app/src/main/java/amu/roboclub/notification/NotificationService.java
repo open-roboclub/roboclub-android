@@ -58,6 +58,7 @@ public class NotificationService extends FirebaseMessagingService {
                 .setContentText(messageBody)
                 .setColor(color)
                 .setAutoCancel(true)
+                .setStyle(new NotificationCompat.BigTextStyle())
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
