@@ -1,0 +1,94 @@
+{
+  "project_info": {
+    "project_number": "911524271284",
+    "firebase_url": "https://amu-roboclub.firebaseio.com",
+    "project_id": "amu-roboclub",
+    "storage_bucket": "amu-roboclub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911524271284:android:57ab1baf3f0e9779",
+        "android_client_info": {
+          "package_name": "amu.roboclub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911524271284-abg9o2s4ic9u2jj2bsm90una70r63psk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "amu.roboclub",
+            "certificate_hash": "322b03825163f506284a61c568ccd14b2ffb412e"
+          }
+        },
+        {
+          "client_id": "911524271284-5i9jbdmdjdejom8bujohfv2ndm4p656s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGdsZk49eDRH6IiSyaqc44VSFUBB3EXbs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911524271284:android:141400b7fa3876ef",
+        "android_client_info": {
+          "package_name": "roboclub.amu.keymanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911524271284-qnu2bpt6e468ccsn6v9u4qm7mfrrnmpi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "roboclub.amu.keymanager",
+            "certificate_hash": "322b03825163f506284a61c568ccd14b2ffb412e"
+          }
+        },
+        {
+          "client_id": "911524271284-5i9jbdmdjdejom8bujohfv2ndm4p656s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGdsZk49eDRH6IiSyaqc44VSFUBB3EXbs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911524271284-5i9jbdmdjdejom8bujohfv2ndm4p656s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
