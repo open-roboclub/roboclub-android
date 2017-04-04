@@ -32,7 +32,7 @@ dependencies:
 test:
     override:
         - ./gradlew clean assembleDebug -Dpre-dex=false
-        - ./gradlew test
+        # - ./gradlew test  # Currently no tests
         - ./gradlew lint
         - cp -r app/build/outputs/apk/ $CIRCLE_ARTIFACTS
         - cp -r app/build/reports/ $CIRCLE_TEST_REPORTS
