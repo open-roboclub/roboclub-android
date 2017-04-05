@@ -1,26 +1,22 @@
 package amu.roboclub.models;
 
 public class News {
+    public String title;
     public String date;
     public String notice;
+    public String notification;
+    public long timestamp;
     public String link;
-
-    public News() {
-    }
-
-    public News(String date, String notice) {
-        this.date = date;
-        this.notice = notice;
-    }
-
-    public News(String date, String notice, String link) {
-        this.date = date;
-        this.notice = notice;
-        this.link = link;
-    }
 
     @Override
     public String toString() {
-        return date + " : \n\n" + notice + "\nLink : " + link + "\n\n\n";
+        return "News{" +
+                "title='" + title + '\'' +
+                ", date='" + date + '\'' +
+                ", notice='" + notice + '\'' +
+                ", notification='" + notification + '\'' +
+                ", timestamp=" + timestamp +
+                ", link='" + link + '\'' +
+                '}';
     }
 }

@@ -14,6 +14,8 @@ import android.support.design.widget.Snackbar;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,13 +45,22 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import amu.roboclub.R;
+import amu.roboclub.models.News;
 import amu.roboclub.utils.CircleTransform;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,6 +81,11 @@ public class AdminFragment extends Fragment {
     @BindView(R.id.avatar) ImageView avatar;
     @BindView(R.id.name_edit) EditText name;
     @BindView(R.id.providers) RadioGroup providersLayout;
+
+    @BindView(R.id.notification_card) CardView notificationCard;
+    @BindView(R.id.title_edit) EditText title;
+    @BindView(R.id.message_edit) EditText message;
+    @BindView(R.id.link_edit) EditText link;
 
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authListener;
@@ -94,6 +110,7 @@ public class AdminFragment extends Fragment {
         ButterKnife.bind(this, root);
 
         progressBar.setIndeterminate(true);
+        progressBar.setVisibility(View.INVISIBLE);
         accountInfo.setVisibility(View.GONE);
 
         authListener = firebaseAuth -> {
@@ -117,6 +134,7 @@ public class AdminFragment extends Fragment {
                 accountInfo.setVisibility(View.GONE);
                 state.setVisibility(View.VISIBLE);
                 state.setText(R.string.signed_out_warning);
+                notificationCard.setVisibility(View.GONE);
                 Log.d(TAG, "onAuthStateChanged:signed_out");
             }
         };
@@ -130,11 +148,15 @@ public class AdminFragment extends Fragment {
         showImageAvatar(user.getPhotoUrl());
 
         showProviders(user);
+
+        showNotificationPanel(user.getUid());
     }
 
     private void showImageAvatar(Uri uri) {
-        if(uri == null)
+        if(uri == null) {
             Toast.makeText(getContext(), R.string.no_image, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -199,9 +221,13 @@ public class AdminFragment extends Fragment {
             userProfileChangeRequest.setDisplayName(userName);
         }
 
-        Uri uri = user.getProviderData().get(providersLayout.getCheckedRadioButtonId()).getPhotoUrl();
-        if(uri != null && !uri.equals(user.getPhotoUrl())) {
-            userProfileChangeRequest.setPhotoUri(uri);
+        int index = providersLayout.getCheckedRadioButtonId();
+        List<? extends UserInfo> providerData = user.getProviderData();
+        if(index >= 0 && index < providerData.size()) {
+            Uri uri = providerData.get(index).getPhotoUrl();
+            if(uri != null && !uri.equals(user.getPhotoUrl())) {
+                userProfileChangeRequest.setPhotoUri(uri);
+            }
         }
 
         progressBar.setVisibility(View.VISIBLE);
@@ -211,6 +237,65 @@ public class AdminFragment extends Fragment {
                     if (task.isSuccessful()) {
                         showSnackbar(R.string.profile_updated);
                     }
+                });
+    }
+
+    private void showNotificationPanel(String uid) {
+        FirebaseDatabase.getInstance()
+                .getReference("admins/"+uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.getValue() != null) {
+                            // Our user is an admin
+                            showSnackbar(R.string.admin_detected);
+                            notificationCard.setVisibility(View.VISIBLE);
+                        } else {
+                            // User is not admin
+                            Log.d(TAG, "Not admin");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // User is not admin
+                        Log.d(TAG, "Not admin");
+                    }
+                });
+    }
+
+    private String getDateString() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, d MMMM yyyy", Locale.getDefault());
+
+        Date date = new Date();
+
+        return simpleDateFormat.format(date);
+    }
+
+    @OnClick(R.id.send_btn)
+    public void sendNotification() {
+        News news = new News();
+        news.title = title.getText().toString();
+        news.notice = message.getText().toString();
+        if(!TextUtils.isEmpty(link.getText().toString()))
+            news.link = link.getText().toString();
+        news.date = getDateString();
+        news.timestamp = -System.currentTimeMillis();
+
+        Log.d(TAG, news.toString());
+
+        FirebaseDatabase.getInstance()
+                .getReference("news")
+                .push()
+                .setValue(news, (databaseError, databaseReference) -> {
+
+                    if(databaseError != null) {
+                        showSnackbar(R.string.error_notification);
+                        Log.d(TAG, databaseError.toString());
+                    } else {
+                        showSnackbar(R.string.notification_sent);
+                    }
+
                 });
     }
 
