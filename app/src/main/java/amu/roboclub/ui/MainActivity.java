@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import amu.roboclub.R;
+import amu.roboclub.ui.fragments.AdminFragment;
 import amu.roboclub.ui.fragments.ContactFragment;
 import amu.roboclub.ui.fragments.ContributionFragment;
 import amu.roboclub.ui.fragments.FeedbackDialogFragment;
@@ -113,6 +114,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_contact:
                 this.id = id;
                 fragmentClass = ContactFragment.class;
+                break;
+            case R.id.nav_admin:
+                this.id = id;
+                fragmentClass = AdminFragment.class;
                 break;
             case R.id.nav_feedback:
                 askFeedback();

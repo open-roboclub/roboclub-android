@@ -18,6 +18,10 @@
             android:id="@+id/contribution"
             android:icon="@drawable/ic_coin"
             android:title="@string/menu_contributions" />
+        <item
+            android:id="@+id/nav_admin"
+            android:icon="@drawable/ic_whatshot"
+            android:title="@string/menu_admin_panel" />
     </group>
 
     <item android:title="@string/info">
