@@ -1,4 +1,5 @@
 # Roboclub AMU
+[![CircleCI](https://img.shields.io/circleci/project/github/RoboClub-core/roboclub-amu.svg)](https://circleci.com/gh/RoboClub-core/roboclub-amu)
 [![Codacy grade](https://img.shields.io/codacy/grade/3ef2fba658914b3ca3bc812cfc3dd935.svg)]()
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)  
 > AMU RoboClub Notification and Club Intro Android App  
