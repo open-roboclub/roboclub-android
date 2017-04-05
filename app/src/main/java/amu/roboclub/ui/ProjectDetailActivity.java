@@ -40,6 +40,26 @@ public class ProjectDetailActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.gallery_list)
+    LinearLayout imageList;
+
+    @BindView(R.id.image)
+    ImageView image;
+    @BindView(R.id.team)
+    TextView team;
+    @BindView(R.id.description)
+    TextView description;
+
+    @BindView(R.id.youtube_card)
+    CardView youtubeCard;
+    @BindView(R.id.youtube_thumb)
+    ImageView youtube;
+
+    @BindView(R.id.documents_card)
+    CardView documentsCard;
+    @BindView(R.id.documents)
+    TextView documents;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,9 +89,6 @@ public class ProjectDetailActivity extends AppCompatActivity {
     private static String getSmallImage(String url) {
         return url.replaceFirst("upload/", "upload/c_thumb,w_150,h_150/");
     }
-
-    @BindView(R.id.gallery_list)
-    LinearLayout imageList;
 
     private void showImages() {
         if (project.images == null || project.images.isEmpty())
@@ -122,11 +139,6 @@ public class ProjectDetailActivity extends AppCompatActivity {
 
     }
 
-    @BindView(R.id.youtube_card)
-    CardView youtubeCard;
-    @BindView(R.id.youtube_thumb)
-    ImageView youtube;
-
     private void showYoutube() {
         if (project.youtube == null)
             return;
@@ -142,18 +154,13 @@ public class ProjectDetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onError() {
-
+                        // No Action
                     }
                 });
 
         youtube.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/" + project.youtube))));
 
     }
-
-    @BindView(R.id.documents_card)
-    CardView documentsCard;
-    @BindView(R.id.documents)
-    TextView documents;
 
     private void showDocuments() {
         if(project.docs == null || project.docs.isEmpty())
@@ -178,13 +185,6 @@ public class ProjectDetailActivity extends AppCompatActivity {
         else
             documents.setText(Html.fromHtml(sb.toString()));
     }
-
-    @BindView(R.id.image)
-    ImageView image;
-    @BindView(R.id.team)
-    TextView team;
-    @BindView(R.id.description)
-    TextView description;
 
     private void populateUI() {
         if (project == null)
@@ -213,6 +213,7 @@ public class ProjectDetailActivity extends AppCompatActivity {
                 finish();
                 return true;
             default:
+                // No Action
         }
         return super.onOptionsItemSelected(item);
     }

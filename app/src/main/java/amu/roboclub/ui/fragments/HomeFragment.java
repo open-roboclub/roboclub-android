@@ -16,14 +16,14 @@ import butterknife.ButterKnife;
 
 public class HomeFragment extends Fragment {
 
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
-    }
-
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.pager)
     ViewPager viewPager;
+
+    public static HomeFragment newInstance() {
+        return new HomeFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

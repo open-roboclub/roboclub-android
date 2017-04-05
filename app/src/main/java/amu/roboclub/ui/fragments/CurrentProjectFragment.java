@@ -33,16 +33,16 @@ public class CurrentProjectFragment extends Fragment {
 
     int count;
 
-    public static CurrentProjectFragment newInstance() {
-        return new CurrentProjectFragment();
-    }
-
     @BindView(R.id.main_content)
     CoordinatorLayout mainLayout;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
     private ChildEventListener childEventListener;
+
+    public static CurrentProjectFragment newInstance() {
+        return new CurrentProjectFragment();
+    }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -102,7 +102,7 @@ public class CurrentProjectFragment extends Fragment {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                // No Action
             }
 
             @Override
@@ -112,11 +112,12 @@ public class CurrentProjectFragment extends Fragment {
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                // No Action
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                // No Action
             }
         });
 

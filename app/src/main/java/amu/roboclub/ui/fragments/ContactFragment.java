@@ -37,12 +37,12 @@ import butterknife.ButterKnife;
 public class ContactFragment extends Fragment {
     private Snackbar snackbar;
 
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+
     public static ContactFragment newInstance() {
         return new ContactFragment();
     }
-
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

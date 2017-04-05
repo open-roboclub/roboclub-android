@@ -3,9 +3,10 @@ package amu.roboclub.models;
 import java.io.Serializable;
 
 public class Doc implements Serializable {
-    public Doc() {}
 
     public String name, url;
+
+    public Doc() {}
 
     @Override
     public String toString() {

@@ -29,6 +29,13 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
+    @BindView(R.id.backdrop)
+    ImageView header;
+    @BindView(R.id.avatarAreeb)
+    ImageView avatarAreeb;
+    @BindView(R.id.avatarDP)
+    ImageView avatarDP;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,13 +69,6 @@ public class DetailActivity extends AppCompatActivity {
         loadImages();
 
     }
-
-    @BindView(R.id.backdrop)
-    ImageView header;
-    @BindView(R.id.avatarAreeb)
-    ImageView avatarAreeb;
-    @BindView(R.id.avatarDP)
-    ImageView avatarDP;
 
     private void loadImages() {
         Picasso.with(this).load(R.drawable.header).into(header);
