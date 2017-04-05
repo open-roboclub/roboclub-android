@@ -26,10 +26,6 @@ import butterknife.ButterKnife;
 
 public class ContributionFragment extends Fragment {
 
-    public static ContributionFragment newInstance() {
-        return new ContributionFragment();
-    }
-
     int count;
 
     @BindView(R.id.recyclerView)
@@ -37,6 +33,10 @@ public class ContributionFragment extends Fragment {
 
     private DatabaseReference contributionReference;
     private ChildEventListener childEventListener;
+
+    public static ContributionFragment newInstance() {
+        return new ContributionFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -84,7 +84,7 @@ public class ContributionFragment extends Fragment {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                // No Action
             }
 
             @Override
@@ -94,12 +94,12 @@ public class ContributionFragment extends Fragment {
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                // No Action
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                // No Action
             }
         });
 

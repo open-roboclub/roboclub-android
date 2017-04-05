@@ -18,17 +18,14 @@ import butterknife.ButterKnife;
 
 public class FeedbackDialogFragment extends BottomSheetDialogFragment {
 
-    public FeedbackDialogFragment() {
-    }
-
-    public static FeedbackDialogFragment newInstance() {
-        return new FeedbackDialogFragment();
-    }
-
     @BindView(R.id.feedbackEdt)
     EditText edt;
     @BindView(R.id.send)
     ImageView send;
+
+    public static FeedbackDialogFragment newInstance() {
+        return new FeedbackDialogFragment();
+    }
 
     private final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("feedback");
 
