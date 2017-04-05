@@ -12,18 +12,16 @@ dependencies:
         - if [ ! -d "/usr/local/android-sdk-linux/build-tools/25.0.2" ]; then echo y | android update sdk --no-ui --all --filter "build-tools-25.0.2"; fi
         # Android Support Repository / Local Maven repository for Support Libraries
         - if [ ! -d "/usr/local/android-sdk-linux/extras/android/m2repository/com/android/support/design/25.3.0" ]; then echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"; fi
-        # Android Tools latest (has sdkmanager)
-        - if [ ! -d "/usr/local/android-sdk-linux/tools/bin/sdkmanager" ]; then echo y | android update sdk --no-ui --all --filter "tools"; fi
-        # Copy all licenses to force 'Yes'
-        - mkdir -p ${ANDROID_HOME}/licenses
-        - echo $ANDROID_SDK_LICENSE > ${ANDROID_HOME}/licenses/android-sdk-license
-
+        # Google Extra
+        - if [ ! -d "/usr/local/android-sdk-linux/extras/google/m2repository/com/google/firebase/firebase-core/10.2.0" ]; then echo y | android update sdk --no-ui --all --filter "extra-google-m2repository"; fi
+        # Google Play Services
+        - if [ ! -d "/usr/local/android-sdk-linux/extras/google/m2repository/com/google/android/gms/play-services/10.2.0" ]; then echo y | android update sdk --no-ui --all --filter "extra-google-google_play_services"; fi
 
     cache_directories:
         - /usr/local/android-sdk-linux/platforms/android-25
         - /usr/local/android-sdk-linux/build-tools/25.0.2
         - /usr/local/android-sdk-linux/extras/android/m2repository
-        - /usr/local/android-sdk-linux/tools/bin
+        - /usr/local/android-sdk-linux/extras/google/m2repository
 
     override:
         # Adding true flag because of this issue with ConstraintLayout https://code.google.com/p/android/issues/detail?id=212128
