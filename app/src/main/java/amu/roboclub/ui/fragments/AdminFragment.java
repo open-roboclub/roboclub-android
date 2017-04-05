@@ -2,28 +2,55 @@ package amu.roboclub.ui.fragments;
 
 
 import android.content.Intent;
+import android.content.pm.ProviderInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.ResultCodes;
+import com.firebase.ui.auth.ui.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
+import java.util.List;
 
 import amu.roboclub.R;
+import amu.roboclub.utils.CircleTransform;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
@@ -31,8 +58,20 @@ import butterknife.OnLongClick;
 public class AdminFragment extends Fragment {
 
     private static final int RC_SIGN_IN = 2020;
+    private static final String TAG = "AdminPanel";
 
     private View root;
+
+    @BindView(R.id.sign_in) FloatingActionButton signIn;
+    @BindView(R.id.state) TextView state;
+    @BindView(R.id.account_info) ScrollView accountInfo;
+    @BindView(R.id.account_progress) ProgressBar progressBar;
+    @BindView(R.id.avatar) ImageView avatar;
+    @BindView(R.id.name_edit) EditText name;
+    @BindView(R.id.providers) RadioGroup providersLayout;
+
+    private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener authListener;
 
     public static AdminFragment newInstance() {
         return new AdminFragment();
@@ -42,6 +81,7 @@ public class AdminFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        auth = FirebaseAuth.getInstance();
         setHasOptionsMenu(true);
     }
 
@@ -52,14 +92,139 @@ public class AdminFragment extends Fragment {
 
         ButterKnife.bind(this, root);
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null) {
-            Toast.makeText(getContext(), "Signed In", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(getContext(), "Signed Out", Toast.LENGTH_LONG).show();
-        }
+        progressBar.setIndeterminate(true);
+        accountInfo.setVisibility(View.GONE);
+
+        authListener = firebaseAuth -> {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+
+            providersLayout.removeAllViews();
+
+            if (user != null) {
+                // User is signed in
+                signIn.setVisibility(View.GONE);
+
+                accountInfo.setVisibility(View.VISIBLE);
+                state.setVisibility(View.GONE);
+
+                showAccountInfo(user);
+                Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+            } else {
+                // User is signed out
+                signIn.setVisibility(View.VISIBLE);
+
+                accountInfo.setVisibility(View.GONE);
+                state.setVisibility(View.VISIBLE);
+                state.setText(R.string.signed_out_warning);
+                Log.d(TAG, "onAuthStateChanged:signed_out");
+            }
+        };
 
         return root;
+    }
+
+    private void showAccountInfo(FirebaseUser user) {
+        name.setText(user.getDisplayName());
+
+        showImageAvatar(user.getPhotoUrl());
+
+        showProviders(user);
+    }
+
+    private void showImageAvatar(Uri uri) {
+        if(uri == null)
+            Toast.makeText(getContext(), R.string.no_image, Toast.LENGTH_SHORT).show();
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        Picasso.with(getContext()).cancelTag(TAG);
+
+        Picasso.with(getContext())
+                .load(uri)
+                .placeholder(VectorDrawableCompat.create(getResources(), R.drawable.ic_avatar, null))
+                .transform(new CircleTransform())
+                .tag(TAG)
+                .into(avatar, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        avatar.setImageDrawable(VectorDrawableCompat.create(getResources(), R.drawable.ic_avatar, null));
+                    }
+                });
+    }
+
+    private RadioButton createRadio(String text) {
+        RadioButton radioButton = new RadioButton(getContext());
+        radioButton.setText(text);
+        return radioButton;
+    }
+
+    private void showProviders(FirebaseUser user) {
+        List<? extends UserInfo> providers = user.getProviderData();
+
+        for (int i = 0; i < providers.size(); i++) {
+            UserInfo userInfo = providers.get(i);
+
+            RadioButton radioButton = createRadio(userInfo.getProviderId());
+            radioButton.setId(i);
+            if(userInfo.getPhotoUrl()!= null && userInfo.getPhotoUrl().equals(user.getPhotoUrl())) {
+                radioButton.setChecked(true);
+            }
+            providersLayout.addView(radioButton);
+        }
+
+        providersLayout.setOnCheckedChangeListener((group, checkedId) -> {
+            Uri uri = providers.get(checkedId).getPhotoUrl();
+            showImageAvatar(uri);
+        });
+    }
+
+    @OnClick(R.id.save_btn)
+    public void saveUser() {
+        FirebaseUser user = auth.getCurrentUser();
+
+        if(user == null)
+            return;
+
+        UserProfileChangeRequest.Builder userProfileChangeRequest = new UserProfileChangeRequest.Builder();
+
+        String userName = name.getText().toString();
+        if(!userName.equals(auth.getCurrentUser().getDisplayName())) {
+            userProfileChangeRequest.setDisplayName(userName);
+        }
+
+        Uri uri = user.getProviderData().get(providersLayout.getCheckedRadioButtonId()).getPhotoUrl();
+        if(uri != null && !uri.equals(user.getPhotoUrl())) {
+            userProfileChangeRequest.setPhotoUri(uri);
+        }
+
+        progressBar.setVisibility(View.VISIBLE);
+        user.updateProfile(userProfileChangeRequest.build())
+                .addOnCompleteListener(task -> {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    if (task.isSuccessful()) {
+                        showSnackbar(R.string.profile_updated);
+                    }
+                });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        auth.addAuthStateListener(authListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        auth.removeAuthStateListener(authListener);
     }
 
     @Override
