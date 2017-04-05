@@ -2,6 +2,20 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias System.getenv('ROBO_KEYALIAS')
+            keyPassword System.getenv('ROBO_KEYPASS')
+            storeFile file('robo.jks')
+            storePassword System.getenv('ROBO_STOREPASS')
+        }
+        debug {
+            keyAlias 'debug'
+            keyPassword 'debugg'
+            storeFile file('debug.jks')
+            storePassword 'debugg'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
 
@@ -18,6 +32,10 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
@@ -40,7 +58,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'com.android.support:support-v4:25.3.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-    releaseCompile 'com.google.firebase:firebase-crash:9.8.0'
+    releaseCompile 'com.google.firebase:firebase-crash:10.2.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
