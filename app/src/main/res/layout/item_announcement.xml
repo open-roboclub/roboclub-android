@@ -63,7 +63,7 @@
             android:id="@+id/link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ECEFF1"
+            android:background="#e7e4ec"
             android:clickable="true"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/visit_attached_link"
-                android:textColor="#CC607D8B"
+                android:textColor="@color/mediumPurple"
                 android:textSize="13sp" />
         </LinearLayout>
 
