@@ -67,4 +67,15 @@
     <string name="menu_projects">Projects</string>
     <string name="menu_contacts">Contacts</string>
     <string name="menu_contributions">Contributions</string>
+    <string name="menu_admin_panel">Admin Panel</string>
+    <string name="facebook_application_id" translatable="false">604375436440333</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb604375436440333</string>
+    <string name="signed_in">Signed in successfully</string>
+    <string name="sign_in_cancelled">Sign in cancelled</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="unknown_error">Unknown error occured</string>
+    <string name="unknown_sign_in_response">Unknown sign in response</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="signed_out">Signed out successfully</string>
 </resources>
