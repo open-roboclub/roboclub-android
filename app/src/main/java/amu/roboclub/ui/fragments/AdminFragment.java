@@ -13,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -64,7 +65,7 @@ public class AdminFragment extends Fragment {
 
     @BindView(R.id.sign_in) FloatingActionButton signIn;
     @BindView(R.id.state) TextView state;
-    @BindView(R.id.account_info) ScrollView accountInfo;
+    @BindView(R.id.account_info) NestedScrollView accountInfo;
     @BindView(R.id.account_progress) ProgressBar progressBar;
     @BindView(R.id.avatar) ImageView avatar;
     @BindView(R.id.name_edit) EditText name;
