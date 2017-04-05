@@ -78,4 +78,18 @@
     <string name="sign_in">Sign in</string>
     <string name="sign_out">Sign Out</string>
     <string name="signed_out">Signed out successfully</string>
+    <string name="signed_out_warning">You are currently signed out!</string>
+    <string name="name">Name</string>
+    <string name="save">Save</string>
+    <string name="photograph">Photograph</string>
+    <string name="no_image">No Image</string>
+    <string name="profile_updated">User profile updated</string>
+    <string name="title">Title</string>
+    <string name="message">Message</string>
+    <string name="link_optional">Link (Optional)</string>
+    <string name="send">Send</string>
+    <string name="save_announcement_only">Save Announcement only</string>
+    <string name="send_notification_only">Send notification only</string>
+    <string name="both">Both</string>
+    <string name="notification_sender">Notification Sender</string>
 </resources>
