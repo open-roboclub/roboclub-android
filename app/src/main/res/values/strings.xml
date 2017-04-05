@@ -92,4 +92,7 @@
     <string name="send_notification_only">Send notification only</string>
     <string name="both">Both</string>
     <string name="notification_sender">Notification Sender</string>
+    <string name="admin_detected">Roboclub Admin Detected</string>
+    <string name="notification_sent">Notification sent</string>
+    <string name="error_notification">Error sending notification!</string>
 </resources>
