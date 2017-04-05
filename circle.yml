@@ -1,9 +1,5 @@
 # CircleCI Configuration
 
-general:
-    artifacts:
-        - /home/ubuntu/roboclub-amu/app/build/outputs/apk/
-
 dependencies:
     pre:
         # Android SDK Platform 25
@@ -24,12 +20,12 @@ dependencies:
         - /usr/local/android-sdk-linux/extras/google/m2repository
 
     override:
-        # Adding true flag because of this issue with ConstraintLayout https://code.google.com/p/android/issues/detail?id=212128
-        - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies || true
+        - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
 test:
     override:
-        - ./gradlew clean assembleDebug -Dpre-dex=false
+        - ./gradlew assembleDebug -Dpre-dex=false
+        - ./gradlew assembleRelease -Dpre-dex=false
         # - ./gradlew test  # Currently no tests
         - ./gradlew lint
         - cp -r app/build/outputs/apk/ $CIRCLE_ARTIFACTS
