@@ -173,14 +173,10 @@ public class ProjectDetailActivity extends AppCompatActivity {
             sb.append("</a><br>");
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            documents.setText(Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_COMPACT));
-        } else {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                documents.setText(Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY));
-            else
-                documents.setText(Html.fromHtml(sb.toString()));
-        }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            documents.setText(Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY));
+        else
+            documents.setText(Html.fromHtml(sb.toString()));
     }
 
     @BindView(R.id.image)
