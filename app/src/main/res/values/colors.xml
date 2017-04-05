@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#607D8B</color>
-    <color name="colorPrimaryDark">#455A64</color>
-    <color name="colorAccent">#00E5FF</color>
+    <color name="colorPrimary">#7E57C2</color>
+    <color name="colorPrimaryDark">#5E35B1</color>
+    <color name="colorAccent">#D500F9</color>
+    <color name="lightPurple">#f6ecf7</color>
+    <color name="mediumPurple">#9575CD</color>
     <color name="fb_blue">#283593</color>
     <color name="em_red">#ef5350</color>
     <color name="ph_blue">#81D4FA</color>
