@@ -54,7 +54,7 @@ public class DetailActivity extends AppCompatActivity {
 
         fab.setOnClickListener(view -> {
             try {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/iamareebjamal/roboclub-amu")));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/RoboClub-core/roboclub-amu")));
             } catch (ActivityNotFoundException anfe) {
                 Toast.makeText(getApplicationContext(), R.string.browser_not_found, Toast.LENGTH_SHORT).show();
             }
@@ -78,7 +78,7 @@ public class DetailActivity extends AppCompatActivity {
                 R.drawable.ic_avatar, null);
 
         Picasso.with(this)
-                .load("http://www.amuroboclub.in/img/members/AreebJamal.jpg")
+                .load("https://res.cloudinary.com/amuroboclub/image/upload/old/members/thumbs/AreebJamal.jpg")
                 .placeholder(mPlaceholderDrawable)
                 .transform(new CircleTransform())
                 .into(avatarAreeb);
