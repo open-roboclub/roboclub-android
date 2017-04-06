@@ -42,7 +42,7 @@
         <activity
             android:name=".ui.ProjectDetailActivity"
             android:label="@string/title_activity_project_detail"
-            android:theme="@style/AppTheme.NoActionBar.Gray">
+            android:theme="@style/AppTheme.Detail">
         </activity>
     </application>
 

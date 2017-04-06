@@ -49,6 +49,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import amu.roboclub.BuildConfig;
 import amu.roboclub.R;
 import amu.roboclub.models.News;
 import amu.roboclub.utils.CircleTransform;
@@ -76,6 +77,8 @@ public class AdminFragment extends Fragment {
     @BindView(R.id.title_edit) EditText title;
     @BindView(R.id.message_edit) EditText message;
     @BindView(R.id.link_edit) EditText link;
+
+    @BindView(R.id.news_selector) RadioGroup newsSelector;
 
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authListener;
@@ -262,6 +265,17 @@ public class AdminFragment extends Fragment {
         return simpleDateFormat.format(date);
     }
 
+    private String getNotificationStatus() {
+        switch (newsSelector.getCheckedRadioButtonId()) {
+            case R.id.news_only:
+                return "only";
+            case R.id.news_yes:
+                return "yes";
+        }
+
+        return "no";
+    }
+
     @OnClick(R.id.send_btn)
     public void sendNotification() {
         News news = new News();
@@ -271,14 +285,18 @@ public class AdminFragment extends Fragment {
             news.link = link.getText().toString();
         news.date = getDateString();
         news.timestamp = -System.currentTimeMillis();
+        news.notification = getNotificationStatus();
 
-        Log.d(TAG, news.toString());
+        Log.d(TAG, "Sending notification : " + news.toString());
 
+        String reference = BuildConfig.DEBUG?"news-debug":"news";
+
+        progressBar.setVisibility(View.VISIBLE);
         FirebaseDatabase.getInstance()
-                .getReference("news")
+                .getReference(reference)
                 .push()
                 .setValue(news, (databaseError, databaseReference) -> {
-
+                    progressBar.setVisibility(View.INVISIBLE);
                     if(databaseError != null) {
                         showSnackbar(R.string.error_notification);
                         Log.d(TAG, databaseError.toString());
