@@ -95,4 +95,12 @@
     <string name="admin_detected">Roboclub Admin Detected</string>
     <string name="notification_sent">Notification sent</string>
     <string name="error_notification">Error sending notification!</string>
+    <string name="modify_news">Modify News</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="error_loading_news">Error loading news</string>
+    <string name="error_updating_news">Error updating news!</string>
+    <string name="news_update_success">News updated successfully</string>
+    <string name="news_delete_success">News Deleted Successfully</string>
+    <string name="news_delete_error">Error deleting news</string>
 </resources>

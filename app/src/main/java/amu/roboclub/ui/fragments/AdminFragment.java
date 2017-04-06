@@ -46,8 +46,10 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import amu.roboclub.BuildConfig;
 import amu.roboclub.R;
@@ -80,8 +82,15 @@ public class AdminFragment extends Fragment {
 
     @BindView(R.id.news_selector) RadioGroup newsSelector;
 
+    @BindView(R.id.news_card) CardView newsCard;
+    @BindView(R.id.title_modify) EditText titleModify;
+    @BindView(R.id.message_modify) EditText messageModify;
+    @BindView(R.id.news_reference) EditText newsReferenceText;
+
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authListener;
+
+    private static final String newsReference = BuildConfig.DEBUG?"news-debug/":"news/";
 
     public static AdminFragment newInstance() {
         return new AdminFragment();
@@ -128,6 +137,7 @@ public class AdminFragment extends Fragment {
                 state.setVisibility(View.VISIBLE);
                 state.setText(R.string.signed_out_warning);
                 notificationCard.setVisibility(View.GONE);
+                newsCard.setVisibility(View.GONE);
                 Log.d(TAG, "onAuthStateChanged:signed_out");
             }
         };
@@ -289,11 +299,9 @@ public class AdminFragment extends Fragment {
 
         Log.d(TAG, "Sending notification : " + news.toString());
 
-        String reference = BuildConfig.DEBUG?"news-debug":"news";
-
         progressBar.setVisibility(View.VISIBLE);
         FirebaseDatabase.getInstance()
-                .getReference(reference)
+                .getReference(newsReference)
                 .push()
                 .setValue(news, (databaseError, databaseReference) -> {
                     progressBar.setVisibility(View.INVISIBLE);
@@ -302,6 +310,78 @@ public class AdminFragment extends Fragment {
                         Log.d(TAG, databaseError.toString());
                     } else {
                         showSnackbar(R.string.notification_sent);
+                        showNewsCard(databaseReference.getKey());
+                    }
+
+                });
+    }
+
+    private void showNewsCard(String key) {
+        newsCard.setVisibility(View.VISIBLE);
+
+        newsReferenceText.setText(key);
+
+        FirebaseDatabase.getInstance()
+                .getReference(newsReference+key)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        News news = dataSnapshot.getValue(News.class);
+                        Log.d(TAG, "Received News : " + news.toString());
+                        titleModify.setText(news.title);
+                        messageModify.setText(news.notice);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        showSnackbar(R.string.error_loading_news);
+                        newsCard.setVisibility(View.GONE);
+                    }
+                });
+    }
+
+    @OnClick(R.id.update)
+    public void updateNews() {
+        Map<String, Object> newsUpdate = new HashMap<>();
+
+        String title = titleModify.getText().toString();
+        String message = messageModify.getText().toString();
+
+        if(!TextUtils.isEmpty(title))
+            newsUpdate.put("title", title);
+
+        if(!TextUtils.isEmpty(message))
+            newsUpdate.put("notice", message);
+
+        if(!newsUpdate.isEmpty()) {
+            progressBar.setVisibility(View.VISIBLE);
+            FirebaseDatabase.getInstance()
+                    .getReference(newsReference+newsReferenceText.getText().toString())
+                    .updateChildren(newsUpdate, (databaseError, databaseReference) -> {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        if(databaseError != null) {
+                            showSnackbar(R.string.error_updating_news);
+                            Log.d(TAG, "Update Error : " + databaseError.toString());
+                        } else {
+                            showSnackbar(R.string.news_update_success);
+                        }
+                    });
+        }
+    }
+
+    @OnClick(R.id.delete)
+    public void deleteNews() {
+        progressBar.setVisibility(View.VISIBLE);
+        FirebaseDatabase.getInstance()
+                .getReference(newsReference+newsReferenceText.getText().toString())
+                .removeValue((databaseError, databaseReference) -> {
+                    progressBar.setVisibility(View.GONE);
+                    if(databaseError != null) {
+                        showSnackbar(R.string.news_delete_error);
+                        Log.d(TAG, "Delete Error : " + databaseError.toString());
+                    } else {
+                        showSnackbar(R.string.news_delete_success);
+                        newsCard.setVisibility(View.GONE);
                     }
 
                 });
