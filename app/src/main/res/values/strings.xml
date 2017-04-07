@@ -108,4 +108,7 @@
     <string name="load_profile_error">Error occurred while getting profile</string>
     <string name="show_profile">Show Profile</string>
     <string name="team_year">Team 2016&#8211;2017</string>
+    <string name="interests">Interests</string>
+    <string name="projects">Projects</string>
+    <string name="view_cv">View CV</string>
 </resources>

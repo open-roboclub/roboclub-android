@@ -1,22 +1,36 @@
 package amu.roboclub.ui;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
 
 import amu.roboclub.R;
 import amu.roboclub.models.Profile;
+import amu.roboclub.models.ProfileInfo;
+import amu.roboclub.utils.CircleTransform;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -28,7 +42,19 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference profileReference;
     private ValueEventListener valueEventListener;
 
+    @BindView(R.id.root) CoordinatorLayout rootLayout;
+    @BindView(R.id.profileContainer) NestedScrollView profileContainer;
     @BindView(R.id.fab) FloatingActionButton fab;
+
+    @BindView(R.id.avatar) ImageView avatar;
+    @BindView(R.id.position) TextView position;
+    @BindView(R.id.batch) TextView batch;
+    @BindView(R.id.about) TextView about;
+    @BindView(R.id.interestsCard) CardView interestsCard;
+    @BindView(R.id.interests) TextView interests;
+    @BindView(R.id.projectsCard) CardView projectsCard;
+    @BindView(R.id.projects) TextView projects;
+    @BindView(R.id.cvCard) CardView cvCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +76,7 @@ public class ProfileActivity extends AppCompatActivity {
             setReferenceKey(getIntent().getStringExtra(REFERENCE_KEY));
             loadProfile();
         } else {
-            Toast.makeText(this, R.string.no_profile_found, Toast.LENGTH_SHORT).show();
+            Snackbar.make(rootLayout, R.string.no_profile_found, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -58,9 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
         String postFix = "firebaseio.com";
         int index = referenceKey.indexOf(postFix) + postFix.length();
 
-        String sanitized = referenceKey.substring(index);
-        Log.d(REFERENCE_KEY, sanitized);
-        reference = sanitized;
+        reference = referenceKey.substring(index);
     }
 
     private void loadProfile() {
@@ -71,21 +95,68 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Profile profile = dataSnapshot.getValue(Profile.class);
-                        Log.d(REFERENCE_KEY, profile.toString());
                         showProfile(profile);
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Toast.makeText(getApplicationContext(), R.string.load_profile_error, Toast.LENGTH_SHORT).show();
+                        Snackbar.make(rootLayout, R.string.load_profile_error, Snackbar.LENGTH_SHORT).show();
                     }
                 });
     }
 
     private void showProfile(Profile profile) {
+        profileContainer.setVisibility(View.VISIBLE);
         if(getSupportActionBar()!=null) getSupportActionBar().setTitle(profile.name);
 
+        position.setText(profile.position);
 
+        if(profile.thumbnail != null) {
+            Picasso.with(this)
+                    .load(profile.thumbnail)
+                    .placeholder(VectorDrawableCompat.create(getResources(), R.drawable.ic_avatar, null))
+                    .transform(new CircleTransform())
+                    .into(avatar);
+        }
+
+        ProfileInfo profileInfo = profile.profile_info;
+        batch.setText(profileInfo.batch);
+        about.setText(profileInfo.about);
+
+        if(profileInfo.cv != null) {
+            cvCard.setVisibility(View.VISIBLE);
+            cvCard.setOnClickListener(view -> {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(profileInfo.cv)));
+                } catch (ActivityNotFoundException ane) {
+                    Snackbar.make(rootLayout, R.string.browser_not_found, Snackbar.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        if(profileInfo.interests != null && !profileInfo.interests.isEmpty()) {
+            interestsCard.setVisibility(View.VISIBLE);
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String interest: profileInfo.interests) {
+                stringBuilder.append("\u25CF");
+                stringBuilder.append(interest);
+                stringBuilder.append("\n");
+            }
+
+            interests.setText(stringBuilder.toString());
+        }
+
+        if(profileInfo.projects != null && !profileInfo.projects.isEmpty()) {
+            projectsCard.setVisibility(View.VISIBLE);
+            StringBuilder stringBuilder = new StringBuilder();
+            for(HashMap project : profileInfo.projects) {
+                stringBuilder.append("\u25CF");
+                stringBuilder.append(project.get("name"));
+                stringBuilder.append("\n");
+            }
+
+            projects.setText(stringBuilder.toString());
+        }
     }
 
     @Override
