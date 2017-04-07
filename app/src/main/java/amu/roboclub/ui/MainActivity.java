@@ -3,7 +3,6 @@ package amu.roboclub.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.BuildConfig;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -21,7 +20,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import amu.roboclub.R;
 import amu.roboclub.ui.fragments.AdminFragment;
-import amu.roboclub.ui.fragments.ContactFragment;
+import amu.roboclub.ui.fragments.TeamFragment;
 import amu.roboclub.ui.fragments.ContributionFragment;
 import amu.roboclub.ui.fragments.FeedbackDialogFragment;
 import amu.roboclub.ui.fragments.HomeFragment;
@@ -116,7 +115,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_contact:
                 this.id = id;
-                fragmentClass = ContactFragment.class;
+                fragmentClass = TeamFragment.class;
                 break;
             case R.id.nav_admin:
                 this.id = id;
