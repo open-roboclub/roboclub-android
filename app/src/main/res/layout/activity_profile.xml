@@ -126,7 +126,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:cardCornerRadius="0dp">
+                app:cardCornerRadius="0dp"
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:orientation="vertical"
