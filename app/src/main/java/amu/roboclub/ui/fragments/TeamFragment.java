@@ -23,13 +23,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
 import amu.roboclub.R;
 import amu.roboclub.models.Profile;
+import amu.roboclub.ui.ProfileActivity;
 import amu.roboclub.ui.viewholder.ContactHolder;
 import amu.roboclub.utils.CircleTransform;
 import butterknife.BindView;
@@ -68,8 +68,6 @@ public class TeamFragment extends Fragment {
                 if (snackbar.isShown())
                     snackbar.dismiss();
 
-                Log.d("Profile", profile.toString());
-
                 holder.name.setText(profile.name);
                 holder.position.setText(profile.position);
 
@@ -81,6 +79,17 @@ public class TeamFragment extends Fragment {
                         .placeholder(mPlaceholderDrawable)
                         .transform(new CircleTransform())
                         .into(holder.avatar);
+
+                if(profile.profile_info != null) {
+                    holder.root.setOnClickListener(view -> {
+                        Intent intent = new Intent(getContext(), ProfileActivity.class);
+                        intent.putExtra(ProfileActivity.REFERENCE_KEY, getRef(position).toString());
+
+                        startActivity(intent);
+                    });
+                } else {
+                    holder.root.setOnClickListener(null);
+                }
 
                 LinearLayout contactPanel = (LinearLayout) holder.root.findViewById(R.id.contactPanel);
                 contactPanel.removeAllViews();

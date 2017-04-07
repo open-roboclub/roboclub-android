@@ -103,4 +103,7 @@
     <string name="news_update_success">News updated successfully</string>
     <string name="news_delete_success">News Deleted Successfully</string>
     <string name="news_delete_error">Error deleting news</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="no_profile_found">No profile found</string>
+    <string name="load_profile_error">Error occurred while getting profile</string>
 </resources>

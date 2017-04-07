@@ -30,8 +30,7 @@
         <activity
             android:name=".ui.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".notification.NotificationService">
             <intent-filter>
@@ -42,8 +41,12 @@
         <activity
             android:name=".ui.ProjectDetailActivity"
             android:label="@string/title_activity_project_detail"
-            android:theme="@style/AppTheme.Detail">
-        </activity>
+            android:theme="@style/AppTheme.Detail" />
+        <activity
+            android:name=".ui.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/AppTheme.Detail" />
     </application>
 
 </manifest>
