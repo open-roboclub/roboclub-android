@@ -5,7 +5,7 @@
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="3dp"
+    android:layout_margin="7dp"
     android:clickable="true"
     android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="3dp"
@@ -61,7 +61,20 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/info"
             android:gravity="center"
+            android:background="#eeeeee"
             android:orientation="horizontal" />
+
+        <TextView
+            android:id="@+id/showProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/contactPanel"
+            android:padding="16dp"
+            android:background="@color/tw__composer_light_gray"
+            android:foreground="?selectableItemBackground"
+            android:text="@string/show_profile"
+            android:visibility="gone"
+            tools:visibility="visible" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
