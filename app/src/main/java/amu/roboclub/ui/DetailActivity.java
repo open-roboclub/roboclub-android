@@ -78,7 +78,7 @@ public class DetailActivity extends AppCompatActivity {
                 R.drawable.ic_avatar, null);
 
         Picasso.with(this)
-                .load("https://res.cloudinary.com/amuroboclub/image/upload/old/members/thumbs/AreebJamal.jpg")
+                .load("https://avatars1.githubusercontent.com/u/3874064?v=3&s=460")
                 .placeholder(mPlaceholderDrawable)
                 .transform(new CircleTransform())
                 .into(avatarAreeb);
