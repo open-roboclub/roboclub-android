@@ -12,9 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -26,13 +23,8 @@ import butterknife.ButterKnife;
 
 public class ContributionFragment extends Fragment {
 
-    int count;
-
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-
-    private DatabaseReference contributionReference;
-    private ChildEventListener childEventListener;
 
     public static ContributionFragment newInstance() {
         return new ContributionFragment();
@@ -43,19 +35,16 @@ public class ContributionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_contribution, container, false);
 
-        count = 0;
-
         ButterKnife.bind(this, root);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
-        gridLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(gridLayoutManager);
 
         final Snackbar snackbar = Snackbar.make(recyclerView, R.string.loading_contributors, Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
 
-        contributionReference = FirebaseDatabase.getInstance().getReference("contribution");
+        DatabaseReference contributionReference = FirebaseDatabase.getInstance().getReference("contribution");
         FirebaseRecyclerAdapter contributionAdapter = new FirebaseRecyclerAdapter<Contribution, ContributionHolder>
                 (Contribution.class, R.layout.item_contribution, ContributionHolder.class, contributionReference) {
 
@@ -68,6 +57,11 @@ public class ContributionFragment extends Fragment {
                 holder.remark.setText(contribution.remark);
                 holder.amount.setText(contribution.amount);
             }
+
+            @Override
+            public Contribution getItem(int position) {
+                return super.getItem(getItemCount() - 1 - position);
+            }
         };
 
         recyclerView.setAdapter(contributionAdapter);
@@ -76,39 +70,11 @@ public class ContributionFragment extends Fragment {
             gridLayoutManager.setSpanCount(2);
         }
 
-        childEventListener = contributionReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                gridLayoutManager.smoothScrollToPosition(recyclerView, null, count++);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                // No Action
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                count--;
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                // No Action
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // No Action
-            }
-        });
-
         return root;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        contributionReference.removeEventListener(childEventListener);
     }
 }

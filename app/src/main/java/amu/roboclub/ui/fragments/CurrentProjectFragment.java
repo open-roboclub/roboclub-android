@@ -8,16 +8,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
@@ -31,14 +27,10 @@ import butterknife.ButterKnife;
 
 public class CurrentProjectFragment extends Fragment {
 
-    int count;
-
     @BindView(R.id.main_content)
     CoordinatorLayout mainLayout;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-
-    private ChildEventListener childEventListener;
 
     public static CurrentProjectFragment newInstance() {
         return new CurrentProjectFragment();
@@ -49,12 +41,10 @@ public class CurrentProjectFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_project, container, false);
 
-        count = 0;
 
         ButterKnife.bind(this, root);
 
         GridLayoutManager llm = new GridLayoutManager(getContext(), 1);
-        llm.setReverseLayout(true);
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -86,6 +76,11 @@ public class CurrentProjectFragment extends Fragment {
                     startActivity(intent);
                 });
             }
+
+            @Override
+            public Project getItem(int position) {
+                return super.getItem(getItemCount() - 1 - position);
+            }
         };
 
         recyclerView.setAdapter(projectAdapter);
@@ -93,33 +88,6 @@ public class CurrentProjectFragment extends Fragment {
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             llm.setSpanCount(2);
         }
-
-        childEventListener = getDatabaseReference().addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                llm.smoothScrollToPosition(recyclerView, null, count++);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                // No Action
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                count--;
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                // No Action
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // No Action
-            }
-        });
 
         return root;
     }
@@ -131,6 +99,5 @@ public class CurrentProjectFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        getDatabaseReference().removeEventListener(childEventListener);
     }
 }
