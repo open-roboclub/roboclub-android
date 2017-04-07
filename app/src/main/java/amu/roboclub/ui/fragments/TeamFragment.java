@@ -15,6 +15,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,24 +25,25 @@ import android.widget.LinearLayout;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
 import amu.roboclub.R;
-import amu.roboclub.models.Contact;
+import amu.roboclub.models.Profile;
 import amu.roboclub.ui.viewholder.ContactHolder;
 import amu.roboclub.utils.CircleTransform;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ContactFragment extends Fragment {
+public class TeamFragment extends Fragment {
     private Snackbar snackbar;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    public static ContactFragment newInstance() {
-        return new ContactFragment();
+    public static TeamFragment newInstance() {
+        return new TeamFragment();
     }
 
     @Override
@@ -58,22 +60,24 @@ public class ContactFragment extends Fragment {
         snackbar = Snackbar.make(recyclerView, R.string.loading_members, Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
 
-        DatabaseReference contactReference = FirebaseDatabase.getInstance().getReference("team/16");
-        FirebaseRecyclerAdapter contactAdapter = new FirebaseRecyclerAdapter<Contact, ContactHolder>(Contact.class, R.layout.item_contact, ContactHolder.class, contactReference) {
+        Query contactReference = FirebaseDatabase.getInstance().getReference("team/16").orderByChild("rank");
+        FirebaseRecyclerAdapter contactAdapter = new FirebaseRecyclerAdapter<Profile, ContactHolder>(Profile.class, R.layout.item_contact, ContactHolder.class, contactReference) {
 
             @Override
-            protected void populateViewHolder(final ContactHolder holder, final Contact contact, int position) {
+            protected void populateViewHolder(final ContactHolder holder, final Profile profile, int position) {
                 if (snackbar.isShown())
                     snackbar.dismiss();
 
-                holder.name.setText(contact.name);
-                holder.position.setText(contact.position);
+                Log.d("Profile", profile.toString());
+
+                holder.name.setText(profile.name);
+                holder.position.setText(profile.position);
 
                 Drawable mPlaceholderDrawable = ResourcesCompat.getDrawable(
                         getContext().getResources(),
                         R.drawable.ic_avatar, null);
 
-                Picasso.with(getContext()).load(contact.thumbnail)
+                Picasso.with(getContext()).load(profile.thumbnail)
                         .placeholder(mPlaceholderDrawable)
                         .transform(new CircleTransform())
                         .into(holder.avatar);
@@ -81,10 +85,10 @@ public class ContactFragment extends Fragment {
                 LinearLayout contactPanel = (LinearLayout) holder.root.findViewById(R.id.contactPanel);
                 contactPanel.removeAllViews();
 
-                if (contact.links == null)
+                if (profile.links == null)
                     return;
 
-                for (String link : contact.links.values()) {
+                for (String link : profile.links.values()) {
                     ImageButton im = new ImageButton(getContext());
 
                     int[] attrs = new int[]{R.attr.selectableItemBackgroundBorderless};

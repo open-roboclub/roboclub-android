@@ -12,8 +12,8 @@
             android:title="@string/menu_projects" />
         <item
             android:id="@+id/nav_contact"
-            android:icon="@drawable/ic_menu_contact"
-            android:title="@string/menu_contacts" />
+            android:icon="@drawable/ic_menu_team"
+            android:title="@string/menu_team" />
         <item
             android:id="@+id/contribution"
             android:icon="@drawable/ic_coin"
