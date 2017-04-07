@@ -15,7 +15,6 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ import com.squareup.picasso.Picasso;
 import amu.roboclub.R;
 import amu.roboclub.models.Profile;
 import amu.roboclub.ui.ProfileActivity;
-import amu.roboclub.ui.viewholder.ContactHolder;
+import amu.roboclub.ui.viewholder.ProfileHolder;
 import amu.roboclub.utils.CircleTransform;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,22 +48,23 @@ public class TeamFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_contact, container, false);
+        View root = inflater.inflate(R.layout.fragment_team, container, false);
 
         ButterKnife.bind(this, root);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setNestedScrollingEnabled(false);
 
         snackbar = Snackbar.make(recyclerView, R.string.loading_members, Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
 
         Query contactReference = FirebaseDatabase.getInstance().getReference("team/16").orderByChild("rank");
-        FirebaseRecyclerAdapter contactAdapter = new FirebaseRecyclerAdapter<Profile, ContactHolder>(Profile.class, R.layout.item_contact, ContactHolder.class, contactReference) {
+        FirebaseRecyclerAdapter contactAdapter = new FirebaseRecyclerAdapter<Profile, ProfileHolder>(Profile.class, R.layout.item_contact, ProfileHolder.class, contactReference) {
 
             @Override
-            protected void populateViewHolder(final ContactHolder holder, final Profile profile, int position) {
+            protected void populateViewHolder(final ProfileHolder holder, final Profile profile, int position) {
                 if (snackbar.isShown())
                     snackbar.dismiss();
 
@@ -81,6 +81,7 @@ public class TeamFragment extends Fragment {
                         .into(holder.avatar);
 
                 if(profile.profile_info != null) {
+                    holder.showProfile.setVisibility(View.VISIBLE);
                     holder.root.setOnClickListener(view -> {
                         Intent intent = new Intent(getContext(), ProfileActivity.class);
                         intent.putExtra(ProfileActivity.REFERENCE_KEY, getRef(position).toString());
@@ -88,6 +89,7 @@ public class TeamFragment extends Fragment {
                         startActivity(intent);
                     });
                 } else {
+                    holder.showProfile.setVisibility(View.GONE);
                     holder.root.setOnClickListener(null);
                 }
 

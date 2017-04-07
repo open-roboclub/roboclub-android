@@ -10,7 +10,7 @@ import amu.roboclub.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ContactHolder extends RecyclerView.ViewHolder {
+public class ProfileHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.rootView)
     public CardView root;
@@ -20,8 +20,10 @@ public class ContactHolder extends RecyclerView.ViewHolder {
     public TextView position;
     @BindView(R.id.avatar)
     public ImageView avatar;
+    @BindView(R.id.showProfile)
+    public TextView showProfile;
 
-    public ContactHolder(View view) {
+    public ProfileHolder(View view) {
         super(view);
 
         ButterKnife.bind(this, view);

@@ -106,4 +106,6 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="no_profile_found">No profile found</string>
     <string name="load_profile_error">Error occurred while getting profile</string>
+    <string name="show_profile">Show Profile</string>
+    <string name="team_year">Team 2016&#8211;2017</string>
 </resources>
