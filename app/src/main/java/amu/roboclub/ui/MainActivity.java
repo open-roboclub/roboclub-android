@@ -96,6 +96,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void createFragmentFromId(int id, String title) {
+
+        if(drawer.isDrawerOpen(GravityCompat.START)) drawer.postDelayed(() -> drawer.closeDrawer(GravityCompat.START), 200);
+
         Class fragmentClass = null;
 
         switch (id) {
@@ -140,8 +143,6 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_content, instanceFragment).commit();
         }
-
-        if(drawer.isDrawerOpen(GravityCompat.START)) drawer.postDelayed(() -> drawer.closeDrawer(GravityCompat.START), 200);
     }
 
     @Override
