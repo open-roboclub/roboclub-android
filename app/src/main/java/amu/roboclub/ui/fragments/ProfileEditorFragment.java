@@ -16,6 +16,7 @@ import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,6 +33,7 @@ import amu.roboclub.R;
 import amu.roboclub.models.Profile;
 import amu.roboclub.models.ProfileInfo;
 import amu.roboclub.utils.CircleTransform;
+import amu.roboclub.utils.ImageUploader;
 import amu.roboclub.utils.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -195,7 +197,11 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
 
         Snackbar.make(root, R.string.upload_photograph, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.yes, v -> {
-                    // TODO : Implement Image Upload
+                    ImageUploader.uploadImage(filePath, (error, message) -> {
+                        Log.d(TAG, String.format("ImageUpload: Error->%s Message->%s", error, message));
+
+                        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                    });
                 }).show();
     }
 
