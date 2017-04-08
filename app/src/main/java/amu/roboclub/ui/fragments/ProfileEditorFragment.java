@@ -1,11 +1,20 @@
 package amu.roboclub.ui.fragments;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +23,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,13 +32,17 @@ import amu.roboclub.R;
 import amu.roboclub.models.Profile;
 import amu.roboclub.models.ProfileInfo;
 import amu.roboclub.utils.CircleTransform;
+import amu.roboclub.utils.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnLongClick;
 
 public class ProfileEditorFragment extends BottomSheetDialogFragment {
 
     private static final String TAG = "ProfileEditorFragment";
+    private static final int PICK_IMAGE = 2020;
+    private static final String STORAGE_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE;
 
     private Profile profile;
     private WeakReference<OnProfileChangeListener> onProfileChangeListenerWeakReference;
@@ -45,6 +59,7 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     @BindView(R.id.cv_link) EditText cvLink;
 
     private View root;
+    private String filePath;
 
     @Override
     public void setupDialog(Dialog dialog, int style) {
@@ -161,6 +176,80 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
 
             if(info.about != null)
                 about.setText(info.about);
+        }
+    }
+
+    private void imageLoaded() {
+        if(filePath == null)
+            return;
+
+        Picasso.with(getContext())
+                .cancelTag(TAG);
+
+        Picasso.with(getContext())
+                .load(new File(filePath))
+                .placeholder(VectorDrawableCompat.create(root.getResources(), R.drawable.ic_avatar, null))
+                .tag(TAG)
+                .transform(new CircleTransform())
+                .into(avatar);
+
+        Snackbar.make(root, R.string.upload_photograph, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.yes, v -> {
+                    // TODO : Implement Image Upload
+                }).show();
+    }
+
+    @OnClick(R.id.photo_fab)
+    public void requestPermissionAndLoadImage() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                ContextCompat.checkSelfPermission(getContext(), STORAGE_PERMISSION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{STORAGE_PERMISSION}, PICK_IMAGE);
+            return;
+        }
+
+        loadImage();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(final int requestCode,
+                                           @NonNull final String[] permissions,
+                                           @NonNull final int[] grantResults) {
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PICK_IMAGE && grantResults.length > 0 &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) loadImage();
+
+    }
+
+    private void loadImage() {
+        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setType("image/*");
+
+        Intent pickIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+
+        Intent chooserIntent = Intent.createChooser(getIntent, getString(R.string.select_image));
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
+
+        startActivityForResult(chooserIntent, PICK_IMAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                Snackbar.make(root, R.string.image_load_failed, Snackbar.LENGTH_LONG).show();
+                return;
+            }
+
+            Uri fileUri = data.getData();
+
+            filePath = Utils.getFilePath(getContext(), fileUri);
+            imageLoaded();
         }
     }
 

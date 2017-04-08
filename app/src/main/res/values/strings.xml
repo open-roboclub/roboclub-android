@@ -117,4 +117,9 @@
     <string name="cv_link">CV Link</string>
     <string name="photo_link">Photo Link</string>
     <string name="upload_photo">Upload Photo</string>
+    <string name="position">Position</string>
+    <string name="image_load_failed">Image Load Failed</string>
+    <string name="select_image">Select Image</string>
+    <string name="upload_photograph">Upload Photograph</string>
+    <string name="yes">Yes</string>
 </resources>
