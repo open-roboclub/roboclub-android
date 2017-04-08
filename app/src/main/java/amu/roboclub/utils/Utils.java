@@ -8,11 +8,23 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Base64;
+
+import java.io.UnsupportedEncodingException;
+
+import amu.roboclub.BuildConfig;
 
 public class Utils {
 
     static String  getCloudinaryUrl() {
-        return System.getenv("ROBO_CLOUDINARY_URL");
+        String url = BuildConfig.API_KEY;
+
+        try {
+            String decoded = new String(Base64.decode(url, Base64.DEFAULT), "UTF-8");
+            return decoded.substring(1, decoded.length() - 1);
+        } catch (UnsupportedEncodingException uee) {
+            return null;
+        }
     }
 
     public static String getFilePath(Context context, Uri uri) {

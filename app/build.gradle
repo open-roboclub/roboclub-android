@@ -37,6 +37,10 @@ android {
         debug {
             signingConfig signingConfigs.debug
         }
+
+        buildTypes.each {
+            it.buildConfigField 'String', 'API_KEY', "\"ImNsb3VkaW5hcnk6Ly83NTc4ODI2MzU2NzIxMjE6alNjbkRNSUdZSENoUGhLMVJZVjh6aUxXRWhNQGFtdXJvYm9jbHViIg==\""
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
