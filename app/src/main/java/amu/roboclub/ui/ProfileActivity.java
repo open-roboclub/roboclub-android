@@ -48,6 +48,8 @@ public class ProfileActivity extends AppCompatActivity {
     private ValueEventListener valueEventListener;
     private FirebaseUser user;
 
+    private boolean greeted = false;
+
     private ProfileEditorFragment profileEditorFragment = new ProfileEditorFragment();
 
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -170,7 +172,7 @@ public class ProfileActivity extends AppCompatActivity {
             projects.setText(stringBuilder.toString());
         }
 
-        configureUser(profile, true);
+        configureUser(profile, false);
 
         if(user ==  null) return;
 
@@ -198,7 +200,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         fab.show();
 
-        if(/* TODO: Remove user != null */ user != null && user.getDisplayName() != null && !TextUtils.isEmpty(user.getDisplayName())){
+        if(!greeted && user.getDisplayName() != null && !TextUtils.isEmpty(user.getDisplayName())){
+            greeted = true;
             String welcome = String.format(getString(R.string.welcome_message), user.getDisplayName());
             Snackbar.make(rootLayout, welcome, Snackbar.LENGTH_SHORT).show();
         }
