@@ -57,13 +57,12 @@
                 </LinearLayout>
             </FrameLayout>
 
-
-
             <LinearLayout
                 android:paddingLeft="10dp"
                 android:paddingStart="10dp"
                 android:paddingRight="10dp"
                 android:paddingEnd="10dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -95,6 +94,7 @@
                 android:paddingStart="10dp"
                 android:paddingRight="10dp"
                 android:paddingEnd="10dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -115,7 +115,9 @@
                         android:id="@+id/photo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/photo_link"/>
+                        android:hint="@string/photo_link"
+                        android:enabled="false"
+                        android:maxLines="1" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -126,6 +128,40 @@
                 android:paddingStart="10dp"
                 android:paddingRight="10dp"
                 android:paddingEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:tint="@color/gray"
+                    app:srcCompat="@drawable/ic_gear"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/position"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/position"
+                        android:enabled="false"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:paddingRight="10dp"
+                android:paddingEnd="10dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -157,6 +193,7 @@
                 android:paddingStart="10dp"
                 android:paddingRight="10dp"
                 android:paddingEnd="10dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

@@ -172,7 +172,7 @@ public class ProfileActivity extends AppCompatActivity {
             projects.setText(stringBuilder.toString());
         }
 
-        configureUser(profile, false);
+        configureUser(profile);
 
         if(user ==  null) return;
 
@@ -183,7 +183,8 @@ public class ProfileActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(dataSnapshot.getValue() != null) {
                             // User is Admin. Show Profile Editor
-                            configureUser(profile, true);
+                            profile.adminOverride = true;
+                            configureUser(profile);
                         }
                     }
 
@@ -194,8 +195,8 @@ public class ProfileActivity extends AppCompatActivity {
                 });
     }
 
-    private void configureUser(Profile profile, boolean override) {
-        if(!override && (user == null || profile.uid == null || !user.getUid().equals(profile.uid)))
+    private void configureUser(Profile profile) {
+        if(!profile.adminOverride && (user == null || profile.uid == null || !user.getUid().equals(profile.uid)))
             return;
 
         fab.show();

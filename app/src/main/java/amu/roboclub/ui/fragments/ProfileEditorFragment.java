@@ -1,6 +1,5 @@
 package amu.roboclub.ui.fragments;
 
-
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.net.Uri;
@@ -40,6 +39,7 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     @BindView(R.id.avatar) ImageView avatar;
     @BindView(R.id.name) EditText name;
     @BindView(R.id.photo) EditText photoLink;
+    @BindView(R.id.position) EditText position;
     @BindView(R.id.batch) EditText batch;
     @BindView(R.id.about) EditText about;
     @BindView(R.id.cv_link) EditText cvLink;
@@ -75,14 +75,34 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         Map<String, Object> profileChangeMap = new HashMap<>();
 
         String nameString = name.getText().toString();
-        if(!TextUtils.isEmpty(nameString)) {
+        if(!TextUtils.isEmpty(nameString) && !profile.name.equals(nameString)) {
             profileChangeMap.put("name", nameString);
         }
 
-        // TODO: Add all attributes to map
+        String batchString = batch.getText().toString();
+        if(!TextUtils.isEmpty(batchString)) {
+            profileChangeMap.put("profile_info/batch", batchString);
+        }
+
+        String aboutString = about.getText().toString();
+        if(!TextUtils.isEmpty(aboutString)) {
+            profileChangeMap.put("profile_info/about", aboutString);
+        }
+
+        String cvString = cvLink.getText().toString();
+        if(!TextUtils.isEmpty(cvString)) {
+            profileChangeMap.put("profile_info/cv", cvString);
+        }
+
+        if(profile.adminOverride) {
+            String positionString = position.getText().toString();
+            if(!TextUtils.isEmpty(positionString)) {
+                profileChangeMap.put("position", positionString);
+            }
+        }
 
         OnProfileChangeListener onProfileChangeListener = onProfileChangeListenerWeakReference.get();
-        if(onProfileChangeListener != null) {
+        if(onProfileChangeListener != null && !profileChangeMap.isEmpty()) {
             onProfileChangeListener.onProfileChange(profileChangeMap);
         }
 
@@ -107,6 +127,12 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         if(root == null || profile == null) return;
 
         name.setText(profile.name);
+
+        position.setText(profile.position);
+        if(profile.adminOverride)
+            position.setEnabled(true);
+        else
+            position.setEnabled(false);
 
         if(profile.thumbnail != null) {
             Uri uri = Uri.parse(profile.thumbnail);

@@ -7,6 +7,7 @@ public class Profile {
     public HashMap<String, String> links;
     public ProfileInfo profile_info;
     public int rank;
+    public boolean adminOverride = false;
 
     @Override
     public String toString() {
