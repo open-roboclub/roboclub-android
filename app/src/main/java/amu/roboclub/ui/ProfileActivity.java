@@ -32,6 +32,7 @@ import java.util.HashMap;
 import amu.roboclub.R;
 import amu.roboclub.models.Profile;
 import amu.roboclub.models.ProfileInfo;
+import amu.roboclub.ui.fragments.ProfileEditorFragment;
 import amu.roboclub.utils.CircleTransform;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +45,8 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference profileReference;
     private ValueEventListener valueEventListener;
     private FirebaseUser user;
+
+    private ProfileEditorFragment profileEditorFragment = new ProfileEditorFragment();
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.root) CoordinatorLayout rootLayout;
@@ -113,6 +116,8 @@ public class ProfileActivity extends AppCompatActivity {
     private void showProfile(Profile profile) {
         profileContainer.setVisibility(View.VISIBLE);
         if(getSupportActionBar()!=null) getSupportActionBar().setTitle(profile.name);
+
+        profileEditorFragment.setProfile(profile);
 
         position.setText(profile.position);
 
@@ -196,7 +201,12 @@ public class ProfileActivity extends AppCompatActivity {
             Snackbar.make(rootLayout, welcome, Snackbar.LENGTH_SHORT).show();
         }
 
-        fab.setOnClickListener(view -> startActivity(new Intent(this, ProfileEditorActivity.class)));
+        fab.setOnClickListener(view -> {
+            if(profileEditorFragment.isDetached())
+                profileEditorFragment = new ProfileEditorFragment();
+            profileEditorFragment.setProfile(profile);
+            profileEditorFragment.show(getSupportFragmentManager(), profileEditorFragment.getTag());
+        });
 
     }
 

@@ -113,4 +113,7 @@
     <string name="view_cv">View CV</string>
     <string name="welcome_message">Welcome %s</string>
     <string name="title_activity_profile_editor">ProfileEditorActivity</string>
+    <string name="batch">Batch</string>
+    <string name="cv_link">CV Link</string>
+    <string name="photo_link">Photo Link</string>
 </resources>
