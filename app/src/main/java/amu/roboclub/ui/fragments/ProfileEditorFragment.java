@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.graphics.drawable.VectorDrawableCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.Map;
 
 import amu.roboclub.R;
@@ -54,6 +56,8 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         close.setOnClickListener(view -> dismiss());
 
         showProfile();
+
+        saveFab.setOnClickListener(view -> save());
     }
 
     public void setProfile(Profile profile) {
@@ -65,6 +69,24 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     public void setOnProfileChangeListener(OnProfileChangeListener onProfileChangeListener) {
         if(onProfileChangeListenerWeakReference != null) onProfileChangeListenerWeakReference.clear();
         onProfileChangeListenerWeakReference = new WeakReference<>(onProfileChangeListener);
+    }
+
+    private void save() {
+        Map<String, Object> profileChangeMap = new HashMap<>();
+
+        String nameString = name.getText().toString();
+        if(!TextUtils.isEmpty(nameString)) {
+            profileChangeMap.put("name", nameString);
+        }
+
+        // TODO: Add all attributes to map
+
+        OnProfileChangeListener onProfileChangeListener = onProfileChangeListenerWeakReference.get();
+        if(onProfileChangeListener != null) {
+            onProfileChangeListener.onProfileChange(profileChangeMap);
+        }
+
+        dismiss();
     }
 
     @OnLongClick(R.id.save_fab)
