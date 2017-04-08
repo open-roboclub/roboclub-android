@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+
 import amu.roboclub.R;
 import amu.roboclub.models.Profile;
 import amu.roboclub.models.ProfileInfo;
@@ -206,6 +208,13 @@ public class ProfileActivity extends AppCompatActivity {
                 profileEditorFragment = new ProfileEditorFragment();
             profileEditorFragment.setProfile(profile);
             profileEditorFragment.show(getSupportFragmentManager(), profileEditorFragment.getTag());
+
+            profileEditorFragment.setOnProfileChangeListener(profileChanges ->
+                    FirebaseDatabase.getInstance()
+                    .getReference(reference)
+                    .updateChildren(profileChanges, (databaseError, databaseReference) ->
+                            Snackbar.make(rootLayout, R.string.profile_updated, BaseTransientBottomBar.LENGTH_SHORT).show()
+                    ));
         });
 
     }

@@ -2,6 +2,7 @@ package amu.roboclub.ui.fragments;
 
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
@@ -9,8 +10,12 @@ import android.support.graphics.drawable.VectorDrawableCompat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+
+import java.lang.ref.WeakReference;
+import java.util.Map;
 
 import amu.roboclub.R;
 import amu.roboclub.models.Profile;
@@ -18,12 +23,14 @@ import amu.roboclub.models.ProfileInfo;
 import amu.roboclub.utils.CircleTransform;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnLongClick;
 
 public class ProfileEditorFragment extends BottomSheetDialogFragment {
 
     private static final String TAG = "ProfileEditorFragment";
 
     private Profile profile;
+    private WeakReference<OnProfileChangeListener> onProfileChangeListenerWeakReference;
 
     @BindView(R.id.close) ImageView close;
     @BindView(R.id.save_fab) FloatingActionButton saveFab;
@@ -53,6 +60,25 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         this.profile = profile;
 
         showProfile();
+    }
+
+    public void setOnProfileChangeListener(OnProfileChangeListener onProfileChangeListener) {
+        onProfileChangeListenerWeakReference.clear();
+        onProfileChangeListenerWeakReference = new WeakReference<>(onProfileChangeListener);
+    }
+
+    @OnLongClick(R.id.save_fab)
+    public boolean saveDescription() {
+        Toast.makeText(getContext(), R.string.save, Toast.LENGTH_SHORT).show();
+
+        return false;
+    }
+
+    @OnLongClick(R.id.photo_fab)
+    public boolean photoDescription() {
+        Toast.makeText(getContext(), R.string.upload_photo, Toast.LENGTH_SHORT).show();
+
+        return false;
     }
 
     private void showProfile() {
@@ -88,5 +114,17 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
             if(info.about != null)
                 about.setText(info.about);
         }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+
+        if(onProfileChangeListenerWeakReference != null)
+            onProfileChangeListenerWeakReference.clear();
+    }
+
+    public interface OnProfileChangeListener {
+        void onProfileChange(Map<String, Object> profileChanges);
     }
 }

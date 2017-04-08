@@ -116,4 +116,5 @@
     <string name="batch">Batch</string>
     <string name="cv_link">CV Link</string>
     <string name="photo_link">Photo Link</string>
+    <string name="upload_photo">Upload Photo</string>
 </resources>
