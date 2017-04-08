@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import amu.roboclub.R;
 import amu.roboclub.models.Profile;
@@ -208,19 +210,38 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         fab.setOnClickListener(view -> {
-            if(profileEditorFragment.isDetached())
+            if (profileEditorFragment.isDetached())
                 profileEditorFragment = new ProfileEditorFragment();
             profileEditorFragment.setProfile(profile);
             profileEditorFragment.show(getSupportFragmentManager(), profileEditorFragment.getTag());
 
-            profileEditorFragment.setOnProfileChangeListener(profileChanges ->
+            profileEditorFragment.setOnProfileChangeListener(profileChanges -> {
+
+                // Save old thumbnail. Just in case
+                if(profileChanges.containsKey("thumbnail") && profile.thumbnail != null) {
+                    final String thumbnail = profile.thumbnail;
                     FirebaseDatabase.getInstance()
-                    .getReference(reference)
-                    .updateChildren(profileChanges, (databaseError, databaseReference) ->
-                            Snackbar.make(rootLayout, R.string.profile_updated, BaseTransientBottomBar.LENGTH_SHORT).show()
-                    ));
+                            .getReference(reference+"/old_avatars/")
+                            .push()
+                            .setValue(thumbnail, (databaseError, databaseReference) -> {
+                                if(databaseError != null){
+                                    Log.d("Profile ", "configureUser: " + databaseError.toString());
+                                }
+                            });
+                }
+
+                updateProfile(profileChanges);
+            });
         });
 
+    }
+
+    private void updateProfile(Map<String, Object> objectMap) {
+        FirebaseDatabase.getInstance()
+                .getReference(reference)
+                .updateChildren(objectMap, (databaseError, databaseReference) ->
+                        Snackbar.make(rootLayout, R.string.profile_updated, BaseTransientBottomBar.LENGTH_SHORT).show()
+                );
     }
 
     @Override

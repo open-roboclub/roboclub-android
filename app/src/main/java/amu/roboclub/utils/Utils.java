@@ -11,6 +11,10 @@ import android.provider.MediaStore;
 
 public class Utils {
 
+    static String  getCloudinaryUrl() {
+        return System.getenv("ROBO_CLOUDINARY_URL");
+    }
+
     public static String getFilePath(Context context, Uri uri) {
         String selection = null;
         String[] selectionArgs = null;

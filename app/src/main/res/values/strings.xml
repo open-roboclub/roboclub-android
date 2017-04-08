@@ -122,4 +122,6 @@
     <string name="select_image">Select Image</string>
     <string name="upload_photograph">Upload Photograph</string>
     <string name="yes">Yes</string>
+    <string name="photo_upload_confirm">Scroll to bottom to confirm photo upload</string>
+    <string name="image_upload_success">Image Uploaded Successfully.\nDon\'t forget to click save button</string>
 </resources>

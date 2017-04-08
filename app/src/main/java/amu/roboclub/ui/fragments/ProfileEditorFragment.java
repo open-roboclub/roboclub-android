@@ -20,12 +20,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,8 +47,9 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     private static final String STORAGE_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE;
 
     private Profile profile;
-    private WeakReference<OnProfileChangeListener> onProfileChangeListenerWeakReference;
+    private OnProfileChangeListener onProfileChangeListener;
 
+    @BindView(R.id.progress_bar) ProgressBar progressBar;
     @BindView(R.id.close) ImageView close;
     @BindView(R.id.save_fab) FloatingActionButton saveFab;
     @BindView(R.id.photo_fab) FloatingActionButton photoFab;
@@ -84,8 +85,7 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     }
 
     public void setOnProfileChangeListener(OnProfileChangeListener onProfileChangeListener) {
-        if(onProfileChangeListenerWeakReference != null) onProfileChangeListenerWeakReference.clear();
-        onProfileChangeListenerWeakReference = new WeakReference<>(onProfileChangeListener);
+        this.onProfileChangeListener = onProfileChangeListener;
     }
 
     private void save() {
@@ -94,6 +94,11 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         String nameString = name.getText().toString();
         if(!TextUtils.isEmpty(nameString) && !profile.name.equals(nameString)) {
             profileChangeMap.put("name", nameString);
+        }
+
+        String photoString = photoLink.getText().toString();
+        if(!TextUtils.isEmpty(photoString) && !profile.thumbnail.equals(photoString)) {
+            profileChangeMap.put("thumbnail", photoString);
         }
 
         String batchString = batch.getText().toString();
@@ -118,10 +123,11 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
             }
         }
 
-        OnProfileChangeListener onProfileChangeListener = onProfileChangeListenerWeakReference.get();
         if(onProfileChangeListener != null && !profileChangeMap.isEmpty()) {
             onProfileChangeListener.onProfileChange(profileChangeMap);
         }
+
+        Log.d(TAG, "save: profile" + onProfileChangeListener + " profileChanges " + profileChangeMap);
 
         dismiss();
     }
@@ -195,15 +201,27 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
                 .transform(new CircleTransform())
                 .into(avatar);
 
-        Snackbar.make(root, R.string.upload_photograph, Snackbar.LENGTH_INDEFINITE)
+        Toast.makeText(getContext(), R.string.photo_upload_confirm, Toast.LENGTH_LONG).show();
+
+        Snackbar.make(avatar, R.string.upload_photograph, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.yes, v -> {
+                    progressBar.setVisibility(View.VISIBLE);
                     ImageUploader.uploadImage(filePath, (error, message) -> {
+                        progressBar.setVisibility(View.GONE);
                         Log.d(TAG, String.format("ImageUpload: Error->%s Message->%s", error, message));
 
-                        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                        if (error) {
+                            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                        } else {
+                            // In case of no error, message is URL of photo
+                            photoLink.setText(message);
+                            Log.d(TAG, "Link set to : " + message);
+                            Toast.makeText(getContext(), R.string.image_upload_success, Toast.LENGTH_LONG).show();
+                        }
                     });
                 }).show();
     }
+
 
     @OnClick(R.id.photo_fab)
     public void requestPermissionAndLoadImage() {
@@ -263,8 +281,8 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
 
-        if(onProfileChangeListenerWeakReference != null)
-            onProfileChangeListenerWeakReference.clear();
+        onProfileChangeListener = null;
+        ImageUploader.removeImageUploadListener();
     }
 
     public interface OnProfileChangeListener {

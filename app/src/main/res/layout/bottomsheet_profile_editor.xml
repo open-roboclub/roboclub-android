@@ -2,7 +2,8 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -56,6 +57,15 @@
 
                 </LinearLayout>
             </FrameLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                android:visibility="invisible"
+                tools:visibility="visible"/>
 
             <LinearLayout
                 android:paddingLeft="10dp"
@@ -116,8 +126,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/photo_link"
-                        android:enabled="false"
-                        android:maxLines="1" />
+                        android:enabled="false" />
 
                 </android.support.design.widget.TextInputLayout>
 
