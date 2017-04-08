@@ -49,3 +49,5 @@
 }
 
 -keep class amu.roboclub.ui.viewholder.** { *; }
+
+-keep class com.cloudinary.** { *; }
