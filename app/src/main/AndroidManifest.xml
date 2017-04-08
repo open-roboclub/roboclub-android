@@ -47,6 +47,10 @@
             android:label="@string/title_activity_profile"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.Detail" />
+        <activity
+            android:name=".ui.ProfileEditorActivity"
+            android:label="@string/title_activity_profile_editor"
+            android:theme="@style/AppTheme.Detail"/>
     </application>
 
 </manifest>
