@@ -13,7 +13,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -38,8 +40,13 @@ public class MainActivity extends AppCompatActivity
             FirebaseMessaging.getInstance().subscribeToTopic("debug");
     }
 
+    private static final String TAG = "MainActivity";
+    private static final String FRAGMENT_KEY = "fragment";
+    private static final String TITLE_KEY = "title";
+
+    private Class fragmentClass;
     private Fragment instanceFragment;
-    private int id = R.id.nav_home;
+    private String title;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -63,30 +70,66 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        setupDrawer();
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(savedInstanceState != null && savedInstanceState.getInt("id") != 0)
-            id = savedInstanceState.getInt("id");
+        if(savedInstanceState != null) {
+            instanceFragment = getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_KEY);
+            title = savedInstanceState.getString(TITLE_KEY);
+            Log.d(TAG, String.format("onCreate: Restoring State : Fragment->%s Title->%s", instanceFragment, title));
+        }
 
-        createFragmentFromId(id, getString(R.string.app_name));
+        if(instanceFragment == null)
+            instanceFragment = HomeFragment.newInstance();
+
+        if(title == null)
+            title = getString(R.string.app_name);
+
+        replaceFragment();
+    }
+
+    private void setupDrawer() {
+        drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) { /* No Action */ }
+
+            @Override
+            public void onDrawerOpened(View drawerView) { /* No Action */ }
+
+            @Override
+            public void onDrawerStateChanged(int newState) { /* No Action */ }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                if (fragmentClass != null) {
+                    try {
+                        instanceFragment = (Fragment) fragmentClass.newInstance();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    replaceFragment();
+                }
+            }
+        });
+    }
+
+    private void replaceFragment() {
+        setTitle(title);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragment_content, instanceFragment).commit();
     }
 
     @Override
     public void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
-        state.putInt("id", id);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        id = savedInstanceState.getInt("id");
+        getSupportFragmentManager().putFragment(state, FRAGMENT_KEY, instanceFragment);
+        state.putString(TITLE_KEY, title);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -94,31 +137,28 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void createFragmentFromId(int id, String title) {
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if(drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
 
-        if(drawer.isDrawerOpen(GravityCompat.START)) drawer.postDelayed(() -> drawer.closeDrawer(GravityCompat.START), 200);
+        fragmentClass = null;
 
-        Class fragmentClass = null;
+        title = item.getTitle().toString();
 
-        switch (id) {
+        switch (item.getItemId()) {
             case R.id.nav_home:
-                this.id = id;
                 fragmentClass = HomeFragment.class;
                 break;
             case R.id.nav_projects:
-                this.id = id;
                 fragmentClass = ProjectFragment.class;
                 break;
             case R.id.contribution:
-                this.id = id;
                 fragmentClass = ContributionFragment.class;
                 break;
             case R.id.nav_contact:
-                this.id = id;
                 fragmentClass = TeamFragment.class;
                 break;
             case R.id.nav_admin:
-                this.id = id;
                 fragmentClass = AdminFragment.class;
                 break;
             case R.id.nav_feedback:
@@ -130,23 +170,6 @@ public class MainActivity extends AppCompatActivity
             default:
                 // Do nothing
         }
-
-        if (fragmentClass != null) {
-            try {
-                instanceFragment = (Fragment) fragmentClass.newInstance();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            setTitle(title);
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_content, instanceFragment).commit();
-        }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        createFragmentFromId(item.getItemId(), (String) item.getTitle());
         return true;
     }
 
