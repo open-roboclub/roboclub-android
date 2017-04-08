@@ -63,7 +63,7 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     }
 
     public void setOnProfileChangeListener(OnProfileChangeListener onProfileChangeListener) {
-        onProfileChangeListenerWeakReference.clear();
+        if(onProfileChangeListenerWeakReference != null) onProfileChangeListenerWeakReference.clear();
         onProfileChangeListenerWeakReference = new WeakReference<>(onProfileChangeListener);
     }
 
