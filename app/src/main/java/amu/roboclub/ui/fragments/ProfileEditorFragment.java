@@ -92,34 +92,46 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         Map<String, Object> profileChangeMap = new HashMap<>();
 
         String nameString = name.getText().toString();
-        if(!TextUtils.isEmpty(nameString) && !profile.name.equals(nameString)) {
+        if(!TextUtils.isEmpty(nameString)) {
             profileChangeMap.put("name", nameString);
+        } else {
+            profileChangeMap.put("name", null);
         }
 
+        // Can't remove photo, else each time new image will be pushed
+        // to old_avatars/ node, so only add if unchanged
         String photoString = photoLink.getText().toString();
-        if(!TextUtils.isEmpty(photoString) && !profile.thumbnail.equals(photoString)) {
+        if(!TextUtils.isEmpty(photoString) && !photoString.equals(profile.thumbnail)) {
             profileChangeMap.put("thumbnail", photoString);
         }
 
         String batchString = batch.getText().toString();
         if(!TextUtils.isEmpty(batchString)) {
             profileChangeMap.put("profile_info/batch", batchString);
+        } else {
+            profileChangeMap.put("profile_info/batch", null);
         }
 
         String aboutString = about.getText().toString();
         if(!TextUtils.isEmpty(aboutString)) {
             profileChangeMap.put("profile_info/about", aboutString);
+        } else {
+            profileChangeMap.put("profile_info/about", null);
         }
 
         String cvString = cvLink.getText().toString();
         if(!TextUtils.isEmpty(cvString)) {
             profileChangeMap.put("profile_info/cv", cvString);
+        } else {
+            profileChangeMap.put("profile_info/cv", null);
         }
 
         if(profile.adminOverride) {
             String positionString = position.getText().toString();
             if(!TextUtils.isEmpty(positionString)) {
                 profileChangeMap.put("position", positionString);
+            } else {
+                profileChangeMap.put("position", null);
             }
         }
 
