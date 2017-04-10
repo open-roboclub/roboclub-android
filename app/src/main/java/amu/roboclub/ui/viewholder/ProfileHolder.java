@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.Map;
@@ -31,20 +30,13 @@ public class ProfileHolder extends RecyclerView.ViewHolder {
     private static FirebaseUser user;
     private static boolean adminOverride = false;
 
-    @BindView(R.id.rootView)
-    public CardView root;
-    @BindView(R.id.title)
-    public TextView name;
-    @BindView(R.id.position)
-    public TextView position;
-    @BindView(R.id.avatar)
-    public ImageView avatar;
-    @BindView(R.id.contactPanel)
-    public LinearLayout contactPanel;
-    @BindView(R.id.showProfile)
-    public TextView showProfile;
-    @BindView(R.id.editable)
-    public TextView editable;
+    @BindView(R.id.rootView) CardView root;
+    @BindView(R.id.title) TextView name;
+    @BindView(R.id.position) TextView position;
+    @BindView(R.id.avatar) ImageView avatar;
+    @BindView(R.id.contactPanel) LinearLayout contactPanel;
+    @BindView(R.id.showProfile) TextView showProfile;
+    @BindView(R.id.editable) TextView editable;
 
     public ProfileHolder(View view) {
         super(view);

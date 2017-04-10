@@ -56,10 +56,12 @@ public class TeamFragment extends Fragment {
         ProfileHolder.setUser(FirebaseAuth.getInstance().getCurrentUser());
 
         Query teamReference = FirebaseDatabase.getInstance().getReference("team/16").orderByChild("rank");
-        FirebaseRecyclerAdapter teamAdapter = new FirebaseRecyclerAdapter<Profile, ProfileHolder>(Profile.class, R.layout.item_contact, ProfileHolder.class, teamReference) {
+        FirebaseRecyclerAdapter teamAdapter =
+                new FirebaseRecyclerAdapter<Profile, ProfileHolder>
+                        (Profile.class, R.layout.item_contact, ProfileHolder.class, teamReference) {
 
             @Override
-            protected void populateViewHolder(final ProfileHolder holder, final Profile profile, int position) {
+            protected void populateViewHolder(final ProfileHolder holder, Profile profile, int position) {
                 if (snackbar.isShown())
                     snackbar.dismiss();
 

@@ -56,15 +56,5 @@ public class ProjectFragment extends Fragment {
         return root;
     }
 
-    public static void setImage(Context context, ImageView imageView, String imgUrl) {
-        if (imgUrl == null || imgUrl.contains("robo.jpg"))
-            imageView.setImageDrawable(VectorDrawableCompat.create(context.getResources(), R.drawable.ic_gear, null));
-        else
-            Picasso.with(context)
-                    .load(imgUrl)
-                    .transform(new CircleTransform())
-                    .into(imageView);
-    }
-
 
 }

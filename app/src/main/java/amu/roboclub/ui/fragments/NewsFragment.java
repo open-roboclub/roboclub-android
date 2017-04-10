@@ -47,33 +47,13 @@ public class NewsFragment extends Fragment {
         FirebaseRecyclerAdapter newsAdapter = new FirebaseRecyclerAdapter<News, NewsHolder>(News.class, R.layout.item_announcement, NewsHolder.class, newsReference) {
 
             @Override
-            protected void populateViewHolder(final NewsHolder holder, final News news, int position) {
+            protected void populateViewHolder(final NewsHolder holder, News news, int position) {
 
-                if (loading.getVisibility() == View.VISIBLE) {
+                if (loading.getVisibility() == View.VISIBLE)
                     loading.setVisibility(View.GONE);
-                }
 
-                holder.news.setText(news.notice);
-                holder.date.setText(news.date);
+                holder.setNews(getContext(), news);
 
-                if (news.link == null) {
-                    holder.link.setVisibility(View.GONE);
-                    holder.divider.setVisibility(View.GONE);
-                    return;
-                }
-
-                holder.link.setVisibility(View.VISIBLE);
-                holder.divider.setVisibility(View.VISIBLE);
-
-                holder.link.setOnClickListener(view -> {
-                    Intent i = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse(news.link));
-                    try {
-                        getActivity().startActivity(i);
-                    } catch (ActivityNotFoundException e) {
-                        Snackbar.make(holder.link, R.string.app_not_found, Snackbar.LENGTH_SHORT).show();
-                    }
-                });
             }
         };
 

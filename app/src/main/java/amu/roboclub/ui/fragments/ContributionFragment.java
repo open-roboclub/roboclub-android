@@ -52,10 +52,7 @@ public class ContributionFragment extends Fragment {
             protected void populateViewHolder(ContributionHolder holder, Contribution contribution, int position) {
                 if (snackbar.isShown())
                     snackbar.dismiss();
-                holder.contributor.setText(contribution.contributor);
-                holder.purpose.setText(contribution.purpose);
-                holder.remark.setText(contribution.remark);
-                holder.amount.setText(contribution.amount);
+                holder.setContribution(contribution);
             }
 
             @Override

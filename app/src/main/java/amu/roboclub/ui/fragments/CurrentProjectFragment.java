@@ -1,6 +1,5 @@
 package amu.roboclub.ui.fragments;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -17,7 +16,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-import amu.roboclub.ui.ProjectDetailActivity;
 import amu.roboclub.R;
 import amu.roboclub.models.Project;
 import amu.roboclub.ui.viewholder.ProjectHolder;
@@ -58,23 +56,8 @@ public class CurrentProjectFragment extends Fragment {
 
                 if (snackbar.isShown())
                     snackbar.dismiss();
-                holder.title.setText(project.name);
 
-                if (project.team != null)
-                    holder.team.setText(project.team);
-                else
-                    holder.team.setText(R.string.dividers);
-
-                ProjectFragment.setImage(getContext(), holder.projectImg, project.image);
-
-                holder.root.setOnClickListener(view -> {
-                    if(project.description == null || project.description.equals(""))
-                        return;
-
-                    Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
-                    intent.putExtra("project", project);
-                    startActivity(intent);
-                });
+                holder.setProject(getContext(), project);
             }
 
             @Override
