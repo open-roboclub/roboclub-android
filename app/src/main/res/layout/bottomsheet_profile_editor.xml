@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="wrap_content">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -11,9 +11,9 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -23,18 +23,18 @@
                     android:id="@+id/close"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:contentDescription="@null"
                     android:layout_margin="16dp"
-                    android:clickable="true"
                     android:background="?selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@null"
                     android:tint="@color/gray"
-                    app:srcCompat="@drawable/ic_clear"/>
+                    app:srcCompat="@drawable/ic_clear" />
 
                 <LinearLayout
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/avatar"
@@ -43,7 +43,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:contentDescription="@null"
-                        app:srcCompat="@drawable/ic_avatar"/>
+                        app:srcCompat="@drawable/ic_avatar" />
 
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/photo_fab"
@@ -53,240 +53,193 @@
                         android:layout_marginBottom="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginRight="10dp"
-                        app:srcCompat="@drawable/ic_image"
-                        app:fabSize="mini"/>
+                        app:fabSize="mini"
+                        app:srcCompat="@drawable/ic_image" />
 
                 </LinearLayout>
             </FrameLayout>
 
             <ProgressBar
                 android:id="@+id/progress_bar"
+                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
-                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                 android:visibility="invisible"
-                tools:visibility="visible"/>
+                tools:visibility="visible" />
 
             <LinearLayout
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
-                android:paddingRight="10dp"
-                android:paddingEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal"
+                style="@style/Padded"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="center"
+                    style="@style/GrayIcon"
                     android:contentDescription="@null"
-                    android:tint="@color/gray"
-                    app:srcCompat="@drawable/ic_avatar"/>
+                    app:srcCompat="@drawable/ic_avatar" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/name"/>
+                        android:hint="@string/name" />
 
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
-                android:paddingRight="10dp"
-                android:paddingEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal"
+                style="@style/Padded"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="center"
+                    style="@style/GrayIcon"
                     android:contentDescription="@null"
-                    android:tint="@color/gray"
-                    app:srcCompat="@drawable/ic_image"/>
+                    app:srcCompat="@drawable/ic_image" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/photo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/photo_link"
-                        android:enabled="false" />
+                        android:enabled="false"
+                        android:hint="@string/photo_link" />
 
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
-                android:paddingRight="10dp"
-                android:paddingEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal"
+                style="@style/Padded"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="center"
+                    style="@style/GrayIcon"
                     android:contentDescription="@null"
-                    android:tint="@color/gray"
-                    app:srcCompat="@drawable/ic_gear"/>
+                    app:srcCompat="@drawable/ic_gear" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/position"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/position"
-                        android:enabled="false"/>
+                        android:enabled="false"
+                        android:hint="@string/position" />
 
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
-                android:paddingRight="10dp"
-                android:paddingEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal"
+                style="@style/Padded"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="center"
+                    style="@style/GrayIcon"
                     android:contentDescription="@null"
-                    android:tint="@color/gray"
-                    app:srcCompat="@drawable/ic_menu_team"/>
+                    app:srcCompat="@drawable/ic_menu_team" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/batch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/batch"/>
+                        android:hint="@string/batch" />
 
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
-                android:paddingRight="10dp"
-                android:paddingEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal"
+                style="@style/Padded"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="center"
+                    style="@style/GrayIcon"
                     android:contentDescription="@null"
-                    android:tint="@color/gray"
-                    app:srcCompat="@drawable/ic_whatshot"/>
+                    app:srcCompat="@drawable/ic_whatshot" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/about"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/menu_about"/>
+                        android:hint="@string/menu_about" />
 
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
-                android:paddingRight="10dp"
-                android:paddingEnd="10dp"
-                android:orientation="horizontal"
+                style="@style/Padded"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="center"
+                    style="@style/GrayIcon"
                     android:contentDescription="@null"
-                    android:tint="@color/gray"
-                    app:srcCompat="@drawable/ic_link"/>
+                    app:srcCompat="@drawable/ic_link" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/cv_link"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/cv_link"/>
+                        android:hint="@string/cv_link" />
 
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
-                android:paddingRight="10dp"
-                android:paddingEnd="10dp"
-                android:orientation="horizontal"
+                style="@style/Padded"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="center"
+                    style="@style/GrayIcon"
                     android:contentDescription="@null"
-                    android:tint="@color/gray"
-                    app:srcCompat="@drawable/ic_smile"/>
+                    app:srcCompat="@drawable/ic_smile" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/interests"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/interests"/>
+                        android:hint="@string/interests" />
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>

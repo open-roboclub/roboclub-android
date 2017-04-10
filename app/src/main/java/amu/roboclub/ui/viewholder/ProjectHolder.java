@@ -32,7 +32,7 @@ public class ProjectHolder extends RecyclerView.ViewHolder {
         projectImg = (ImageView) view.findViewById(R.id.projectImg);
     }
 
-    private static void setImage(Context context, ImageView imageView, String imgUrl) {
+    public static void setImage(Context context, ImageView imageView, String imgUrl) {
         if (imgUrl == null || imgUrl.contains("robo.jpg"))
             imageView.setImageDrawable(VectorDrawableCompat.create(context.getResources(), R.drawable.ic_gear, null));
         else

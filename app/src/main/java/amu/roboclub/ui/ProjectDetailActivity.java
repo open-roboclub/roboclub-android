@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import amu.roboclub.ui.viewholder.ProjectHolder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -190,7 +191,7 @@ public class ProjectDetailActivity extends AppCompatActivity {
         if (project == null)
             return;
 
-        ProjectFragment.setImage(this, image, project.image);
+        ProjectHolder.setImage(this, image, project.image);
 
         if (project.team != null)
             team.setText(project.team);
