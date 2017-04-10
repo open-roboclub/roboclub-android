@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,6 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.root) CoordinatorLayout rootLayout;
     @BindView(R.id.profileContainer) NestedScrollView profileContainer;
+    @BindView(R.id.profileInfo) LinearLayout profileInfoContainer;
     @BindView(R.id.fab) FloatingActionButton fab;
 
     @BindView(R.id.avatar) ImageView avatar;
@@ -136,42 +138,51 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         ProfileInfo profileInfo = profile.profile_info;
-        batch.setText(profileInfo.batch);
-        about.setText(profileInfo.about);
 
-        if(profileInfo.cv != null) {
-            cvCard.setVisibility(View.VISIBLE);
-            cvCard.setOnClickListener(view -> {
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(profileInfo.cv)));
-                } catch (ActivityNotFoundException ane) {
-                    Snackbar.make(rootLayout, R.string.browser_not_found, Snackbar.LENGTH_SHORT).show();
+        if(profileInfo != null) {
+            profileInfoContainer.setVisibility(View.VISIBLE);
+
+            if(profileInfo.batch != null)
+                batch.setText(profileInfo.batch);
+            if(profileInfo.about != null)
+            about.setText(profileInfo.about);
+
+            if (profileInfo.cv != null) {
+                cvCard.setVisibility(View.VISIBLE);
+                cvCard.setOnClickListener(view -> {
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(profileInfo.cv)));
+                    } catch (ActivityNotFoundException ane) {
+                        Snackbar.make(rootLayout, R.string.browser_not_found, Snackbar.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            if (profileInfo.interests != null && !profileInfo.interests.isEmpty()) {
+                interestsCard.setVisibility(View.VISIBLE);
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String interest : profileInfo.interests) {
+                    stringBuilder.append("\u25CF");
+                    stringBuilder.append(interest);
+                    stringBuilder.append("\n");
                 }
-            });
-        }
 
-        if(profileInfo.interests != null && !profileInfo.interests.isEmpty()) {
-            interestsCard.setVisibility(View.VISIBLE);
-            StringBuilder stringBuilder = new StringBuilder();
-            for (String interest: profileInfo.interests) {
-                stringBuilder.append("\u25CF");
-                stringBuilder.append(interest);
-                stringBuilder.append("\n");
+                interests.setText(stringBuilder.toString());
             }
 
-            interests.setText(stringBuilder.toString());
-        }
+            if (profileInfo.projects != null && !profileInfo.projects.isEmpty()) {
+                projectsCard.setVisibility(View.VISIBLE);
+                StringBuilder stringBuilder = new StringBuilder();
+                for (HashMap project : profileInfo.projects) {
+                    stringBuilder.append("\u25CF");
+                    stringBuilder.append(project.get("name"));
+                    stringBuilder.append("\n");
+                }
 
-        if(profileInfo.projects != null && !profileInfo.projects.isEmpty()) {
-            projectsCard.setVisibility(View.VISIBLE);
-            StringBuilder stringBuilder = new StringBuilder();
-            for(HashMap project : profileInfo.projects) {
-                stringBuilder.append("\u25CF");
-                stringBuilder.append(project.get("name"));
-                stringBuilder.append("\n");
+                projects.setText(stringBuilder.toString());
             }
-
-            projects.setText(stringBuilder.toString());
+        } else {
+            profileInfoContainer.setVisibility(View.GONE);
         }
 
         configureUser(profile);
