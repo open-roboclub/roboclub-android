@@ -3,7 +3,9 @@ package amu.roboclub.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UpdateMapBuilder {
@@ -22,13 +24,30 @@ public class UpdateMapBuilder {
         return this;
     }
 
+    public UpdateMapBuilder addNonNullNonEmptyList(String key, String value, List<String> comparator) {
+        if(key == null)
+            return this;
+
+        List<String> list = Arrays.asList(value.split("\n"));
+
+        if(TextUtils.isEmpty(value)) {
+            if(comparator != null && !comparator.isEmpty())
+                map.put(key, null);
+        } else if(!list.equals(comparator)) {
+            map.put(key, list);
+        }
+
+        return this;
+    }
+
     public UpdateMapBuilder addNonNullNonEqualString(String key, String value, String comparator) {
         if(key == null)
             return this;
 
-        if(comparator != null && (value == null || TextUtils.isEmpty(value))) {
-            map.put(key, null);
-        } else if(value != null && !value.equals(comparator) && !TextUtils.isEmpty(value)) {
+        if(value == null || TextUtils.isEmpty(value)) {
+            if(comparator != null)
+                map.put(key, null);
+        } else if(!value.equals(comparator)) {
             map.put(key, value);
         }
 

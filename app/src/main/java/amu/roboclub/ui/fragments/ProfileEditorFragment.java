@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.cloudinary.utils.StringUtils;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -62,6 +63,7 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     @BindView(R.id.batch) TextInputEditText batch;
     @BindView(R.id.about) TextInputEditText about;
     @BindView(R.id.cv_link) TextInputEditText cvLink;
+    @BindView(R.id.interests) TextInputEditText interests;
 
     private View root;
     private String filePath;
@@ -115,17 +117,19 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         String aboutString = about.getText().toString();
         String cvString = cvLink.getText().toString();
         String positionString = position.getText().toString();
+        String interestString = interests.getText().toString();
 
         ProfileInfo profileInfo = profile.profile_info;
         if(profileInfo == null)
             profileInfo = new ProfileInfo(); // Hack to avoid NPE
 
         UpdateMapBuilder updateMapBuilder = new UpdateMapBuilder()
-                        .addNonNullNonEqualString("name", nameString, profile.name)
-                        .addNonNullNonEqualString("profile_info/batch", batchString, profileInfo.batch)
-                        .addNonNullNonEqualString("profile_info/about", aboutString, profileInfo.about)
-                        .addNonNullNonEqualString("profile_info/cv", cvString, profileInfo.cv)
-                        .addNonEqualString("thumbnail", photoString, profile.thumbnail);
+                .addNonNullNonEqualString("name", nameString, profile.name)
+                .addNonNullNonEqualString("profile_info/batch", batchString, profileInfo.batch)
+                .addNonNullNonEqualString("profile_info/about", aboutString, profileInfo.about)
+                .addNonNullNonEqualString("profile_info/cv", cvString, profileInfo.cv)
+                .addNonNullNonEmptyList("profile_info/interests", interestString, profileInfo.interests)
+                .addNonEqualString("thumbnail", photoString, profile.thumbnail);
 
 
         if(profile.adminOverride)
@@ -143,7 +147,7 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     }
 
     private void setupEditTexts() {
-        setEditTextDisabled(about, photoLink, position, batch, about, cvLink);
+        setEditTextDisabled(about, photoLink, position, batch, about, cvLink, interests);
     }
 
     private void setEditTextDisabled(TextInputEditText... editTexts) {
@@ -214,6 +218,10 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
 
             if(info.about != null)
                 about.setText(info.about);
+
+            if (info.interests != null) {
+                interests.setText(StringUtils.join(info.interests, "\n"));
+            }
         }
     }
 

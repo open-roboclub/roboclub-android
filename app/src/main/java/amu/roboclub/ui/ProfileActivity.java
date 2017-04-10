@@ -251,9 +251,14 @@ public class ProfileActivity extends AppCompatActivity {
     private void updateProfile(Map<String, Object> objectMap) {
         FirebaseDatabase.getInstance()
                 .getReference(reference)
-                .updateChildren(objectMap, (databaseError, databaseReference) ->
-                        Snackbar.make(rootLayout, R.string.profile_updated, BaseTransientBottomBar.LENGTH_SHORT).show()
-                );
+                .updateChildren(objectMap, (databaseError, databaseReference) -> {
+                    if(databaseError != null){
+                        Log.d("UpdateProfile", "updateProfile: " + databaseError);
+                        Snackbar.make(rootLayout, R.string.profile_update_failed, BaseTransientBottomBar.LENGTH_SHORT).show();
+                    } else {
+                        Snackbar.make(rootLayout, R.string.profile_updated, BaseTransientBottomBar.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override

@@ -126,4 +126,5 @@
     <string name="image_upload_success">Image Uploaded Successfully.\nDon\'t forget to click save button</string>
     <string name="post_key">Post Key</string>
     <string name="editable">editable</string>
+    <string name="profile_update_failed">Profile Update Failed</string>
 </resources>
