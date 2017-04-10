@@ -16,6 +16,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -49,6 +50,7 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     private Profile profile;
     private OnProfileChangeListener onProfileChangeListener;
 
+    @BindView(R.id.nestedScrollView) NestedScrollView scrollView;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
     @BindView(R.id.close) ImageView close;
     @BindView(R.id.save_fab) FloatingActionButton saveFab;
@@ -76,8 +78,24 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         showProfile();
 
         saveFab.setOnClickListener(view -> save());
+        setScrollBehaviour();
 
         setupEditTexts();
+    }
+
+    private void setScrollBehaviour() {
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                int dy = scrollY - oldScrollY;
+
+                if(dy > 0) {
+                    saveFab.hide();
+                } else {
+                    saveFab.show();
+                }
+            }
+        });
     }
 
     public void setProfile(Profile profile) {

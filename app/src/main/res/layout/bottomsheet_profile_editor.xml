@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -260,16 +261,16 @@
 
             </LinearLayout>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/save_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/fab_margin"
-                app:srcCompat="@drawable/ic_save" />
-
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/save_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_save" />
 
 </android.support.design.widget.CoordinatorLayout>
