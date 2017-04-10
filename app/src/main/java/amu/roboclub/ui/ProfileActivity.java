@@ -142,6 +142,7 @@ public class ProfileActivity extends AppCompatActivity {
         if(profileInfo != null) {
             profileInfoContainer.setVisibility(View.VISIBLE);
 
+            // TODO : Fix empty about section
             if(profileInfo.batch != null)
                 batch.setText(profileInfo.batch);
             if(profileInfo.about != null)
