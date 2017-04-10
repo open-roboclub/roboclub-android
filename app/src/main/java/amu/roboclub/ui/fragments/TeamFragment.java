@@ -22,6 +22,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
@@ -60,6 +62,8 @@ public class TeamFragment extends Fragment {
         snackbar = Snackbar.make(recyclerView, R.string.loading_members, Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         Query contactReference = FirebaseDatabase.getInstance().getReference("team/16").orderByChild("rank");
         FirebaseRecyclerAdapter contactAdapter = new FirebaseRecyclerAdapter<Profile, ProfileHolder>(Profile.class, R.layout.item_contact, ProfileHolder.class, contactReference) {
 
@@ -91,6 +95,21 @@ public class TeamFragment extends Fragment {
                 } else {
                     holder.showProfile.setVisibility(View.GONE);
                     holder.root.setOnClickListener(null);
+                }
+
+                if(user != null && user.getUid().equals(profile.uid)) {
+                    holder.editable.setVisibility(View.VISIBLE);
+                    holder.root.setOnClickListener(view -> {
+                        Intent intent = new Intent(getContext(), ProfileActivity.class);
+                        intent.putExtra(ProfileActivity.REFERENCE_KEY, getRef(position).toString());
+
+                        startActivity(intent);
+                    });
+                } else {
+                    holder.editable.setVisibility(View.GONE);
+                    if(profile.profile_info == null) {
+                        holder.root.setOnClickListener(null);
+                    }
                 }
 
                 LinearLayout contactPanel = (LinearLayout) holder.root.findViewById(R.id.contactPanel);

@@ -22,6 +22,8 @@ public class ProfileHolder extends RecyclerView.ViewHolder {
     public ImageView avatar;
     @BindView(R.id.showProfile)
     public TextView showProfile;
+    @BindView(R.id.editable)
+    public TextView editable;
 
     public ProfileHolder(View view) {
         super(view);

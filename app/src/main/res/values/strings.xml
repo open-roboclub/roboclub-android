@@ -125,4 +125,5 @@
     <string name="photo_upload_confirm">Scroll to bottom to confirm photo upload</string>
     <string name="image_upload_success">Image Uploaded Successfully.\nDon\'t forget to click save button</string>
     <string name="post_key">Post Key</string>
+    <string name="editable">editable</string>
 </resources>
