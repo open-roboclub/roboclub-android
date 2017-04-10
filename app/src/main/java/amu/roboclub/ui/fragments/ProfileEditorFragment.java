@@ -15,7 +15,6 @@ import android.support.design.widget.Snackbar;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -26,7 +25,6 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 
 import amu.roboclub.R;
@@ -34,6 +32,7 @@ import amu.roboclub.models.Profile;
 import amu.roboclub.models.ProfileInfo;
 import amu.roboclub.utils.CircleTransform;
 import amu.roboclub.utils.ImageUploader;
+import amu.roboclub.utils.UpdateMapBuilder;
 import amu.roboclub.utils.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,57 +88,35 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     }
 
     private void save() {
-        Map<String, Object> profileChangeMap = new HashMap<>();
-
-        String nameString = name.getText().toString();
-        if(!TextUtils.isEmpty(nameString)) {
-            profileChangeMap.put("name", nameString);
-        } else {
-            profileChangeMap.put("name", null);
-        }
-
-        // Can't remove photo, else each time new image will be pushed
-        // to old_avatars/ node, so only add if unchanged
         String photoString = photoLink.getText().toString();
-        if(!TextUtils.isEmpty(photoString) && !photoString.equals(profile.thumbnail)) {
-            profileChangeMap.put("thumbnail", photoString);
-        }
-
+        String nameString = name.getText().toString();
         String batchString = batch.getText().toString();
-        if(!TextUtils.isEmpty(batchString)) {
-            profileChangeMap.put("profile_info/batch", batchString);
-        } else {
-            profileChangeMap.put("profile_info/batch", null);
-        }
-
         String aboutString = about.getText().toString();
-        if(!TextUtils.isEmpty(aboutString)) {
-            profileChangeMap.put("profile_info/about", aboutString);
-        } else {
-            profileChangeMap.put("profile_info/about", null);
-        }
-
         String cvString = cvLink.getText().toString();
-        if(!TextUtils.isEmpty(cvString)) {
-            profileChangeMap.put("profile_info/cv", cvString);
-        } else {
-            profileChangeMap.put("profile_info/cv", null);
+        String positionString = position.getText().toString();
+
+        ProfileInfo profileInfo = profile.profile_info;
+        if(profileInfo == null)
+            profileInfo = new ProfileInfo(); // Hack to avoid NPE
+
+        UpdateMapBuilder updateMapBuilder = new UpdateMapBuilder()
+                        .addNonNullNonEqualString("name", nameString, profile.name)
+                        .addNonNullNonEqualString("profile_info/batch", batchString, profileInfo.batch)
+                        .addNonNullNonEqualString("profile_info/about", aboutString, profileInfo.about)
+                        .addNonNullNonEqualString("profile_info/cv", cvString, profileInfo.cv)
+                        .addNonEqualString("thumbnail", photoString, profile.thumbnail);
+
+
+        if(profile.adminOverride)
+            updateMapBuilder.addNonNullNonEqualString("position", positionString, profile.position);
+
+        Map<String, Object> updateMap = updateMapBuilder.build();
+
+        if(onProfileChangeListener != null && !updateMap.isEmpty()) {
+            onProfileChangeListener.onProfileChange(updateMap);
         }
 
-        if(profile.adminOverride) {
-            String positionString = position.getText().toString();
-            if(!TextUtils.isEmpty(positionString)) {
-                profileChangeMap.put("position", positionString);
-            } else {
-                profileChangeMap.put("position", null);
-            }
-        }
-
-        if(onProfileChangeListener != null && !profileChangeMap.isEmpty()) {
-            onProfileChangeListener.onProfileChange(profileChangeMap);
-        }
-
-        Log.d(TAG, "save: profile" + onProfileChangeListener + " profileChanges " + profileChangeMap);
+        Log.d(TAG, "save: profile" + onProfileChangeListener + " profileChanges " + updateMap);
 
         dismiss();
     }
