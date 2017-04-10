@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -68,7 +69,7 @@ public class AdminFragment extends Fragment {
     private View root;
 
     @BindView(R.id.sign_in) FloatingActionButton signIn;
-    @BindView(R.id.state) TextView state;
+    @BindView(R.id.state) LinearLayout state;
     @BindView(R.id.account_info) NestedScrollView accountInfo;
     @BindView(R.id.account_progress) ProgressBar progressBar;
     @BindView(R.id.avatar) ImageView avatar;
@@ -135,7 +136,6 @@ public class AdminFragment extends Fragment {
 
                 accountInfo.setVisibility(View.GONE);
                 state.setVisibility(View.VISIBLE);
-                state.setText(R.string.signed_out_warning);
                 notificationCard.setVisibility(View.GONE);
                 newsCard.setVisibility(View.GONE);
                 Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -426,9 +426,12 @@ public class AdminFragment extends Fragment {
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
-                        .setProviders(Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+                        .setProviders(Arrays.asList(
+                                new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
                                 new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
                                 new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()))
+                        .setTheme(R.style.PurpleTheme)
+                        .setLogo(R.drawable.logo)
                         .build(),
                 RC_SIGN_IN);
     }

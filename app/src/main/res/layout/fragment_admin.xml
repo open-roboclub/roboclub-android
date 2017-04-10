@@ -192,6 +192,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:enabled="false"
+                        android:hint="@string/post_key"
                         tools:text="Firebase Reference"/>
 
                     <android.support.design.widget.TextInputLayout
@@ -246,15 +247,29 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <TextView
+    <LinearLayout
         android:id="@+id/state"
-        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_gravity="center"
-        android:textSize="26sp"
-        android:textStyle="italic"
-        android:text="@string/signed_out_warning"
-        tools:visibility="gone" />
+        tools:visibility="gone">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:tint="@color/gray"
+            android:contentDescription="@null"
+            app:srcCompat="@drawable/ic_whatshot"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            android:text="@string/signed_out_warning" />
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/account_progress"

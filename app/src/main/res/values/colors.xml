@@ -2,8 +2,8 @@
 <resources>
     <color name="colorPrimary">#7E57C2</color>
     <color name="colorPrimaryDark">#5E35B1</color>
-    <color name="colorAccent">#D500F9</color>
-    <color name="lightPurple">#f6ecf7</color>
+    <color name="colorAccent">@color/material_deep_purple_a200</color>
+    <color name="lightPurple">@color/material_deep_purple_50</color>
     <color name="mediumPurple">#9575CD</color>
     <color name="fb_blue">#283593</color>
     <color name="em_red">#ef5350</color>
@@ -13,4 +13,24 @@
     <color name="white">#efefef</color>
     <color name="gray">#555555</color>
     <color name="cyan">#00E5FF</color>
+
+
+    <color name="text_default_material_dark_primary">#ffffffff</color>
+    <color name="text_default_material_light_primary">#de000000</color>
+    <color name="text_default_material_dark_secondary">#b3ffffff</color>
+    <color name="text_default_material_light_secondary">#8a000000</color>
+
+    <color name="material_deep_purple_50">#EDE7F6</color>
+    <color name="material_deep_purple_500">#673AB7</color>
+    <color name="material_deep_purple_700">#512DA8</color>
+    <color name="material_deep_purple_a200">#E040FB</color>
+
+    <color name="material_gray_300">#E0E0E0</color>
+    <color name="material_gray_850">#ff303030</color>
+    <color name="material_gray_900">#ff212121</color>
+
+    <color name="material_lime_a700">#AEEA00</color>
+
+    <color name="material_purple_50">#F3E5F5</color>
+    <color name="material_purple_a700">#AA00FF</color>
 </resources>
