@@ -16,6 +16,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -75,6 +76,8 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         showProfile();
 
         saveFab.setOnClickListener(view -> save());
+
+        setupEditTexts();
     }
 
     public void setProfile(Profile profile) {
@@ -119,6 +122,26 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         Log.d(TAG, "save: profile" + onProfileChangeListener + " profileChanges " + updateMap);
 
         dismiss();
+    }
+
+    private void setupEditTexts() {
+        setEditTextDisabled(about, photoLink, position, batch, about, cvLink);
+    }
+
+    private void setEditTextDisabled(TextInputEditText... editTexts) {
+        for(TextInputEditText editText: editTexts) {
+            editText.setMaxLines(1);
+            editText.setEllipsize(TextUtils.TruncateAt.END);
+            editText.setOnFocusChangeListener((v, hasFocus) -> {
+                if(!hasFocus) {
+                    editText.setMaxLines(1);
+                    editText.setEllipsize(TextUtils.TruncateAt.END);
+                } else {
+                    editText.setMaxLines(200);
+                    editText.setEllipsize(null);
+                }
+            });
+        }
     }
 
     @OnLongClick(R.id.save_fab)
