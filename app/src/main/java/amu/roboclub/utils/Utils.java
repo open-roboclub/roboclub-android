@@ -1,20 +1,33 @@
 package amu.roboclub.utils;
 
+import android.app.Application;
+import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.DrawableRes;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.util.Base64;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 
 import amu.roboclub.BuildConfig;
+import amu.roboclub.R;
 
 public class Utils {
+
+    public static final int MODE_LINK = 0, MODE_TELEPHONE = 1, MODE_EMAIL = 2;
 
     static String  getCloudinaryUrl() {
         String url = BuildConfig.API_KEY;
@@ -25,6 +38,52 @@ public class Utils {
         } catch (UnsupportedEncodingException uee) {
             return null;
         }
+    }
+
+    private static ImageButton getRippleImageButton(Context context) {
+        ImageButton im = new ImageButton(context);
+
+        int[] attrs = new int[]{R.attr.selectableItemBackgroundBorderless};
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
+        im.setBackgroundResource(typedArray.getResourceId(0, 0));
+        typedArray.recycle();
+        im.setPadding(20, 20, 20, 20);
+
+        return im;
+    }
+
+    public static void addImageLink(Context context, @DrawableRes int drawable, String link, LinearLayout linearLayout, int mode) {
+        if(link == null)
+            return;
+
+        ImageButton im = getRippleImageButton(context);
+
+        im.setImageResource(drawable);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+        if(mode == MODE_TELEPHONE)
+            intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + link));
+        else if(mode == MODE_EMAIL) {
+            intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{link});
+            intent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.mail_subject));
+        }
+
+        linearLayout.addView(im);
+
+        Intent finalIntent = intent;
+        im.setOnClickListener(view -> {
+            try {
+                context.startActivity(finalIntent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(context, R.string.app_not_found, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public static void addImageLink(Context context, @DrawableRes int drawable, String link, LinearLayout linearLayout) {
+        addImageLink(context, drawable, link, linearLayout, MODE_LINK);
     }
 
     public static String getFilePath(Context context, Uri uri) {

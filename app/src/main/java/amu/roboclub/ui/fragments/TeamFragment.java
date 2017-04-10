@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -32,11 +33,14 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.Map;
+
 import amu.roboclub.R;
 import amu.roboclub.models.Profile;
 import amu.roboclub.ui.ProfileActivity;
 import amu.roboclub.ui.viewholder.ProfileHolder;
 import amu.roboclub.utils.CircleTransform;
+import amu.roboclub.utils.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -80,12 +84,8 @@ public class TeamFragment extends Fragment {
                 holder.name.setText(profile.name);
                 holder.position.setText(profile.position);
 
-                Drawable mPlaceholderDrawable = ResourcesCompat.getDrawable(
-                        getContext().getResources(),
-                        R.drawable.ic_avatar, null);
-
                 Picasso.with(getContext()).load(profile.thumbnail)
-                        .placeholder(mPlaceholderDrawable)
+                        .placeholder(VectorDrawableCompat.create(getResources(), R.drawable.ic_avatar, null))
                         .transform(new CircleTransform())
                         .into(holder.avatar);
 
@@ -125,69 +125,18 @@ public class TeamFragment extends Fragment {
                     }
                 }
 
-                LinearLayout contactPanel = (LinearLayout) holder.root.findViewById(R.id.contactPanel);
-                contactPanel.removeAllViews();
+                holder.contactPanel.removeAllViews();
 
-                if (profile.links == null)
+                Map<String, String> links = profile.links;
+                if (links == null)
                     return;
 
-                for (String link : profile.links.values()) {
-                    ImageButton im = new ImageButton(getContext());
+                Utils.addImageLink(getContext(), R.drawable.ic_email, links.get("email"), holder.contactPanel, Utils.MODE_EMAIL);
+                Utils.addImageLink(getContext(), R.drawable.ic_phone, links.get("mobile"), holder.contactPanel, Utils.MODE_TELEPHONE);
+                Utils.addImageLink(getContext(), R.drawable.ic_facebook, links.get("facebook"), holder.contactPanel);
+                Utils.addImageLink(getContext(), R.drawable.ic_gplus, links.get("g-plus"), holder.contactPanel);
+                Utils.addImageLink(getContext(), R.drawable.ic_linkedin, links.get("linkedin"), holder.contactPanel);
 
-                    int[] attrs = new int[]{R.attr.selectableItemBackgroundBorderless};
-                    TypedArray typedArray = getActivity().obtainStyledAttributes(attrs);
-                    im.setBackgroundResource(typedArray.getResourceId(0, 0));
-                    typedArray.recycle();
-                    im.setPadding(20, 20, 20, 20);
-
-                    Intent i = null;
-
-                    if (link.contains("facebook")) {
-                        im.setImageResource(R.drawable.ic_facebook);
-                        DrawableCompat.setTint(im.getDrawable(), ContextCompat.getColor(getContext(), R.color.fb_blue));
-
-                        i = new Intent(Intent.ACTION_VIEW,
-                                Uri.parse(link));
-                    } else if (link.contains("linkedin")) {
-                        im.setImageResource(R.drawable.ic_linkedin);
-                        DrawableCompat.setTint(im.getDrawable(), ContextCompat.getColor(getContext(), R.color.li_blue));
-
-                        i = new Intent(Intent.ACTION_VIEW,
-                                Uri.parse(link));
-                    } else if (link.contains("plus.google")) {
-                        im.setImageResource(R.drawable.ic_gplus);
-                        DrawableCompat.setTint(im.getDrawable(), ContextCompat.getColor(getContext(), R.color.gp_red));
-
-                        i = new Intent(Intent.ACTION_VIEW,
-                                Uri.parse(link));
-                    } else if (link.contains("+91")) {
-                        im.setImageResource(R.drawable.ic_phone);
-                        DrawableCompat.setTint(im.getDrawable(), ContextCompat.getColor(getContext(), R.color.ph_blue));
-
-                        i = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + link));
-                    } else if (link.contains("@")) {
-                        im.setImageResource(R.drawable.ic_email);
-                        DrawableCompat.setTint(im.getDrawable(), ContextCompat.getColor(getContext(), R.color.em_red));
-
-                        i = new Intent(Intent.ACTION_SEND);
-                        i.setType("text/plain");
-                        i.putExtra(Intent.EXTRA_EMAIL, new String[]{link});
-                        i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_subject));
-                    }
-
-
-                    if (i != null) {
-                        contactPanel.addView(im);
-                        final Intent intent = i;
-                        im.setOnClickListener(view -> {
-                            try {
-                                getActivity().startActivity(intent);
-                            } catch (ActivityNotFoundException e) {
-                                Snackbar.make(holder.root, R.string.app_not_found, Snackbar.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }
             }
         };
 

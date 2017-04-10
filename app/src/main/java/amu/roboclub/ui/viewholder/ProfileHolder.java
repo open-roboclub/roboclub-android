@@ -4,6 +4,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import amu.roboclub.R;
@@ -20,6 +21,8 @@ public class ProfileHolder extends RecyclerView.ViewHolder {
     public TextView position;
     @BindView(R.id.avatar)
     public ImageView avatar;
+    @BindView(R.id.contactPanel)
+    public LinearLayout contactPanel;
     @BindView(R.id.showProfile)
     public TextView showProfile;
     @BindView(R.id.editable)
