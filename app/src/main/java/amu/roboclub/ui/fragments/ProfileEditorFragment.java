@@ -28,6 +28,7 @@ import com.cloudinary.utils.StringUtils;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 import amu.roboclub.R;
@@ -64,6 +65,11 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     @BindView(R.id.about) TextInputEditText about;
     @BindView(R.id.cv_link) TextInputEditText cvLink;
     @BindView(R.id.interests) TextInputEditText interests;
+    @BindView(R.id.phone) TextInputEditText phone;
+    @BindView(R.id.email) TextInputEditText email;
+    @BindView(R.id.facebook) TextInputEditText facebook;
+    @BindView(R.id.gplus) TextInputEditText gplus;
+    @BindView(R.id.linkedin) TextInputEditText linkedin;
 
     private View root;
     private String filePath;
@@ -118,16 +124,30 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         String cvString = cvLink.getText().toString();
         String positionString = position.getText().toString();
         String interestString = interests.getText().toString();
+        String phoneNo = phone.getText().toString();
+        String emailAdd = email.getText().toString();
+        String facebookId = facebook.getText().toString();
+        String gplusId = gplus.getText().toString();
+        String linkedinId = linkedin.getText().toString();
 
         ProfileInfo profileInfo = profile.profile_info;
         if(profileInfo == null)
             profileInfo = new ProfileInfo(); // Hack to avoid NPE
+
+        Map<String, String> links = profile.links;
+        if(links == null)
+            links = new HashMap<>(); // Hack to avoid NPE
 
         UpdateMapBuilder updateMapBuilder = new UpdateMapBuilder()
                 .addNonNullNonEqualString("name", nameString, profile.name)
                 .addNonNullNonEqualString("profile_info/batch", batchString, profileInfo.batch)
                 .addNonNullNonEqualString("profile_info/about", aboutString, profileInfo.about)
                 .addNonNullNonEqualString("profile_info/cv", cvString, profileInfo.cv)
+                .addNonNullNonEqualString("links/mobile", phoneNo, links.get("mobile"))
+                .addNonNullNonEqualString("links/email", emailAdd, links.get("email"))
+                .addNonNullNonEqualString("links/facebook", facebookId, links.get("facebook"))
+                .addNonNullNonEqualString("links/g-plus", gplusId, links.get("g-plus"))
+                .addNonNullNonEqualString("links/linkdedin", linkedinId, links.get("linkedin"))
                 .addNonNullNonEmptyList("profile_info/interests", interestString, profileInfo.interests)
                 .addNonEqualString("thumbnail", photoString, profile.thumbnail);
 
@@ -147,7 +167,8 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     }
 
     private void setupEditTexts() {
-        setEditTextDisabled(about, photoLink, position, batch, about, cvLink, interests);
+        setEditTextDisabled(about, photoLink, position, batch, about, cvLink, interests, phone,
+                email, gplus, facebook, linkedin);
     }
 
     private void setEditTextDisabled(TextInputEditText... editTexts) {
@@ -210,19 +231,31 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
 
         ProfileInfo info = profile.profile_info;
         if(info != null) {
-            if(info.batch != null)
-                batch.setText(info.batch);
+            loadText(info.batch, batch);
 
-            if(info.cv != null)
-                cvLink.setText(info.cv);
+            loadText(info.cv, cvLink);
 
-            if(info.about != null)
-                about.setText(info.about);
+            loadText(info.about, about);
 
-            if (info.interests != null) {
-                interests.setText(StringUtils.join(info.interests, "\n"));
-            }
+            if (info.interests != null)
+                loadText(StringUtils.join(info.interests, "\n"), interests);
         }
+
+        Map<String, String> links = profile.links;
+        if(links != null && !links.isEmpty()) {
+            loadText(links.get("mobile"), phone);
+            loadText(links.get("email"), email);
+            loadText(links.get("facebook"), facebook);
+            loadText(links.get("g-plus"), gplus);
+            loadText(links.get("linkedin"), linkedin);
+        }
+    }
+
+    private void loadText(String text, TextInputEditText editText) {
+        if(text == null)
+            return;
+
+        editText.setText(text);
     }
 
     private void imageLoaded() {

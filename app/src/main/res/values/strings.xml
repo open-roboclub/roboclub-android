@@ -127,4 +127,8 @@
     <string name="post_key">Post Key</string>
     <string name="editable">editable</string>
     <string name="profile_update_failed">Profile Update Failed</string>
+    <string name="contact_no">Contact No</string>
+    <string name="facebook_id">Facebook ID</string>
+    <string name="google_plus_id">Google Plus ID</string>
+    <string name="linkedin_id">Linkedin ID</string>
 </resources>
