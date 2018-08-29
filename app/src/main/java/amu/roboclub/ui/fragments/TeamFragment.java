@@ -2,6 +2,7 @@ package amu.roboclub.ui.fragments;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,12 +35,14 @@ public class TeamFragment extends Fragment {
 
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
 
+    private FirebaseRecyclerAdapter teamAdapter;
+
     public static TeamFragment newInstance() {
         return new TeamFragment();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_team, container, false);
 
@@ -53,34 +57,45 @@ public class TeamFragment extends Fragment {
         snackbar.show();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        ProfileHolder.setUser(FirebaseAuth.getInstance().getCurrentUser());
+        ProfileHolder.setUser(user);
 
         Query teamReference = FirebaseDatabase.getInstance().getReference("team/16").orderByChild("rank");
-        FirebaseRecyclerAdapter teamAdapter =
-                new FirebaseRecyclerAdapter<Profile, ProfileHolder>
-                        (Profile.class, R.layout.item_contact, ProfileHolder.class, teamReference) {
+        FirebaseRecyclerOptions<Profile> options = new FirebaseRecyclerOptions.Builder<Profile>()
+                .setQuery(teamReference, Profile.class)
+                .build();
+        teamAdapter = new FirebaseRecyclerAdapter<Profile, ProfileHolder>(options) {
+
+            @NonNull
+            @Override
+            public ProfileHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.item_contact, parent, false);
+                return new ProfileHolder(view);
+            }
 
             @Override
-            protected void populateViewHolder(final ProfileHolder holder, Profile profile, int position) {
+            protected void onBindViewHolder(@NonNull ProfileHolder holder, int position, @NonNull Profile profile) {
                 if (snackbar.isShown())
                     snackbar.dismiss();
 
                 holder.setProfile(getContext(), profile, getRef(position).toString());
             }
+
         };
 
         recyclerView.setAdapter(teamAdapter);
+        teamAdapter.startListening(); // TODO: Move to LifecycleOwner or AAC
 
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             gridLayoutManager.setSpanCount(2);
         }
 
-        if(user != null) {
+        if (user != null) {
             FirebaseDatabase.getInstance()
                     .getReference("admins/" + user.getUid())
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.getValue() != null) {
                                 // User is Admin. Set override to true
                                 Log.d("TeamFragment", "Admin Override Enabled");
@@ -90,7 +105,7 @@ public class TeamFragment extends Fragment {
                         }
 
                         @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
                             // No action
                         }
                     });
@@ -99,5 +114,11 @@ public class TeamFragment extends Fragment {
         return root;
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (teamAdapter != null) {
+            teamAdapter.stopListening();
+        }
+    }
 }

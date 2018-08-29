@@ -114,7 +114,7 @@ public class ProjectDetailActivity extends AppCompatActivity {
 
                 ImageView bigImage = new ImageView(getApplicationContext());
                 bigImage.setPadding(pad, pad, pad, pad);
-                Picasso.with(getApplicationContext())
+                Picasso.get()
                         .load(imageUrl)
                         .into(bigImage);
 
@@ -123,7 +123,7 @@ public class ProjectDetailActivity extends AppCompatActivity {
                 alert.show();
             });
 
-            Picasso.with(this)
+            Picasso.get()
                     .load(getSmallImage(imageUrl))
                     .into(im, new Callback() {
                         @Override
@@ -133,7 +133,8 @@ public class ProjectDetailActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception ex) {
+                            // Do nothing
                         }
                     });
         }
@@ -145,7 +146,7 @@ public class ProjectDetailActivity extends AppCompatActivity {
             return;
 
 
-        Picasso.with(this)
+        Picasso.get()
                 .load("https://img.youtube.com/vi/" + project.youtube + "/hqdefault.jpg")
                 .into(youtube, new Callback() {
                     @Override
@@ -154,7 +155,7 @@ public class ProjectDetailActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception ex) {
                         // No Action
                     }
                 });

@@ -71,21 +71,21 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void loadImages() {
-        Picasso.with(this).load(R.drawable.header).into(header);
+        Picasso.get().load(R.drawable.header).into(header);
 
-        Drawable mPlaceholderDrawable = ResourcesCompat.getDrawable(
+        Drawable placeholder = ResourcesCompat.getDrawable(
                 getResources(),
                 R.drawable.ic_avatar, null);
 
-        Picasso.with(this)
+        Picasso.get()
                 .load("https://avatars1.githubusercontent.com/u/3874064?v=3&s=460")
-                .placeholder(mPlaceholderDrawable)
+                .placeholder(placeholder)
                 .transform(new CircleTransform())
                 .into(avatarAreeb);
 
-        Picasso.with(this)
+        Picasso.get()
                 .load("https://avatars3.githubusercontent.com/u/9443348?v=3&s=460")
-                .placeholder(mPlaceholderDrawable)
+                .placeholder(placeholder)
                 .transform(new CircleTransform())
                 .into(avatarDP);
 

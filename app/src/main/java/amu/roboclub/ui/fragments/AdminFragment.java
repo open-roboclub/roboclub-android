@@ -26,13 +26,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.FirebaseUiException;
 import com.firebase.ui.auth.IdpResponse;
-import com.firebase.ui.auth.ResultCodes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
@@ -60,6 +59,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+
+import static android.app.Activity.RESULT_OK;
 
 public class AdminFragment extends Fragment {
 
@@ -163,9 +164,9 @@ public class AdminFragment extends Fragment {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        Picasso.with(getContext()).cancelTag(TAG);
+        Picasso.get().cancelTag(TAG);
 
-        Picasso.with(getContext())
+        Picasso.get()
                 .load(uri)
                 .placeholder(VectorDrawableCompat.create(getResources(), R.drawable.ic_avatar, null))
                 .transform(new CircleTransform())
@@ -177,7 +178,7 @@ public class AdminFragment extends Fragment {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception ex) {
                         progressBar.setVisibility(View.INVISIBLE);
                         avatar.setImageDrawable(VectorDrawableCompat.create(getResources(), R.drawable.ic_avatar, null));
                     }
@@ -426,10 +427,11 @@ public class AdminFragment extends Fragment {
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
-                        .setProviders(Arrays.asList(
-                                new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
-                                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
-                                new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()))
+                        .setAvailableProviders(Arrays.asList(
+                                new AuthUI.IdpConfig.EmailBuilder().build(),
+                                new AuthUI.IdpConfig.GoogleBuilder().build(),
+                                new AuthUI.IdpConfig.FacebookBuilder().build(),
+                                new AuthUI.IdpConfig.PhoneBuilder().build()))
                         .setTheme(R.style.PurpleTheme)
                         .setLogo(R.drawable.logo)
                         .build(),
@@ -449,7 +451,7 @@ public class AdminFragment extends Fragment {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             // Successfully signed in
-            if (resultCode == ResultCodes.OK) {
+            if (resultCode == RESULT_OK) {
                 showSnackbar(R.string.signed_in);
                 return;
             } else {
@@ -460,14 +462,17 @@ public class AdminFragment extends Fragment {
                     return;
                 }
 
-                if (response.getErrorCode() == ErrorCodes.NO_NETWORK) {
-                    showSnackbar(R.string.no_internet_connection);
-                    return;
-                }
+                FirebaseUiException error = response.getError();
+                if (error !=  null) {
+                    if (error.getErrorCode() == ErrorCodes.NO_NETWORK) {
+                        showSnackbar(R.string.no_internet_connection);
+                        return;
+                    }
 
-                if (response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
-                    showSnackbar(R.string.unknown_error);
-                    return;
+                    if (error.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
+                        showSnackbar(R.string.unknown_error);
+                        return;
+                    }
                 }
             }
 

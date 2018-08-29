@@ -36,7 +36,7 @@ public class ProjectHolder extends RecyclerView.ViewHolder {
         if (imgUrl == null || imgUrl.contains("robo.jpg"))
             imageView.setImageDrawable(VectorDrawableCompat.create(context.getResources(), R.drawable.ic_gear, null));
         else
-            Picasso.with(context)
+            Picasso.get()
                     .load(imgUrl)
                     .transform(new CircleTransform())
                     .into(imageView);

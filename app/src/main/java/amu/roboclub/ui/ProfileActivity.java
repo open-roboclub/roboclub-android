@@ -130,7 +130,7 @@ public class ProfileActivity extends AppCompatActivity {
         position.setText(profile.position);
 
         if(profile.thumbnail != null) {
-            Picasso.with(this)
+            Picasso.get()
                     .load(profile.thumbnail)
                     .placeholder(VectorDrawableCompat.create(getResources(), R.drawable.ic_avatar, null))
                     .transform(new CircleTransform())

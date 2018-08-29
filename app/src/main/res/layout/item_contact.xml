@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/contactPanel"
             android:padding="16dp"
-            android:background="@color/tw__composer_light_gray"
+            android:background="#ffccd6dd"
             android:foreground="?selectableItemBackground"
             android:text="@string/show_profile"
             android:visibility="gone"

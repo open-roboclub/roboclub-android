@@ -92,16 +92,13 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     }
 
     private void setScrollBehaviour() {
-        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                int dy = scrollY - oldScrollY;
+        scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            int dy = scrollY - oldScrollY;
 
-                if(dy > 0) {
-                    saveFab.hide();
-                } else {
-                    saveFab.show();
-                }
+            if(dy > 0) {
+                saveFab.hide();
+            } else {
+                saveFab.show();
             }
         });
     }
@@ -216,10 +213,10 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
             Uri uri = Uri.parse(profile.thumbnail);
 
             // Cancel previously loading image if new request is generated
-            Picasso.with(getContext())
+            Picasso.get()
                     .cancelTag(TAG);
 
-            Picasso.with(getContext())
+            Picasso.get()
                     .load(uri)
                     .placeholder(VectorDrawableCompat.create(root.getResources(), R.drawable.ic_avatar, null))
                     .tag(TAG)
@@ -262,10 +259,10 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         if(filePath == null)
             return;
 
-        Picasso.with(getContext())
+        Picasso.get()
                 .cancelTag(TAG);
 
-        Picasso.with(getContext())
+        Picasso.get()
                 .load(new File(filePath))
                 .placeholder(VectorDrawableCompat.create(root.getResources(), R.drawable.ic_avatar, null))
                 .tag(TAG)

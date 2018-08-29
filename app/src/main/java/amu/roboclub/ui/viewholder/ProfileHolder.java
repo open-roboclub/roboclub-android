@@ -56,7 +56,7 @@ public class ProfileHolder extends RecyclerView.ViewHolder {
         name.setText(profile.name);
         position.setText(profile.position);
 
-        Picasso.with(context)
+        Picasso.get()
                 .load(Uri.parse(profile.thumbnail))
                 .placeholder(VectorDrawableCompat.create(context.getResources(), R.drawable.ic_avatar, null))
                 .transform(new CircleTransform())

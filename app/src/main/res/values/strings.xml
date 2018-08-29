@@ -131,4 +131,5 @@
     <string name="facebook_id">Facebook ID</string>
     <string name="google_plus_id">Google Plus ID</string>
     <string name="linkedin_id">Linkedin ID</string>
+    <string name="email_hint">Email</string>
 </resources>

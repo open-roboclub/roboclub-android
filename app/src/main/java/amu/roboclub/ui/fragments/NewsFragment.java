@@ -1,10 +1,7 @@
 package amu.roboclub.ui.fragments;
 
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -44,17 +42,31 @@ public class NewsFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         DatabaseReference newsReference = FirebaseDatabase.getInstance().getReference("news");
-        FirebaseRecyclerAdapter newsAdapter = new FirebaseRecyclerAdapter<News, NewsHolder>(News.class, R.layout.item_announcement, NewsHolder.class, newsReference) {
+
+        FirebaseRecyclerOptions<News> options = new FirebaseRecyclerOptions.Builder<News>()
+                .setQuery(newsReference, News.class)
+                .setLifecycleOwner(this)
+                .build();
+
+        FirebaseRecyclerAdapter newsAdapter = new FirebaseRecyclerAdapter<News, NewsHolder>(options) {
+
+            @NonNull
+            @Override
+            public NewsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.item_announcement, parent, false);
+
+                return new NewsHolder(view);
+            }
 
             @Override
-            protected void populateViewHolder(final NewsHolder holder, News news, int position) {
-
+            protected void onBindViewHolder(@NonNull NewsHolder holder, int position, @NonNull News news) {
                 if (loading.getVisibility() == View.VISIBLE)
                     loading.setVisibility(View.GONE);
 
                 holder.setNews(getContext(), news);
-
             }
+
         };
 
         recyclerView.setAdapter(newsAdapter);
