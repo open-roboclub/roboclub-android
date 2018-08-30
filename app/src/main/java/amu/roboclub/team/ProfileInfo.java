@@ -1,10 +1,15 @@
 package amu.roboclub.team;
 
+import android.support.annotation.Keep;
+
 import java.util.HashMap;
 import java.util.List;
 
+@Keep
 public class ProfileInfo {
-    public String about, batch, cv;
+    public String about;
+    public String batch;
+    public String cv;
     public List<String> interests;
     public List<HashMap<String, String>> projects;
 

@@ -1,17 +1,22 @@
 package amu.roboclub.project;
 
+import android.support.annotation.Keep;
+
 import java.io.Serializable;
 import java.util.List;
 
+@Keep
 public class Project implements Serializable {
-    public String id, name, description, team, image, youtube;
+    public String id;
+    public String name;
+    public String description;
+    public String team;
+    public String image;
+    public String youtube;
     public boolean ongoing;
 
     public List<String> images;
     public List<Doc> docs;
-
-    public Project() {
-    }
 
     public String getImage() {
         return image;

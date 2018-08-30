@@ -1,5 +1,8 @@
 package amu.roboclub.news;
 
+import android.support.annotation.Keep;
+
+@Keep
 public class News {
     public String title;
     public String date;

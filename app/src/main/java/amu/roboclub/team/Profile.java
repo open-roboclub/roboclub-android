@@ -1,7 +1,10 @@
 package amu.roboclub.team;
 
+import android.support.annotation.Keep;
+
 import java.util.HashMap;
 
+@Keep
 public class Profile {
     public String name, position, thumbnail, uid;
     public HashMap<String, String> links;
