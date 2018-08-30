@@ -4,6 +4,7 @@ package amu.roboclub.ui.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
@@ -69,30 +70,46 @@ public class AdminFragment extends Fragment {
 
     private View root;
 
-    @BindView(R.id.sign_in) FloatingActionButton signIn;
-    @BindView(R.id.state) LinearLayout state;
-    @BindView(R.id.account_info) NestedScrollView accountInfo;
-    @BindView(R.id.account_progress) ProgressBar progressBar;
-    @BindView(R.id.avatar) ImageView avatar;
-    @BindView(R.id.name_edit) EditText name;
-    @BindView(R.id.providers) RadioGroup providersLayout;
+    @BindView(R.id.sign_in)
+    FloatingActionButton signIn;
+    @BindView(R.id.state)
+    LinearLayout state;
+    @BindView(R.id.account_info)
+    NestedScrollView accountInfo;
+    @BindView(R.id.account_progress)
+    ProgressBar progressBar;
+    @BindView(R.id.avatar)
+    ImageView avatar;
+    @BindView(R.id.name_edit)
+    EditText name;
+    @BindView(R.id.providers)
+    RadioGroup providersLayout;
 
-    @BindView(R.id.notification_card) CardView notificationCard;
-    @BindView(R.id.title_edit) EditText title;
-    @BindView(R.id.message_edit) EditText message;
-    @BindView(R.id.link_edit) EditText link;
+    @BindView(R.id.notification_card)
+    CardView notificationCard;
+    @BindView(R.id.title_edit)
+    EditText title;
+    @BindView(R.id.message_edit)
+    EditText message;
+    @BindView(R.id.link_edit)
+    EditText link;
 
-    @BindView(R.id.news_selector) RadioGroup newsSelector;
+    @BindView(R.id.news_selector)
+    RadioGroup newsSelector;
 
-    @BindView(R.id.news_card) CardView newsCard;
-    @BindView(R.id.title_modify) EditText titleModify;
-    @BindView(R.id.message_modify) EditText messageModify;
-    @BindView(R.id.news_reference) EditText newsReferenceText;
+    @BindView(R.id.news_card)
+    CardView newsCard;
+    @BindView(R.id.title_modify)
+    EditText titleModify;
+    @BindView(R.id.message_modify)
+    EditText messageModify;
+    @BindView(R.id.news_reference)
+    EditText newsReferenceText;
 
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authListener;
 
-    private static final String newsReference = BuildConfig.DEBUG?"news-debug/":"news/";
+    private static final String newsReference = BuildConfig.DEBUG ? "debug/news/" : "news/";
 
     public static AdminFragment newInstance() {
         return new AdminFragment();
@@ -107,7 +124,7 @@ public class AdminFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_admin, container, false);
 
@@ -157,7 +174,7 @@ public class AdminFragment extends Fragment {
     }
 
     private void showImageAvatar(Uri uri) {
-        if(uri == null) {
+        if (uri == null) {
             Toast.makeText(getContext(), R.string.no_image, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -199,7 +216,7 @@ public class AdminFragment extends Fragment {
 
             RadioButton radioButton = createRadio(userInfo.getProviderId());
             radioButton.setId(i);
-            if(userInfo.getPhotoUrl()!= null && userInfo.getPhotoUrl().equals(user.getPhotoUrl())) {
+            if (userInfo.getPhotoUrl() != null && userInfo.getPhotoUrl().equals(user.getPhotoUrl())) {
                 radioButton.setChecked(true);
             }
             providersLayout.addView(radioButton);
@@ -215,21 +232,21 @@ public class AdminFragment extends Fragment {
     public void saveUser() {
         FirebaseUser user = auth.getCurrentUser();
 
-        if(user == null)
+        if (user == null)
             return;
 
         UserProfileChangeRequest.Builder userProfileChangeRequest = new UserProfileChangeRequest.Builder();
 
         String userName = name.getText().toString();
-        if(!userName.equals(auth.getCurrentUser().getDisplayName())) {
+        if (!userName.equals(auth.getCurrentUser().getDisplayName())) {
             userProfileChangeRequest.setDisplayName(userName);
         }
 
         int index = providersLayout.getCheckedRadioButtonId();
         List<? extends UserInfo> providerData = user.getProviderData();
-        if(index >= 0 && index < providerData.size()) {
+        if (index >= 0 && index < providerData.size()) {
             Uri uri = providerData.get(index).getPhotoUrl();
-            if(uri != null && !uri.equals(user.getPhotoUrl())) {
+            if (uri != null && !uri.equals(user.getPhotoUrl())) {
                 userProfileChangeRequest.setPhotoUri(uri);
             }
         }
@@ -246,11 +263,11 @@ public class AdminFragment extends Fragment {
 
     private void showNotificationPanel(String uid) {
         FirebaseDatabase.getInstance()
-                .getReference("admins/"+uid)
+                .getReference("admins/" + uid)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.getValue() != null) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() != null) {
                             // Our user is an admin
                             showSnackbar(R.string.admin_detected);
                             notificationCard.setVisibility(View.VISIBLE);
@@ -261,7 +278,7 @@ public class AdminFragment extends Fragment {
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
                         // User is not admin
                         Log.d(TAG, "Not admin");
                     }
@@ -292,7 +309,7 @@ public class AdminFragment extends Fragment {
         News news = new News();
         news.title = title.getText().toString();
         news.notice = message.getText().toString();
-        if(!TextUtils.isEmpty(link.getText().toString()))
+        if (!TextUtils.isEmpty(link.getText().toString()))
             news.link = link.getText().toString();
         news.date = getDateString();
         news.timestamp = -System.currentTimeMillis();
@@ -306,7 +323,7 @@ public class AdminFragment extends Fragment {
                 .push()
                 .setValue(news, (databaseError, databaseReference) -> {
                     progressBar.setVisibility(View.INVISIBLE);
-                    if(databaseError != null) {
+                    if (databaseError != null) {
                         showSnackbar(R.string.error_notification);
                         Log.d(TAG, databaseError.toString());
                     } else {
@@ -323,10 +340,10 @@ public class AdminFragment extends Fragment {
         newsReferenceText.setText(key);
 
         FirebaseDatabase.getInstance()
-                .getReference(newsReference+key)
+                .getReference(newsReference + key)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         News news = dataSnapshot.getValue(News.class);
                         Log.d(TAG, "Received News : " + news.toString());
                         titleModify.setText(news.title);
@@ -334,7 +351,7 @@ public class AdminFragment extends Fragment {
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
                         showSnackbar(R.string.error_loading_news);
                         newsCard.setVisibility(View.GONE);
                     }
@@ -348,19 +365,19 @@ public class AdminFragment extends Fragment {
         String title = titleModify.getText().toString();
         String message = messageModify.getText().toString();
 
-        if(!TextUtils.isEmpty(title))
+        if (!TextUtils.isEmpty(title))
             newsUpdate.put("title", title);
 
-        if(!TextUtils.isEmpty(message))
+        if (!TextUtils.isEmpty(message))
             newsUpdate.put("notice", message);
 
-        if(!newsUpdate.isEmpty()) {
+        if (!newsUpdate.isEmpty()) {
             progressBar.setVisibility(View.VISIBLE);
             FirebaseDatabase.getInstance()
-                    .getReference(newsReference+newsReferenceText.getText().toString())
+                    .getReference(newsReference + newsReferenceText.getText().toString())
                     .updateChildren(newsUpdate, (databaseError, databaseReference) -> {
                         progressBar.setVisibility(View.INVISIBLE);
-                        if(databaseError != null) {
+                        if (databaseError != null) {
                             showSnackbar(R.string.error_updating_news);
                             Log.d(TAG, "Update Error : " + databaseError.toString());
                         } else {
@@ -374,10 +391,10 @@ public class AdminFragment extends Fragment {
     public void deleteNews() {
         progressBar.setVisibility(View.VISIBLE);
         FirebaseDatabase.getInstance()
-                .getReference(newsReference+newsReferenceText.getText().toString())
+                .getReference(newsReference + newsReferenceText.getText().toString())
                 .removeValue((databaseError, databaseReference) -> {
                     progressBar.setVisibility(View.GONE);
-                    if(databaseError != null) {
+                    if (databaseError != null) {
                         showSnackbar(R.string.news_delete_error);
                         Log.d(TAG, "Delete Error : " + databaseError.toString());
                     } else {
@@ -463,7 +480,7 @@ public class AdminFragment extends Fragment {
                 }
 
                 FirebaseUiException error = response.getError();
-                if (error !=  null) {
+                if (error != null) {
                     if (error.getErrorCode() == ErrorCodes.NO_NETWORK) {
                         showSnackbar(R.string.no_internet_connection);
                         return;

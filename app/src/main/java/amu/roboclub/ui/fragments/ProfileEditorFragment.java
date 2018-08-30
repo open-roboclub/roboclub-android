@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
@@ -52,24 +53,42 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     private Profile profile;
     private OnProfileChangeListener onProfileChangeListener;
 
-    @BindView(R.id.nestedScrollView) NestedScrollView scrollView;
-    @BindView(R.id.progress_bar) ProgressBar progressBar;
-    @BindView(R.id.close) ImageView close;
-    @BindView(R.id.save_fab) FloatingActionButton saveFab;
-    @BindView(R.id.photo_fab) FloatingActionButton photoFab;
-    @BindView(R.id.avatar) ImageView avatar;
-    @BindView(R.id.name) TextInputEditText name;
-    @BindView(R.id.photo) TextInputEditText photoLink;
-    @BindView(R.id.position) TextInputEditText position;
-    @BindView(R.id.batch) TextInputEditText batch;
-    @BindView(R.id.about) TextInputEditText about;
-    @BindView(R.id.cv_link) TextInputEditText cvLink;
-    @BindView(R.id.interests) TextInputEditText interests;
-    @BindView(R.id.phone) TextInputEditText phone;
-    @BindView(R.id.email) TextInputEditText email;
-    @BindView(R.id.facebook) TextInputEditText facebook;
-    @BindView(R.id.gplus) TextInputEditText gplus;
-    @BindView(R.id.linkedin) TextInputEditText linkedin;
+    @BindView(R.id.nestedScrollView)
+    NestedScrollView scrollView;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+    @BindView(R.id.close)
+    ImageView close;
+    @BindView(R.id.save_fab)
+    FloatingActionButton saveFab;
+    @BindView(R.id.photo_fab)
+    FloatingActionButton photoFab;
+    @BindView(R.id.avatar)
+    ImageView avatar;
+    @BindView(R.id.name)
+    TextInputEditText name;
+    @BindView(R.id.photo)
+    TextInputEditText photoLink;
+    @BindView(R.id.position)
+    TextInputEditText position;
+    @BindView(R.id.batch)
+    TextInputEditText batch;
+    @BindView(R.id.about)
+    TextInputEditText about;
+    @BindView(R.id.cv_link)
+    TextInputEditText cvLink;
+    @BindView(R.id.interests)
+    TextInputEditText interests;
+    @BindView(R.id.phone)
+    TextInputEditText phone;
+    @BindView(R.id.email)
+    TextInputEditText email;
+    @BindView(R.id.facebook)
+    TextInputEditText facebook;
+    @BindView(R.id.gplus)
+    TextInputEditText gplus;
+    @BindView(R.id.linkedin)
+    TextInputEditText linkedin;
 
     private View root;
     private String filePath;
@@ -95,7 +114,7 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             int dy = scrollY - oldScrollY;
 
-            if(dy > 0) {
+            if (dy > 0) {
                 saveFab.hide();
             } else {
                 saveFab.show();
@@ -128,11 +147,11 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         String linkedinId = linkedin.getText().toString();
 
         ProfileInfo profileInfo = profile.profile_info;
-        if(profileInfo == null)
+        if (profileInfo == null)
             profileInfo = new ProfileInfo(); // Hack to avoid NPE
 
         Map<String, String> links = profile.links;
-        if(links == null)
+        if (links == null)
             links = new HashMap<>(); // Hack to avoid NPE
 
         UpdateMapBuilder updateMapBuilder = new UpdateMapBuilder()
@@ -144,17 +163,17 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
                 .addNonNullNonEqualString("links/email", emailAdd, links.get("email"))
                 .addNonNullNonEqualString("links/facebook", facebookId, links.get("facebook"))
                 .addNonNullNonEqualString("links/g-plus", gplusId, links.get("g-plus"))
-                .addNonNullNonEqualString("links/linkdedin", linkedinId, links.get("linkedin"))
+                .addNonNullNonEqualString("links/linkedin", linkedinId, links.get("linkedin"))
                 .addNonNullNonEmptyList("profile_info/interests", interestString, profileInfo.interests)
                 .addNonEqualString("thumbnail", photoString, profile.thumbnail);
 
 
-        if(profile.adminOverride)
+        if (profile.adminOverride)
             updateMapBuilder.addNonNullNonEqualString("position", positionString, profile.position);
 
         Map<String, Object> updateMap = updateMapBuilder.build();
 
-        if(onProfileChangeListener != null && !updateMap.isEmpty()) {
+        if (onProfileChangeListener != null && !updateMap.isEmpty()) {
             onProfileChangeListener.onProfileChange(updateMap);
         }
 
@@ -169,11 +188,11 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     }
 
     private void setEditTextDisabled(TextInputEditText... editTexts) {
-        for(TextInputEditText editText: editTexts) {
+        for (TextInputEditText editText : editTexts) {
             editText.setMaxLines(1);
             editText.setEllipsize(TextUtils.TruncateAt.END);
             editText.setOnFocusChangeListener((v, hasFocus) -> {
-                if(!hasFocus) {
+                if (!hasFocus) {
                     editText.setMaxLines(1);
                     editText.setEllipsize(TextUtils.TruncateAt.END);
                 } else {
@@ -199,17 +218,17 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     }
 
     private void showProfile() {
-        if(root == null || profile == null) return;
+        if (root == null || profile == null) return;
 
         name.setText(profile.name);
 
         position.setText(profile.position);
-        if(profile.adminOverride)
+        if (profile.adminOverride)
             position.setEnabled(true);
         else
             position.setEnabled(false);
 
-        if(profile.thumbnail != null) {
+        if (profile.thumbnail != null) {
             Uri uri = Uri.parse(profile.thumbnail);
 
             // Cancel previously loading image if new request is generated
@@ -227,7 +246,7 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         }
 
         ProfileInfo info = profile.profile_info;
-        if(info != null) {
+        if (info != null) {
             loadText(info.batch, batch);
 
             loadText(info.cv, cvLink);
@@ -239,7 +258,7 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         }
 
         Map<String, String> links = profile.links;
-        if(links != null && !links.isEmpty()) {
+        if (links != null && !links.isEmpty()) {
             loadText(links.get("mobile"), phone);
             loadText(links.get("email"), email);
             loadText(links.get("facebook"), facebook);
@@ -249,14 +268,14 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     }
 
     private void loadText(String text, TextInputEditText editText) {
-        if(text == null)
+        if (text == null)
             return;
 
         editText.setText(text);
     }
 
     private void imageLoaded() {
-        if(filePath == null)
+        if (filePath == null)
             return;
 
         Picasso.get()
@@ -319,9 +338,8 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
         getIntent.setType("image/*");
 
-        Intent pickIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickIntent.setType("image/*");
+        Intent pickIntent = new Intent(Intent.ACTION_PICK);
+        pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
 
         Intent chooserIntent = Intent.createChooser(getIntent, getString(R.string.select_image));
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});

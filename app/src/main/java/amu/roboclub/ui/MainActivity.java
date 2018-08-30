@@ -22,11 +22,11 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import amu.roboclub.R;
 import amu.roboclub.ui.fragments.AdminFragment;
-import amu.roboclub.ui.fragments.TeamFragment;
 import amu.roboclub.ui.fragments.ContributionFragment;
 import amu.roboclub.ui.fragments.FeedbackDialogFragment;
 import amu.roboclub.ui.fragments.HomeFragment;
 import amu.roboclub.ui.fragments.ProjectFragment;
+import amu.roboclub.ui.fragments.TeamFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity
     static {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         FirebaseMessaging.getInstance().subscribeToTopic("news");
-        if(amu.roboclub.BuildConfig.DEBUG)
-            FirebaseMessaging.getInstance().subscribeToTopic("debug");
+        if (amu.roboclub.BuildConfig.DEBUG)
+            FirebaseMessaging.getInstance().subscribeToTopic("debug-news");
     }
 
     private static final String TAG = "MainActivity";
@@ -74,16 +74,16 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             instanceFragment = getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_KEY);
             title = savedInstanceState.getString(TITLE_KEY);
             Log.d(TAG, String.format("onCreate: Restoring State : Fragment->%s Title->%s", instanceFragment, title));
         }
 
-        if(instanceFragment == null)
+        if (instanceFragment == null)
             instanceFragment = HomeFragment.newInstance();
 
-        if(title == null)
+        if (title == null)
             title = getString(R.string.app_name);
 
         replaceFragment();
@@ -92,16 +92,16 @@ public class MainActivity extends AppCompatActivity
     private void setupDrawer() {
         drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) { /* No Action */ }
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) { /* No Action */ }
 
             @Override
-            public void onDrawerOpened(View drawerView) { /* No Action */ }
+            public void onDrawerOpened(@NonNull View drawerView) { /* No Action */ }
 
             @Override
             public void onDrawerStateChanged(int newState) { /* No Action */ }
 
             @Override
-            public void onDrawerClosed(View drawerView) {
+            public void onDrawerClosed(@NonNull View drawerView) {
                 if (fragmentClass != null) {
                     try {
                         instanceFragment = (Fragment) fragmentClass.newInstance();
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if(drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
+        if (drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
 
         fragmentClass = null;
 

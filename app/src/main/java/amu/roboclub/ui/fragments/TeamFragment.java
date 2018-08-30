@@ -59,7 +59,7 @@ public class TeamFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         ProfileHolder.setUser(user);
 
-        Query teamReference = FirebaseDatabase.getInstance().getReference("team/16").orderByChild("rank");
+        Query teamReference = FirebaseDatabase.getInstance().getReference("team/current/members").orderByChild("rank");
         FirebaseRecyclerOptions<Profile> options = new FirebaseRecyclerOptions.Builder<Profile>()
                 .setQuery(teamReference, Profile.class)
                 .build();
@@ -78,7 +78,7 @@ public class TeamFragment extends Fragment {
                 if (snackbar.isShown())
                     snackbar.dismiss();
 
-                holder.setProfile(getContext(), profile, getRef(position).toString());
+                holder.setProfile(profile, getRef(position).toString());
             }
 
         };

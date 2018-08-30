@@ -30,6 +30,8 @@ public class ProfileHolder extends RecyclerView.ViewHolder {
     private static FirebaseUser user;
     private static boolean adminOverride = false;
 
+    private final Context context;
+
     @BindView(R.id.rootView) CardView root;
     @BindView(R.id.title) TextView name;
     @BindView(R.id.position) TextView position;
@@ -42,6 +44,7 @@ public class ProfileHolder extends RecyclerView.ViewHolder {
         super(view);
 
         ButterKnife.bind(this, view);
+        this.context = view.getContext();
     }
 
     public static void setUser(FirebaseUser user) {
@@ -52,7 +55,7 @@ public class ProfileHolder extends RecyclerView.ViewHolder {
         ProfileHolder.adminOverride = adminOverride;
     }
 
-    public void setProfile(Context context, Profile profile, String databaseReference) {
+    public void setProfile(Profile profile, String databaseReference) {
         name.setText(profile.name);
         position.setText(profile.position);
 
@@ -62,7 +65,7 @@ public class ProfileHolder extends RecyclerView.ViewHolder {
                 .transform(new CircleTransform())
                 .into(avatar);
 
-        if(profile.profile_info != null) {
+        if (profile.profile_info != null) {
             showProfile.setVisibility(View.VISIBLE);
             root.setOnClickListener(view -> {
                 Intent intent = new Intent(context, ProfileActivity.class);
@@ -81,7 +84,7 @@ public class ProfileHolder extends RecyclerView.ViewHolder {
         if(sameUser ||  adminOverride) {
             editable.setVisibility(View.VISIBLE);
 
-            int resId = sameUser?R.drawable.capsule:R.drawable.capsule_grey;
+            int resId = sameUser ? R.drawable.capsule : R.drawable.capsule_grey;
 
             editable.setBackground(ResourcesCompat.getDrawable(context.getResources(), resId, null));
 

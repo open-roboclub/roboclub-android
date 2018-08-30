@@ -4,6 +4,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -55,21 +57,37 @@ public class ProfileActivity extends AppCompatActivity {
 
     private ProfileEditorFragment profileEditorFragment = new ProfileEditorFragment();
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.root) CoordinatorLayout rootLayout;
-    @BindView(R.id.profileContainer) NestedScrollView profileContainer;
-    @BindView(R.id.profileInfo) LinearLayout profileInfoContainer;
-    @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.root)
+    CoordinatorLayout rootLayout;
+    @BindView(R.id.profileContainer)
+    NestedScrollView profileContainer;
+    @BindView(R.id.profileInfo)
+    LinearLayout profileInfoContainer;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
-    @BindView(R.id.avatar) ImageView avatar;
-    @BindView(R.id.position) TextView position;
-    @BindView(R.id.batch) TextView batch;
-    @BindView(R.id.about) TextView about;
-    @BindView(R.id.interestsCard) CardView interestsCard;
-    @BindView(R.id.interests) TextView interests;
-    @BindView(R.id.projectsCard) CardView projectsCard;
-    @BindView(R.id.projects) TextView projects;
-    @BindView(R.id.cvCard) CardView cvCard;
+    @BindView(R.id.avatar)
+    ImageView avatar;
+    @BindView(R.id.position)
+    TextView position;
+    @BindView(R.id.batch)
+    TextView batch;
+    @BindView(R.id.about_card)
+    CardView aboutCard;
+    @BindView(R.id.about)
+    TextView about;
+    @BindView(R.id.interestsCard)
+    CardView interestsCard;
+    @BindView(R.id.interests)
+    TextView interests;
+    @BindView(R.id.projectsCard)
+    CardView projectsCard;
+    @BindView(R.id.projects)
+    TextView projects;
+    @BindView(R.id.cvCard)
+    CardView cvCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,11 +102,11 @@ public class ProfileActivity extends AppCompatActivity {
         fab.hide();
 
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null) {
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        if(getIntent().hasExtra(REFERENCE_KEY)) {
+        if (getIntent().hasExtra(REFERENCE_KEY)) {
             setReferenceKey(getIntent().getStringExtra(REFERENCE_KEY));
             loadProfile();
         } else {
@@ -109,27 +127,39 @@ public class ProfileActivity extends AppCompatActivity {
         valueEventListener = profileReference
                 .addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Profile profile = dataSnapshot.getValue(Profile.class);
                         showProfile(profile);
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
                         Snackbar.make(rootLayout, R.string.load_profile_error, Snackbar.LENGTH_SHORT).show();
                     }
                 });
     }
 
+    private boolean showAndSetText(TextView textView, @Nullable String text) {
+        if (!TextUtils.isEmpty(text)) {
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(text);
+            return true;
+        } else {
+            textView.setVisibility(View.GONE);
+        }
+
+        return false;
+    }
+
     private void showProfile(Profile profile) {
         profileContainer.setVisibility(View.VISIBLE);
-        if(getSupportActionBar()!=null) getSupportActionBar().setTitle(profile.name);
+        if (getSupportActionBar() != null) getSupportActionBar().setTitle(profile.name);
 
         profileEditorFragment.setProfile(profile);
 
         position.setText(profile.position);
 
-        if(profile.thumbnail != null) {
+        if (profile.thumbnail != null) {
             Picasso.get()
                     .load(profile.thumbnail)
                     .placeholder(VectorDrawableCompat.create(getResources(), R.drawable.ic_avatar, null))
@@ -139,14 +169,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         ProfileInfo profileInfo = profile.profile_info;
 
-        if(profileInfo != null) {
+        if (profileInfo != null) {
             profileInfoContainer.setVisibility(View.VISIBLE);
 
-            // TODO : Fix empty about section
-            if(profileInfo.batch != null)
-                batch.setText(profileInfo.batch);
-            if(profileInfo.about != null)
-            about.setText(profileInfo.about);
+            showAndSetText(batch, profileInfo.batch);
+
+            if (showAndSetText(about, profileInfo.about)) {
+                aboutCard.setVisibility(View.VISIBLE);
+            }
 
             if (profileInfo.cv != null) {
                 cvCard.setVisibility(View.VISIBLE);
@@ -188,14 +218,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         configureUser(profile);
 
-        if(user ==  null) return;
+        if (user == null) return;
 
         FirebaseDatabase.getInstance()
                 .getReference("admins/" + user.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.getValue() != null) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() != null) {
                             // User is Admin. Show Profile Editor
                             profile.adminOverride = true;
                             configureUser(profile);
@@ -203,19 +233,19 @@ public class ProfileActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
                         // No action
                     }
                 });
     }
 
     private void configureUser(Profile profile) {
-        if(!profile.adminOverride && (user == null || profile.uid == null || !user.getUid().equals(profile.uid)))
+        if (!profile.adminOverride && (user == null || profile.uid == null || !user.getUid().equals(profile.uid)))
             return;
 
         fab.show();
 
-        if(!greeted && user.getDisplayName() != null && !TextUtils.isEmpty(user.getDisplayName())){
+        if (!greeted && user.getDisplayName() != null && !TextUtils.isEmpty(user.getDisplayName())) {
             greeted = true;
             String welcome = String.format(getString(R.string.welcome_message), user.getDisplayName());
             Snackbar.make(rootLayout, welcome, Snackbar.LENGTH_SHORT).show();
@@ -230,13 +260,13 @@ public class ProfileActivity extends AppCompatActivity {
             profileEditorFragment.setOnProfileChangeListener(profileChanges -> {
 
                 // Save old thumbnail. Just in case
-                if(profileChanges.containsKey("thumbnail") && profile.thumbnail != null) {
+                if (profileChanges.containsKey("thumbnail") && profile.thumbnail != null) {
                     final String thumbnail = profile.thumbnail;
                     FirebaseDatabase.getInstance()
-                            .getReference(reference+"/old_avatars/")
+                            .getReference(reference + "/old_avatars/")
                             .push()
                             .setValue(thumbnail, (databaseError, databaseReference) -> {
-                                if(databaseError != null){
+                                if (databaseError != null) {
                                     Log.d("Profile ", "configureUser: " + databaseError.toString());
                                 }
                             });
@@ -252,7 +282,7 @@ public class ProfileActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance()
                 .getReference(reference)
                 .updateChildren(objectMap, (databaseError, databaseReference) -> {
-                    if(databaseError != null){
+                    if (databaseError != null) {
                         Log.d("UpdateProfile", "updateProfile: " + databaseError);
                         Snackbar.make(rootLayout, R.string.profile_update_failed, BaseTransientBottomBar.LENGTH_SHORT).show();
                     } else {
@@ -278,7 +308,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        if(profileReference != null) {
+        if (profileReference != null) {
             profileReference.removeEventListener(valueEventListener);
         }
     }
