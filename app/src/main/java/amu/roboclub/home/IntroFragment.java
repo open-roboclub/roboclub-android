@@ -1,4 +1,4 @@
-package amu.roboclub.ui.fragments;
+package amu.roboclub.home;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

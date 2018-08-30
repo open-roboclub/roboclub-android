@@ -1,4 +1,4 @@
-package amu.roboclub.ui.fragments;
+package amu.roboclub.home;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import amu.roboclub.R;
+import amu.roboclub.news.NewsFragment;
 import amu.roboclub.ui.adapters.PagerAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;

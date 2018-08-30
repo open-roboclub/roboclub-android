@@ -21,17 +21,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import amu.roboclub.R;
-import amu.roboclub.ui.fragments.AdminFragment;
-import amu.roboclub.ui.fragments.ContributionFragment;
+import amu.roboclub.admin.AdminFragment;
+import amu.roboclub.contribution.ContributionFragment;
+import amu.roboclub.home.HomeFragment;
+import amu.roboclub.project.list.ProjectFragment;
+import amu.roboclub.team.list.TeamFragment;
 import amu.roboclub.ui.fragments.FeedbackDialogFragment;
-import amu.roboclub.ui.fragments.HomeFragment;
-import amu.roboclub.ui.fragments.ProjectFragment;
-import amu.roboclub.ui.fragments.TeamFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String TAG = "MainActivity";
+    private static final String FRAGMENT_KEY = "fragment";
+    private static final String TITLE_KEY = "title";
 
     static {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
@@ -40,20 +44,15 @@ public class MainActivity extends AppCompatActivity
             FirebaseMessaging.getInstance().subscribeToTopic("debug-news");
     }
 
-    private static final String TAG = "MainActivity";
-    private static final String FRAGMENT_KEY = "fragment";
-    private static final String TITLE_KEY = "title";
-
-    private Class fragmentClass;
-    private Fragment instanceFragment;
-    private String title;
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+    private Class fragmentClass;
+    private Fragment instanceFragment;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

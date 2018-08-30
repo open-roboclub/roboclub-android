@@ -1,4 +1,4 @@
-package amu.roboclub.ui.viewholder;
+package amu.roboclub.project.list;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,17 +12,21 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import amu.roboclub.R;
-import amu.roboclub.models.Project;
-import amu.roboclub.ui.ProjectDetailActivity;
+import amu.roboclub.project.Project;
+import amu.roboclub.project.detail.ProjectDetailActivity;
 import amu.roboclub.utils.CircleTransform;
 import butterknife.BindView;
 
 public class ProjectHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.rootView) CardView root;
-    @BindView(R.id.title) TextView title;
-    @BindView(R.id.team) TextView team;
-    @BindView(R.id.projectImg) ImageView projectImg;
+    @BindView(R.id.rootView)
+    CardView root;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.team)
+    TextView team;
+    @BindView(R.id.projectImg)
+    ImageView projectImg;
 
     public ProjectHolder(View view) {
         super(view);
@@ -53,7 +57,7 @@ public class ProjectHolder extends RecyclerView.ViewHolder {
         setImage(context, projectImg, project.image);
 
         root.setOnClickListener(view -> {
-            if(project.description == null || project.description.equals(""))
+            if (project.description == null || project.description.equals(""))
                 return;
 
             Intent intent = new Intent(context, ProjectDetailActivity.class);

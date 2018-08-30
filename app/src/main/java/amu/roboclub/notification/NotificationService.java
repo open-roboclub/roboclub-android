@@ -46,12 +46,12 @@ public class NotificationService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        String title = notification.getTitle()!=null?notification.getTitle():getString(R.string.app_name);
-        int color = notification.getColor()!=null?Color.parseColor(notification.getColor()): ResourcesCompat.getColor(getResources(), R.color.colorAccent, null);
+        String title = notification.getTitle() != null ? notification.getTitle() : getString(R.string.app_name);
+        int color = notification.getColor() != null ? Color.parseColor(notification.getColor()) : ResourcesCompat.getColor(getResources(), R.color.colorAccent, null);
         String messageBody = notification.getBody();
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, TAG)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(messageBody)

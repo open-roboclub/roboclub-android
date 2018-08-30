@@ -1,4 +1,4 @@
-package amu.roboclub.ui.fragments;
+package amu.roboclub.news;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,8 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import amu.roboclub.R;
-import amu.roboclub.models.News;
-import amu.roboclub.ui.viewholder.NewsHolder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

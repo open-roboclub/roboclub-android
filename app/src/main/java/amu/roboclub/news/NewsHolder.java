@@ -1,4 +1,4 @@
-package amu.roboclub.ui.viewholder;
+package amu.roboclub.news;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -11,16 +11,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import amu.roboclub.R;
-import amu.roboclub.models.News;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NewsHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.news) TextView newsText;
-    @BindView(R.id.date) TextView date;
-    @BindView(R.id.link) LinearLayout link;
-    @BindView(R.id.divider) LinearLayout divider;
+    @BindView(R.id.news)
+    TextView newsText;
+    @BindView(R.id.date)
+    TextView date;
+    @BindView(R.id.link)
+    LinearLayout link;
+    @BindView(R.id.divider)
+    LinearLayout divider;
 
     public NewsHolder(View view) {
         super(view);

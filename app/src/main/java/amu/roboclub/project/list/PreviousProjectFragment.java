@@ -1,4 +1,4 @@
-package amu.roboclub.ui.fragments;
+package amu.roboclub.project.list;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;

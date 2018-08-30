@@ -1,4 +1,4 @@
-package amu.roboclub.models;
+package amu.roboclub.news;
 
 public class News {
     public String title;

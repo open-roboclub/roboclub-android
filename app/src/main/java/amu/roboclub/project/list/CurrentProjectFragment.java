@@ -1,4 +1,4 @@
-package amu.roboclub.ui.fragments;
+package amu.roboclub.project.list;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -19,8 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import amu.roboclub.R;
-import amu.roboclub.models.Project;
-import amu.roboclub.ui.viewholder.ProjectHolder;
+import amu.roboclub.project.Project;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -54,8 +53,8 @@ public class CurrentProjectFragment extends Fragment {
         snackbar.show();
 
         FirebaseRecyclerOptions<Project> options = new FirebaseRecyclerOptions.Builder<Project>()
-                        .setQuery(getDatabaseReference(), Project.class)
-                        .build();
+                .setQuery(getDatabaseReference(), Project.class)
+                .build();
 
         projectAdapter = new FirebaseRecyclerAdapter<Project, ProjectHolder>(options) {
 
@@ -86,7 +85,7 @@ public class CurrentProjectFragment extends Fragment {
         recyclerView.setAdapter(projectAdapter);
         projectAdapter.startListening(); // TODO: Move to LifecycleOwner or AAC
 
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             llm.setSpanCount(2);
         }
 

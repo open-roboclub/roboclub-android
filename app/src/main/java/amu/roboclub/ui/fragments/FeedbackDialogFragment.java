@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 
 public class FeedbackDialogFragment extends BottomSheetDialogFragment {
 
+    private final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("feedback");
     @BindView(R.id.feedbackEdt)
     EditText edt;
     @BindView(R.id.send)
@@ -26,8 +27,6 @@ public class FeedbackDialogFragment extends BottomSheetDialogFragment {
     public static FeedbackDialogFragment newInstance() {
         return new FeedbackDialogFragment();
     }
-
-    private final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("feedback");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +45,7 @@ public class FeedbackDialogFragment extends BottomSheetDialogFragment {
             }
 
             databaseReference.push().setValue(feedback, (databaseError, databaseReference1) -> {
-                if(databaseError != null)
+                if (databaseError != null)
                     Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(getContext(), R.string.feedback_posted, Toast.LENGTH_SHORT).show();

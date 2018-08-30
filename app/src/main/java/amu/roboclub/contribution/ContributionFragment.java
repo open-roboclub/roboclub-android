@@ -1,4 +1,4 @@
-package amu.roboclub.ui.fragments;
+package amu.roboclub.contribution;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -18,8 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import amu.roboclub.R;
-import amu.roboclub.models.Contribution;
-import amu.roboclub.ui.viewholder.ContributionHolder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -77,7 +75,7 @@ public class ContributionFragment extends Fragment {
 
         recyclerView.setAdapter(contributionAdapter);
 
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             gridLayoutManager.setSpanCount(2);
         }
 

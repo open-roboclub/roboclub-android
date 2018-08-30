@@ -1,4 +1,4 @@
-package amu.roboclub.ui.fragments;
+package amu.roboclub.team.detail;
 
 import android.Manifest;
 import android.app.Activity;
@@ -33,12 +33,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import amu.roboclub.R;
-import amu.roboclub.models.Profile;
-import amu.roboclub.models.ProfileInfo;
+import amu.roboclub.team.Profile;
+import amu.roboclub.team.ProfileInfo;
 import amu.roboclub.utils.CircleTransform;
-import amu.roboclub.utils.ImageUploader;
-import amu.roboclub.utils.UpdateMapBuilder;
-import amu.roboclub.utils.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -49,9 +46,6 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     private static final String TAG = "ProfileEditorFragment";
     private static final int PICK_IMAGE = 2020;
     private static final String STORAGE_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE;
-
-    private Profile profile;
-    private OnProfileChangeListener onProfileChangeListener;
 
     @BindView(R.id.nestedScrollView)
     NestedScrollView scrollView;
@@ -90,6 +84,8 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
     @BindView(R.id.linkedin)
     TextInputEditText linkedin;
 
+    private Profile profile;
+    private OnProfileChangeListener onProfileChangeListener;
     private View root;
     private String filePath;
 
@@ -339,7 +335,7 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
         getIntent.setType("image/*");
 
         Intent pickIntent = new Intent(Intent.ACTION_PICK);
-        pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+        pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
 
         Intent chooserIntent = Intent.createChooser(getIntent, getString(R.string.select_image));
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
@@ -358,7 +354,7 @@ public class ProfileEditorFragment extends BottomSheetDialogFragment {
 
             Uri fileUri = data.getData();
 
-            filePath = Utils.getFilePath(getContext(), fileUri);
+            filePath = FileUtils.getFilePath(getContext(), fileUri);
             imageLoaded();
         }
     }

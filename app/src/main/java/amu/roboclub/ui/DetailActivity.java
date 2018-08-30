@@ -61,9 +61,9 @@ public class DetailActivity extends AppCompatActivity {
         });
 
         fab.setOnLongClickListener(view -> {
-                Toast.makeText(getApplicationContext(), R.string.source_code, Toast.LENGTH_SHORT).show();
-                return true;
-            }
+                    Toast.makeText(getApplicationContext(), R.string.source_code, Toast.LENGTH_SHORT).show();
+                    return true;
+                }
         );
 
         loadImages();

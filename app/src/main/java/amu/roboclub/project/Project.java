@@ -1,4 +1,4 @@
-package amu.roboclub.models;
+package amu.roboclub.project;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,7 +10,8 @@ public class Project implements Serializable {
     public List<String> images;
     public List<Doc> docs;
 
-    public Project() { }
+    public Project() {
+    }
 
     public String getImage() {
         return image;

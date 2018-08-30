@@ -1,4 +1,4 @@
-package amu.roboclub.ui;
+package amu.roboclub.team.detail;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -37,9 +37,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import amu.roboclub.R;
-import amu.roboclub.models.Profile;
-import amu.roboclub.models.ProfileInfo;
-import amu.roboclub.ui.fragments.ProfileEditorFragment;
+import amu.roboclub.team.Profile;
+import amu.roboclub.team.ProfileInfo;
 import amu.roboclub.utils.CircleTransform;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,15 +46,6 @@ import butterknife.ButterKnife;
 public class ProfileActivity extends AppCompatActivity {
 
     public static final String REFERENCE_KEY = "profile_reference";
-    private String reference;
-
-    private DatabaseReference profileReference;
-    private ValueEventListener valueEventListener;
-    private FirebaseUser user;
-
-    private boolean greeted = false;
-
-    private ProfileEditorFragment profileEditorFragment = new ProfileEditorFragment();
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -67,7 +57,6 @@ public class ProfileActivity extends AppCompatActivity {
     LinearLayout profileInfoContainer;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-
     @BindView(R.id.avatar)
     ImageView avatar;
     @BindView(R.id.position)
@@ -88,6 +77,13 @@ public class ProfileActivity extends AppCompatActivity {
     TextView projects;
     @BindView(R.id.cvCard)
     CardView cvCard;
+
+    private String reference;
+    private DatabaseReference profileReference;
+    private ValueEventListener valueEventListener;
+    private FirebaseUser user;
+    private boolean greeted = false;
+    private ProfileEditorFragment profileEditorFragment = new ProfileEditorFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

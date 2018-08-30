@@ -40,11 +40,11 @@
         </service>
 
         <activity
-            android:name=".ui.ProjectDetailActivity"
+            android:name=".project.detail.ProjectDetailActivity"
             android:label="@string/title_activity_project_detail"
             android:theme="@style/AppTheme.Detail" />
         <activity
-            android:name=".ui.ProfileActivity"
+            android:name=".team.detail.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.Detail" />

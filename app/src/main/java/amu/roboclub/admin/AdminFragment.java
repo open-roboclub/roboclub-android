@@ -1,4 +1,4 @@
-package amu.roboclub.ui.fragments;
+package amu.roboclub.admin;
 
 
 import android.content.Intent;
@@ -54,7 +54,7 @@ import java.util.Map;
 
 import amu.roboclub.BuildConfig;
 import amu.roboclub.R;
-import amu.roboclub.models.News;
+import amu.roboclub.news.News;
 import amu.roboclub.utils.CircleTransform;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,9 +67,7 @@ public class AdminFragment extends Fragment {
 
     private static final int RC_SIGN_IN = 2020;
     private static final String TAG = "AdminPanel";
-
-    private View root;
-
+    private static final String newsReference = BuildConfig.DEBUG ? "debug/news/" : "news/";
     @BindView(R.id.sign_in)
     FloatingActionButton signIn;
     @BindView(R.id.state)
@@ -105,11 +103,9 @@ public class AdminFragment extends Fragment {
     EditText messageModify;
     @BindView(R.id.news_reference)
     EditText newsReferenceText;
-
+    private View root;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authListener;
-
-    private static final String newsReference = BuildConfig.DEBUG ? "debug/news/" : "news/";
 
     public static AdminFragment newInstance() {
         return new AdminFragment();

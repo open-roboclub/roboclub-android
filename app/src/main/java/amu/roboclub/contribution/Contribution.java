@@ -1,4 +1,4 @@
-package amu.roboclub.models;
+package amu.roboclub.contribution;
 
 public class Contribution {
     public String contributor, purpose, remark, amount;

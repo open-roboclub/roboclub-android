@@ -1,7 +1,6 @@
-package amu.roboclub.utils;
+package amu.roboclub.team.detail;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,10 +11,10 @@ public class UpdateMapBuilder {
     private Map<String, Object> map = new HashMap<>();
 
     public UpdateMapBuilder addNonNullString(String key, String value) {
-        if(key == null)
+        if (key == null)
             return this;
 
-        if(value != null && !TextUtils.isEmpty(value)) {
+        if (value != null && !TextUtils.isEmpty(value)) {
             map.put(key, value);
         } else {
             map.put(key, null);
@@ -25,15 +24,15 @@ public class UpdateMapBuilder {
     }
 
     public UpdateMapBuilder addNonNullNonEmptyList(String key, String value, List<String> comparator) {
-        if(key == null)
+        if (key == null)
             return this;
 
         List<String> list = Arrays.asList(value.split("\n"));
 
-        if(TextUtils.isEmpty(value)) {
-            if(comparator != null && !comparator.isEmpty())
+        if (TextUtils.isEmpty(value)) {
+            if (comparator != null && !comparator.isEmpty())
                 map.put(key, null);
-        } else if(!list.equals(comparator)) {
+        } else if (!list.equals(comparator)) {
             map.put(key, list);
         }
 
@@ -41,13 +40,13 @@ public class UpdateMapBuilder {
     }
 
     public UpdateMapBuilder addNonNullNonEqualString(String key, String value, String comparator) {
-        if(key == null)
+        if (key == null)
             return this;
 
-        if(value == null || TextUtils.isEmpty(value)) {
-            if(comparator != null)
+        if (value == null || TextUtils.isEmpty(value)) {
+            if (comparator != null)
                 map.put(key, null);
-        } else if(!value.equals(comparator)) {
+        } else if (!value.equals(comparator)) {
             map.put(key, value);
         }
 
@@ -55,10 +54,10 @@ public class UpdateMapBuilder {
     }
 
     public UpdateMapBuilder addNonEqualString(String key, String value, String comparator) {
-        if(key == null)
+        if (key == null)
             return this;
 
-        if(value != null && !TextUtils.isEmpty(value) && !value.equals(comparator)) {
+        if (value != null && !TextUtils.isEmpty(value) && !value.equals(comparator)) {
             map.put(key, value);
         }
 

@@ -1,4 +1,4 @@
-package amu.roboclub.models;
+package amu.roboclub.team;
 
 import java.util.HashMap;
 import java.util.List;

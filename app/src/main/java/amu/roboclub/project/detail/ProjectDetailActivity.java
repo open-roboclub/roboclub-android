@@ -1,4 +1,4 @@
-package amu.roboclub.ui;
+package amu.roboclub.project.detail;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,41 +25,44 @@ import android.widget.Toast;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import amu.roboclub.ui.viewholder.ProjectHolder;
+import amu.roboclub.R;
+import amu.roboclub.project.Doc;
+import amu.roboclub.project.Project;
+import amu.roboclub.project.list.ProjectHolder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import amu.roboclub.R;
-import amu.roboclub.models.Doc;
-import amu.roboclub.models.Project;
-import amu.roboclub.ui.fragments.ProjectFragment;
-
 public class ProjectDetailActivity extends AppCompatActivity {
-
-    private Project project;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
     @BindView(R.id.gallery_list)
     LinearLayout imageList;
-
     @BindView(R.id.image)
     ImageView image;
     @BindView(R.id.team)
     TextView team;
     @BindView(R.id.description)
     TextView description;
-
     @BindView(R.id.youtube_card)
     CardView youtubeCard;
     @BindView(R.id.youtube_thumb)
     ImageView youtube;
-
     @BindView(R.id.documents_card)
     CardView documentsCard;
     @BindView(R.id.documents)
     TextView documents;
+    private Project project;
+
+    private static float toPx(float dp, Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
+    private static String getSmallImage(String url) {
+        return url.replaceFirst("upload/", "upload/c_thumb,w_150,h_150/");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,16 +82,6 @@ public class ProjectDetailActivity extends AppCompatActivity {
         }
 
         populateUI();
-    }
-
-    private static float toPx(float dp, Context context) {
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-    }
-
-    private static String getSmallImage(String url) {
-        return url.replaceFirst("upload/", "upload/c_thumb,w_150,h_150/");
     }
 
     private void showImages() {
@@ -165,7 +158,7 @@ public class ProjectDetailActivity extends AppCompatActivity {
     }
 
     private void showDocuments() {
-        if(project.docs == null || project.docs.isEmpty())
+        if (project.docs == null || project.docs.isEmpty())
             return;
 
         documents.setMovementMethod(LinkMovementMethod.getInstance());
@@ -182,7 +175,7 @@ public class ProjectDetailActivity extends AppCompatActivity {
             sb.append("</a><br>");
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             documents.setText(Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY));
         else
             documents.setText(Html.fromHtml(sb.toString()));

@@ -1,4 +1,4 @@
-package amu.roboclub.ui.fragments;
+package amu.roboclub.team.list;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -24,17 +24,15 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import amu.roboclub.R;
-import amu.roboclub.models.Profile;
-import amu.roboclub.ui.viewholder.ProfileHolder;
+import amu.roboclub.team.Profile;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
 public class TeamFragment extends Fragment {
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
     private Snackbar snackbar;
-
-    @BindView(R.id.recycler_view) RecyclerView recyclerView;
-
     private FirebaseRecyclerAdapter teamAdapter;
 
     public static TeamFragment newInstance() {

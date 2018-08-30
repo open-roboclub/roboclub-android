@@ -1,4 +1,4 @@
-package amu.roboclub.models;
+package amu.roboclub.project;
 
 import java.io.Serializable;
 
@@ -6,7 +6,8 @@ public class Doc implements Serializable {
 
     public String name, url;
 
-    public Doc() {}
+    public Doc() {
+    }
 
     @Override
     public String toString() {
