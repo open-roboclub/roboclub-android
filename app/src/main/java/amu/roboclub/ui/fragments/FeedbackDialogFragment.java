@@ -1,6 +1,8 @@
 package amu.roboclub.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,13 +31,14 @@ public class FeedbackDialogFragment extends BottomSheetDialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.bottomsheet_feedback, container, false);
 
         ButterKnife.bind(this, root);
 
         final FeedbackDialogFragment current = this;
+        final Context context = getActivity().getApplicationContext();
 
         send.setOnClickListener(view -> {
             String feedback = edt.getText().toString();
@@ -44,11 +47,9 @@ public class FeedbackDialogFragment extends BottomSheetDialogFragment {
                 return;
             }
 
-            databaseReference.push().setValue(feedback, (databaseError, databaseReference1) -> {
-                if (databaseError != null)
-                    Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getContext(), R.string.feedback_posted, Toast.LENGTH_SHORT).show();
+            databaseReference.push().setValue(feedback, (databaseError, databaseReference) -> {
+                String message = databaseError != null ? databaseError.getMessage() : context.getString(R.string.feedback_posted);
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
             });
 
             current.dismiss();
