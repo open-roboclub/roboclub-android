@@ -23,8 +23,8 @@ android {
         applicationId "amu.roboclub"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 13
-        versionName "4.1.0-SNAPSHOT"
+        versionCode 14
+        versionName "4.1.0"
         vectorDrawables.useSupportLibrary = true
         resConfigs "en"
     }
