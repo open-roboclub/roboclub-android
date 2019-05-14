@@ -7,8 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.res.ResourcesCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.res.ResourcesCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;

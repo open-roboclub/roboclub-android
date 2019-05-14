@@ -3,10 +3,12 @@ package amu.roboclub.team.list;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.cardview.widget.CardView;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;

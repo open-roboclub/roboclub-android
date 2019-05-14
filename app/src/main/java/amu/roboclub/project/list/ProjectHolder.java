@@ -2,9 +2,11 @@ package amu.roboclub.project.list;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import amu.roboclub.project.Project;
 import amu.roboclub.project.detail.ProjectDetailActivity;
 import amu.roboclub.utils.CircleTransform;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ProjectHolder extends RecyclerView.ViewHolder {
 
@@ -30,10 +33,7 @@ public class ProjectHolder extends RecyclerView.ViewHolder {
 
     public ProjectHolder(View view) {
         super(view);
-        root = (CardView) view.findViewById(R.id.rootView);
-        title = (TextView) view.findViewById(R.id.title);
-        team = (TextView) view.findViewById(R.id.team);
-        projectImg = (ImageView) view.findViewById(R.id.projectImg);
+        ButterKnife.bind(this, view);
     }
 
     public static void setImage(Context context, ImageView imageView, String imgUrl) {

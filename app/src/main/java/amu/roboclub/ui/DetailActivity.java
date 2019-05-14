@@ -5,16 +5,16 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import amu.roboclub.R;
@@ -33,8 +33,6 @@ public class DetailActivity extends AppCompatActivity {
     ImageView header;
     @BindView(R.id.avatarAreeb)
     ImageView avatarAreeb;
-    @BindView(R.id.avatarDP)
-    ImageView avatarDP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +80,6 @@ public class DetailActivity extends AppCompatActivity {
                 .placeholder(placeholder)
                 .transform(new CircleTransform())
                 .into(avatarAreeb);
-
-        Picasso.get()
-                .load("https://avatars3.githubusercontent.com/u/9443348?v=3&s=460")
-                .placeholder(placeholder)
-                .transform(new CircleTransform())
-                .into(avatarDP);
 
     }
 

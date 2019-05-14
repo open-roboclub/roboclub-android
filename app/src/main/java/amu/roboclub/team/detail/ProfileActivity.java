@@ -4,18 +4,16 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BaseTransientBottomBar;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.widget.NestedScrollView;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -24,6 +22,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -280,9 +281,9 @@ public class ProfileActivity extends AppCompatActivity {
                 .updateChildren(objectMap, (databaseError, databaseReference) -> {
                     if (databaseError != null) {
                         Log.d("UpdateProfile", "updateProfile: " + databaseError);
-                        Snackbar.make(rootLayout, R.string.profile_update_failed, BaseTransientBottomBar.LENGTH_SHORT).show();
+                        Snackbar.make(rootLayout, R.string.profile_update_failed, Snackbar.LENGTH_SHORT).show();
                     } else {
-                        Snackbar.make(rootLayout, R.string.profile_updated, BaseTransientBottomBar.LENGTH_SHORT).show();
+                        Snackbar.make(rootLayout, R.string.profile_updated, Snackbar.LENGTH_SHORT).show();
                     }
                 });
     }
