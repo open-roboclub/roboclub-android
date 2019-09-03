@@ -67,7 +67,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.firebaseui:firebase-ui-database:5.1.0'
     implementation 'com.firebaseui:firebase-ui-auth:5.1.0'
-    implementation 'com.facebook.android:facebook-login:5.4.0'
+    implementation 'com.facebook.android:facebook-login:5.5.0'
     implementation 'com.cloudinary:cloudinary-android:1.26.0'
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
