@@ -66,7 +66,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.firebaseui:firebase-ui-database:5.1.0'
-    implementation 'com.firebaseui:firebase-ui-auth:5.1.0'
+    implementation 'com.firebaseui:firebase-ui-auth:6.0.1'
     implementation 'com.facebook.android:facebook-login:5.5.1'
     implementation 'com.cloudinary:cloudinary-android:1.26.0'
     implementation 'com.jakewharton:butterknife:10.2.0'
