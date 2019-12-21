@@ -70,7 +70,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:5.13.0'
     implementation 'com.cloudinary:cloudinary-android:1.26.0'
     implementation 'com.jakewharton:butterknife:10.2.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
